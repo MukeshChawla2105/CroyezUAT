@@ -1,0 +1,146 @@
+<!-- c:Assignment_Execution_Criteria -->
+<aura:component controller= "LeadAssigningCompController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="Exereclst" type="LeadAssigningCompController.WrapperExc[]"/>
+    <aura:attribute name="WrappexcList" type="object" />
+    <aura:attribute name="objectlist" type="list" />
+    <aura:attribute name="mapOfObject" type="Map"/>
+    <aura:attribute name="fieldMap" type="Map"/>
+    <aura:attribute name="picklistValueMap" type="Map"/>
+    <aura:attribute name="parentId" type="String"/>
+    <aura:attribute name="scoreCardId" type="String"/>
+    <aura:attribute name="scoreCardDetail" type="Object"/> 
+    <aura:attribute name="scoreCardObject" type="Execution_Criteria__c" default="{'Id':'','Enabled__c':'','Evaluation_Expression_For_Execution__c':''}"/> 
+    <aura:attribute name="wrapperFields" type="LeadAssigningCompController.WrapperFields[]" />
+    <aura:attribute name="matchingList" type="String[]" />
+    <aura:attribute name="isPicklist" type="Boolean" default="false"/>
+    <aura:attribute name="picklistValueOfField" type="Map" />
+    <aura:attribute name="spinner" type="Boolean" default="false"/>
+    <aura:attribute name="objectName" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	
+    <ltng:require scripts="/resource/sweetalert2/sweetalert2.js"
+                  styles="/resource/sweetalert2/sweetalert2.min.css" />
+    
+    <aura:if isTrue="{!v.spinner}" >
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    
+    <lightning:card title="Lead Assignment Execution Criteria" iconName="standard:contact">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="S.No">S.No</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Name">Name</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Related Object">Related Object</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Field Name">Field Name</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Field Type">Field Type</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Matching Type">Matching Type</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Matching Value">Matching Value</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Marks Alloted">Sequence</div>
+                    </th>
+                </tr>
+            </thead>
+            <aura:iteration items="{!v.Exereclst}" var="exc" indexVar="index">
+                <tbody>
+                    <tr class="slds-hint-parent" id="{!index}">
+                        <td> 
+                            {!index + 1}
+                        </td>
+                        <th  scope="row">
+                            <div class="slds-truncate" title="Name">
+                                <lightning:input aura:id="valueVal" type="text"  value="{!exc.Name}" placeholder="Enter Name"/>
+                                <!--a href="javascript:void(0);" tabindex="-1">{!exc.Name}</a> -->
+                            </div>
+                        </th>
+                        <td data-label="Related Object">
+                        
+                            <b><ui:outputText value="{!exc.RelatedObject}"/></b>
+                        </td>
+                        <td data-label="Field Name">
+                          
+                            <a name="{!index}">
+                            <lightning:select aura:id="fieldVal" value="{!exc.fieldValue}" name="fieldPicklist" required="true" messageWhenValueMissing="Select cannot be empty" onchange="{!c.selectFieldName}">
+                                <option value="">--None--</option>
+                                <aura:iteration items="{!exc.FieldName}" var="field" indexVar="key">
+                                    <option text="{!field.value}" value="{!field.key}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                            </a>
+                        </td>
+                        <td data-label="Field Type">
+                           
+                                <b><ui:outputText value="{!exc.fieldDataType}"/></b>
+
+                        </td>
+                        <td data-label="Matching Type">
+                            <a name="{!index}">
+                            <lightning:select name="matchingTypePicklist" value="{!exc.MatchingType}" required="true" messageWhenValueMissing="Select cannot be empty">
+                                <option value="">--None--</option>
+                                <aura:iteration items="{!exc.matchTypeList}" var="matchValue">
+                                    <option text="{!matchValue}" value="{!matchValue}"/>
+                                </aura:iteration> 
+                            </lightning:select>
+                            </a>
+                         
+                        </td>
+                        <td data-label="Matching Value">
+                            <a name="{!index}">
+                            <aura:if isTrue="{!or(exc.fieldDataType=='Picklist',exc.fieldDataType=='Multi-Picklist')}">
+                                <lightning:select aura:id="valueVal" value="{!exc.MatchingValue}" name="matchingTypePicklist" required="true" messageWhenValueMissing="Select cannot be empty">
+                                    <option value="">--None--</option>
+                                    <aura:iteration items="{!exc.mapOfPicklistFields}" var="field" indexVar="key">
+                                        <option text="{!field.value}" value="{!field.key}"/>
+                                    </aura:iteration>
+                                </lightning:select>
+                                <aura:set attribute="else">
+                                    <lightning:input aura:id="valueVal" type="text"  value="{!exc.MatchingValue}" placeholder="Enter value"/>
+                                </aura:set>
+                            </aura:if>
+                            </a>
+                        </td>
+                        <td data-label="Sequence">
+                            <lightning:input aura:id="valueVal" type="text"  value="{!exc.Sequence}" placeholder="Enter value"/>
+                        </td>
+                        <td>
+                            <a onclick="{!c.createObjectData}" name="{!index+'-'+exc.Id}" >
+                                <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                <span class="slds-assistive-text">Add Icon</span>
+                            </a>   
+                        </td>
+                        <td>
+                            <a onclick="{!c.removeRow}" name="{!index+'-'+exc.Id}" >
+                                <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                <span class="slds-assistive-text">Delete Icon</span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </aura:iteration>
+        </table>
+    </lightning:card>
+    <aura:method name="scoreCardExeCriteria" action="{!c.saveExecutionCriteria}" access="public">
+        <aura:attribute name="callback" type="Function" />
+    </aura:method>
+</aura:component>

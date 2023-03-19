@@ -1,0 +1,147 @@
+<apex:page renderAs="pdf" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" standardController="Invoice__c" extensions="CroyezInvoicePDF" >
+    <html>
+        <head>
+            <style>
+                table {
+                }
+            </style>
+        </head>
+        <body>
+            <table border="1px solid black;" style="width: 100%;   padding-left: 0px;  border-collapse: collapse;">
+                <tr><td><div class="header" style="float:center; ">
+                    <apex:image url="{!$Resource.CroyezHeader}" width="700" height="100"/>
+                    </div > 
+                    <div  style="float:right; font-size:70%; padding-right: 50px;" >
+                        <b style="padding-right: 30px; margin-bottom: 20px;">INVOICE NO:</b> &nbsp;&nbsp;&nbsp; {!inoviceRec.Name}   <br/>
+                        <b  style="padding-right: 30px;">INVOICE DATE:</b>&nbsp;&nbsp; <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">  <apex:param value="{!inoviceRec.Due_Date__c}"  />  </apex:outputText>
+                    </div></td>
+                </tr>
+                <tr  >
+                    <td style="padding-left:300px; margin-bottom: -100px; font-size:170%; color:Navy;"  bgcolor="#DBE9FA"   ><b > RECEIPT</b> </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div Style= "float: left;  width: 50%; font-size:90%;" >
+                            <br/>
+                            <h5><b>{!customSettingRec.Name__c} </b> </h5>    
+                            {!customSettingRec.Address__c} <br/><br/>
+                            
+                            <br/><br/>
+                            <table style="width:100%;   font-size:90%;">
+                                <tr>
+                                    <th>Phone:</th>
+                                    <td>{!customSettingRec.Phone__c}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td>{!customSettingRec.Email__c}</td>
+                                </tr>
+                                <tr>
+                                    <th>Corporate Identity #: </th>
+                                    <td>{!customSettingRec.Corporate_Identity__c}</td>
+                                </tr>
+                                <tr>
+                                    <th>STIN #: </th>
+                                    <td>{!customSettingRec.GSTIN__c}</td>
+                                </tr>
+                                <tr>
+                                    <th>PAN #: </th>
+                                    <td>{!customSettingRec.PAN__c}</td>
+                                </tr>
+                            </table>
+                        </div >
+                        <div Style= "float: left;  width: 50%; font-size:90%; ">
+                            Buyers Information: <br/> 
+                            <h5><b>{!name}</b></h5>
+                            <b>Address:</b> {!address}
+                            <br/> <br/><br/><br/><br/><br/><br/>
+                            <table style="width:100%; height:90%; font-size:90%; padding-bottom: 20px;">
+                                <tr >
+                                    <th>Email:</th>
+                                    <td> <a href="{!email}">{!email}</a></td>
+                                </tr>
+                                <tr style="padding-bottom: 20px;">
+                                    <th >Phone:</th>
+                                    <td>{!phone}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div Style= "float: left;  width: 100%; font-size:90%; ">
+                            <table border="1px solid black;" style="width: 100%; height:500%; padding-left: 0px;  font-size:80%;  border-collapse: collapse;">         
+                                <tr style="background-color:#DBE9FA;color:Navy;"> 
+                                    <th  rowspan="2" align="center" >Description of Service</th>
+                                    <th  rowspan="2" align="center" >SAC <br/> Code</th>
+                                    <th  rowspan="2" align="center" >Taxable <br/> Value</th>  
+                                    <th  style="padding-left:4px;" colspan="2" align="center">CGST</th>              
+                                    <th style="padding-left:4px;" colspan="2" align="center">SGST</th>
+                                    <th rowspan="1" align="center">Total Amount Received</th>
+                                </tr>
+                                <tr style="background-color:#DBE9FA;">
+                                    <td style="padding-left:4px; color:Navy;">Rate</td>
+                                    <td style="padding-left:4px; color:Navy;">Amount</td>
+                                    <td style="padding-left:4px; color:Navy;">Rate</td>
+                                    <td style="padding-left:4px; color:Navy;">Amount</td>
+                                    <td>
+                                        <tr style= "background-color: transparen; ">
+                                            <td style="border: none; padding-bottom: 50px;" align="center">{!descriptionofservice}</td>
+                                            <td style="border: none; padding-bottom: 50px;" align="center">{!customSettingRec.Sac_Code__c}</td>
+                                            <td style="border: none; padding-bottom: 50px;" align="center">{!taxableAmount}</td>
+                                            <td style="border: none; padding-bottom: 50px;" align="center">{!customSettingRec.CGST_Rate__c}% </td>
+                                            <td style="border: none; padding-bottom: 50px;" align="center">{!CGST}</td>
+                                            <td style="border: none; padding-bottom: 50px;" align="center">{!customSettingRec.SGST_Rate__c}%</td>
+                                            <td style="border: none; padding-bottom: 50px;" align="center">{!SGST}</td>
+                                            <td style="border: none; padding-bottom: 50px;" align="center">{!amountInclusiveTaxes}</td>
+                                        </tr>
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <td  style="background-color:#DBE9FA; "  colspan="2" align="center"><b>Total</b></td> 
+                                    <td align="center">{!taxableAmount}</td>
+                                    <td> </td>
+                                    <td align="center">{!CGST} </td>
+                                    <td> </td>
+                                    <td align="center">{!SGST}</td>
+                                    <td align="center"><b>{!amountInclusiveTaxes}</b></td>
+                                </tr> 
+                                <br/>  
+                                <div  Style= "float: left;  width: 100%;">
+                                    <div Style= "float: left;  width: 50%; font-size:90%;" align="center">
+                                        <b >Total Payment Received (In words)</b> 
+                                    </div>
+                                    <div Style= "float: right;  width: 50%; font-size:90%;"  align="center">
+                                    Rupees &nbsp; {!amountInclusiveTaxesInWords}
+                                    </div>
+                                </div>
+                                <br/> <br/>  <br/> 
+                                <div  Style= "float: left;  width: 100%;">
+                                    <div Style= "float: left;  width: 50%; font-size:90%; margin-left:5px;"  >
+                                        <b >Questions?</b> <br/>
+                                        Email us at info@croyez.in
+                                    </div>
+                                    <div Style= "float: right;  width: 50%;"  align="center">
+                                        <apex:image url="{!$Resource.CroyezStampLogo}" width="100" height="100"/>
+                                    </div>
+                                </div>
+                                <br/> <br/>
+                                <div  Style= "float: left;  width: 100%; font-size:80%; padding-bottom: 20px;"  align="center">
+                                    This is computer generated receipt no signature required
+                                </div>
+                                <br/> <br/> <br/> <br/> <br/> <br/>
+                                <div  Style= "float: left;  width: 100%;">
+                                    <div  Style= "float: left;  width: 50%;" ></div>  
+                                    <div Style= "float: right;  width: 50%; padding-bottom: 20px; margin-right:5px;font-size:80%;" align="center" >
+                                        <apex:image url="{!$Resource.GmailLogo}" width="20" height="20"  />
+                                        <b  > Email:info@croyez.in</b> <br/>
+                                        <b style= "margin-left: 100px;" >Website:www.croyezimmigration.com</b>  
+                                        <!--  <a href="https://www.croyezimmigration.com/">Website:www.croyezimmigration.com</a>-->
+                                    </div >
+                                </div>
+                            </table>
+                        </div> 
+                    </td>
+                </tr>
+            </table>
+        </body>
+        
+    </html>
+</apex:page>

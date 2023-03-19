@@ -1,0 +1,100 @@
+<apex:page readOnly="true" applyHtmlTag="false" sidebar="false" showHeader="false" cache="true" docType="html-5.0" renderAs="pdf" controller="EvaluationScoreController">
+    <html>
+        <head>
+            <style type="text/css">
+                @page {
+                padding-left: 5px;    
+                padding-right: 5px;      
+                }
+                
+                table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+                }
+                
+                td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+                }
+                
+                tr:nth-child(even) {
+                background-color: #dddddd;
+                }
+            </style>
+        </head>
+        <body>
+            <div style = "text-align:center; font-size:18px;">
+                <b>Croyez Immigration</b>
+            </div><br/><br/>
+            <div style="font-size:15px">
+                
+                <table>
+                    <tr>
+                        <td>Name : </td>
+                        <td>{!ldDetails.Name}</td>
+                    </tr>
+                    <tr>
+                        <td>Phone : </td>
+                        <td>{!ldDetails.Phone}</td>
+                    </tr>
+                    <tr>
+                        <td>Email :</td>
+                        <td> {!ldDetails.Email}</td>
+                    </tr>
+                    <tr>
+                        <td>Job Title : </td>
+                        <td>{!ldDetails.Title_Job_Title__c}</td>
+                    </tr>
+                     <tr>
+                        <td>Job Title Score: </td>
+                        <td>{!ldDetails.Title_Job_Title_Score__c}</td>
+                    </tr>
+                    <tr>
+                        <td>Experience : </td>
+                        <td>{!ldDetails.Experience__c}</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>Experience Score: </td>
+                        <td>{!ldDetails.Experience_Score__c}</td>
+                        
+                    </tr>
+                     <tr>
+                        <td>Qualification : </td>
+                        <td>{!ldDetails.Qualification__c}</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>Qualification Score: </td>
+                        <td>{!ldDetails.Qualification_Score__c}</td>
+                        
+                    </tr>
+                     <tr>
+                        <td>ILETS Score : </td>
+                        <td>{!ldDetails.Ilets__c}</td>
+                    </tr>
+                    <tr>
+                        <td>Evaluation Score :  </td>
+                        <td>{!ldDetails.Evaluation_Score_V1__c}</td>
+                        
+                    </tr>
+                   
+                </table>
+                
+                <br/><br/>
+                <apex:outputpanel rendered="{!ldDetails.Evaluation_Score_V1__c >= 15}" > 
+                    <div style = "text-align:center; font-size:22px; color:green"> 
+                        <b>APPROVED</b>
+                    </div>
+                </apex:outputpanel>
+                <apex:outputpanel rendered="{!ldDetails.Evaluation_Score_V1__c < 15}" > 
+                    <div style = "text-align:center; font-size:22px; color:red"> 
+                        <b>REJECTED</b>
+                    </div>
+                </apex:outputpanel>
+            </div>
+        </body>
+    </html>
+</apex:page>

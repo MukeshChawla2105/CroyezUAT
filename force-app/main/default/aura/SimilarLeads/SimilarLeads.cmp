@@ -1,0 +1,87 @@
+<aura:component controller="SimilarLeadsHelper"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <!--Attribiute-->
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="leadListWithsimDomain" type="List" />
+    <aura:attribute name="showImage" type="boolean" default="false"/>
+    
+    <aura:attribute name="url" type="String" />
+    <!--Handler-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--Lightning Card-->
+    
+    <lightning:card >
+        <div style = "border-style: solid;margin :1%" >
+            <div style = "margin :1%" >
+                <aura:if  isTrue="{!v.leadListWithsimDomain.length > 0}">
+                    <div style="margin-bottom: 2%;margin-left: 4%;margin-top: 2%;">
+                        <lightning:button variant="destructive" disabled="true">Leads With Similar Domain ⬇️</lightning:button> 
+                        <br/>
+                    </div>
+                    <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid" aria-label="Example advanced table of Opportunities with cell focused">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="slds-text-title_caps" scope="col">
+                                    <div class="slds-truncate" title="lead Name">Name</div>
+                                </th>
+                                <th class="slds-text-title_caps" scope="col">
+                                    <div class="slds-truncate" title="lead CIN">Phone</div>
+                                </th>
+                                <th class="slds-text-title_caps" scope="col">
+                                    <div class="slds-truncate" title="Owner">Email</div>
+                                </th>
+                                <th class="slds-text-title_caps" scope="col">
+                                    <div class="slds-truncate" title="Rating">Enquired Visa</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{! v.leadListWithsimDomain }" var="lead">
+                                <tr>
+                                    <td>
+                                        <a target="_blank" href="{!$Site.CurrentSiteUrl+'/lightning/r/Lead/'+lead.Id+'/view'}" tabindex="-1">
+
+                                            <lightning:badge label="{!lead.Name}"/>
+                                        </a> 
+                                        
+                                    </td>
+                                    <td>
+                                        <b>
+                                            {!lead.Phone}
+                                        </b>
+                                    </td>
+                                    <td class="slds-cell_action-mode" role="gridcell">
+                                        <div class="slds-truncate" title="{!lead.Email}">
+                                            <a href="#" tabindex="0">{!lead.Email}</a>
+                                        </div>
+                                    </td>
+                                    <td> 
+                                        <b>
+                                            {!lead.Visa_Type__c}
+                                        </b> 
+                                    </td>
+                                </tr>	
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                    <aura:set attribute="else">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-8 LeftDiv">
+                                <img src="{!$Resource.company_logo}" alt="User avatar" class="center"/>
+                            </div>
+                            <div class="slds-col slds-size_6-of-8 LeftDiv">
+                                <div style="margin-top: 13%;margin-left: 4%;">
+                                    <b>
+                                        No Leads With Similar Domain .. 😊😊
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:set>
+                </aura:if> 
+            </div>
+        </div>
+    </lightning:card>
+    
+    
+    <br/>
+</aura:component>

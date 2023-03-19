@@ -1,0 +1,20 @@
+<aura:component controller="LeadCreationFormClass" access="global" >
+
+<aura:attribute name="UploadLabel" type="String" />
+<aura:attribute name="UploadAuraId" type="String" />
+<aura:attribute name="fileName" type="String" default="No File Selected.." />
+<aura:attribute name="childcmpauraId" type="String" />
+
+<aura:method name="childMessageMethod" action="{!c.getMessage}" access="public">
+    <aura:attribute name="message" type="String" default="default message" />
+    </aura:method>
+
+
+<aura:registerEvent name="cmpEvent" type="c:uploadDocEvent"/>
+
+<lightning:input aura:id="{!v.UploadAuraId}" onchange="{!c.handleFilesChange}" type="file" name="file"
+                label="{!v.UploadLabel}" multiple="false" required="true" />
+
+            <div class="slds-text-body_small slds-text-color_error">{!v.fileName} </div>
+
+</aura:component>

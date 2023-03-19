@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Lead_PDF_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Lead PDF Link</shortDescription>
+        <value>https://croyezimmigrationservicespvtltd--dev--c.sandbox.vf.force.com/apex/EvaluationScorePDF?id=</value>
+    </labels>
+</CustomLabels>

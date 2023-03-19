@@ -1,0 +1,59 @@
+<aura:component controller="LeadAssigningCompController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:actionOverride" access="global" >
+    
+    <!--currStep attribute will help in navigating  to different steps of progress indicator-->
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="firstComp" type="boolean" default="true"/>
+    <aura:attribute name="secondComp" type="boolean" default="false"/>
+    <aura:attribute name="thirdComp" type="boolean" default="false"/>
+    <aura:attribute name="scoreCardId" type="String"/>
+    <aura:attribute name="currStep" type="string" default="step1"/>
+    
+    <aura:attribute name="stepMap" type="Map" />
+    <aura:attribute name="scoreCardDetail" type="Object"/> 
+    <aura:attribute name="Exereclst" type="LeadAssigningCompController.WrapperExc[]" />
+    <aura:attribute name="WrappweicList" type="LeadAssigningCompController.WrapperExcWeight[]"/> 
+    <aura:handler value="{!this}" name="init" action="{!c.onComponentLoad}"/>
+    <ltng:require scripts="/resource/sweetalert2/sweetalert2.js"
+                  styles="/resource/sweetalert2/sweetalert2.min.css" />
+    
+    <br/>
+    
+    <lightning:progressIndicator currentStep="{!v.currStep}" type="base">
+      
+        <lightning:progressStep label="Step One" value="step1" onclick="{!c.changeStep}"/>
+        <lightning:progressStep label="Step Two" value="step2" onclick="{!c.changeStep}"/>
+      
+    </lightning:progressIndicator>
+    <br/>
+    
+    <aura:if isTrue="{!v.firstComp}">
+        <div class="leftMargin">
+            <c:LeadAssigning_details scoreCardDetail="{!v.scoreCardDetail}" aura:Id="scoreCardDet" recordId ="{!v.recordId}"/>
+        </div>
+    </aura:if>
+    <br/>
+    <aura:if isTrue="{!v.secondComp}">
+        <div class="leftMargin">
+            <c:Assignment_Execution_Criteria scoreCardDetail="{!v.scoreCardDetail}" scoreCardId="{!v.scoreCardId}" aura:Id="scoreCardExeCri" Exereclst ="{!v.Exereclst}" parentId ="{!v.recordId}" objectName="{!v.scoreCardDetail.relatedObject}"/>
+        </div>
+    </aura:if>
+    <br/>
+    
+    <br/>
+    <br/>
+    <div class="slds-docked-form-footer">
+        <aura:if isTrue="{!v.thirdComp}">  
+            <lightning:button label="Back" title="Click to Proceed Back" onclick="{!c.goBack}" variant="neutral" iconName="utility:back" iconPosition="left" />
+        </aura:if>
+        <aura:if isTrue="{!v.firstComp}">
+            <lightning:button label="Save &amp; Next" title="Click to Proceed Further" onclick="{!c.goForward}" variant="neutral" iconName="utility:forward" iconPosition="right" />
+        </aura:if>
+        <aura:if isTrue="{!v.currStep == 'step3'}">
+            <lightning:button label="Save" title="Click to Proceed Further" onclick="{!c.goForward}" variant="neutral" iconName="utility:forward" iconPosition="right" />
+        </aura:if>
+        <aura:if isTrue="{!v.currStep == 'step3'}">   
+            <lightning:button label="Cancel" title="Click to cancel" onclick="{!c.cancel}" variant="destructive" iconName="utility:close" iconPosition="right" />
+        </aura:if>
+    </div>
+    
+</aura:component>

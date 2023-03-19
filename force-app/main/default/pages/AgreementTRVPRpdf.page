@@ -1,0 +1,426 @@
+<apex:page renderAs="pdf" applyHtmlTag="false" applyBodyTag="false" showHeader="false" sidebar="false" standardController="lead" extensions="AgreementPDFClass">
+    <html>
+        <head>
+            <style>
+                 @page {
+                 background-image: url("{!URLFOR($Resource.CroyezPdfWaterMark)}")!important;
+                 background-size: 8in 8in!important !important;
+                  background-repeat : no-repeat !important;
+                  background-position : center !important;
+                 width: 100%;
+                size: 19.0cm 29.7cm !important ;
+                margin-top: 0cm !important;
+                margin-left: -2cm !important;
+                margin-right: -1cm !important;
+                margin-bottom: 0cm !important;
+                padding-left : 2cm !important
+                
+                }
+            </style>
+        </head>
+        <body  >
+            <div Style= "float: center;  width: 100%; font-size:90%;" >
+                   <apex:image url="{!$Resource.CroyezHeader}" width="900" height="100"/>
+            </div >
+            <div Style= "float: left;  width: 100%; font-size:70%; margin-top: 200px;  margin-left: 100px;">
+                Express Entry Process<br/><br/>
+               <h3 style="color:#2B65EC;font-size:90%">RETAINER AGREEMENT</h3>  <br/><br/>
+               <b>Mr.{!name}</b>  <br/><br/> 
+                {!leadRec.CreatedDate} <br/><br/>
+               M/s CROYEZ IMMIGRATION SERVICE PRIVATE LIMITED
+
+            </div>
+            <div Style= "float: right;  width: 100%;  " >
+                <div Style= "float: left;  width: 50%;  "></div>
+                <div Style= "float: right;  width: 50%; margin-right: -120px; " >
+                   <apex:image url="{!$Resource.CroyezLeaf}" width="200" height="200"/>
+            </div >
+            </div>
+              <div Style= "float: left;  width: 100%; font-size:90%; margin-top: 355px; " >
+                   <apex:image url="{!$Resource.CroyezFooter}" width="700" height="100"/>
+            </div >
+            
+            
+            <div Style= "float: left;  width: 100%; font-size:90%;" >
+                   <apex:image url="{!$Resource.CroyezHeader}" width="700" height="100"/>
+            </div > 
+            <div Style= "float: left;  width: 100%; font-size:90%; margin-top: 10px; ">
+                <h4 style="text-decoration: underline; text-align: center;">
+                    RETAINER AGREEMENT
+                </h4>
+            </div> 
+             <div Style= "float: left;  width: 100%; font-size:90%; margin-top: 10px; ">
+                <h5 style="  text-align: center;">
+                    Client File Number: {!leadRec.File_Number__c}
+                </h5>
+            </div>
+            <div Style= "float: right;  width: 100%; font-size:70%; line-height: 1.8;   margin-top: 5px; margin-right: -150px;">
+                This Retainer Agreement is made on DATE, {!leadRec.CreatedDate} betweenn Croyez Immigration Service Private Limited,<br/>
+                 , located at t No: 29, H.M Centre, 1st Floor, Nungambakkam High Rd, Chennai, Tamil Nadu 600034 and<br/>
+                Client Mr.{!name} (the “Client”), Residing at xxx xxx xx xx India. WHEREAS Croyez immigration and the Client <br/>
+                wish to enter into a written agreement which contains the agreed upon terms and conditions upon which the <br/>
+                CROYEZ will provide services to the Client.
+                <br/>  <br/>  
+                IN CONSIDERATION of the mutual covenants contained in this Agreement, the parties agree as follows:
+                <br/>  <br/>  
+                <b style="color:#2B65EC;font-size:90%">1. CROYEZ Responsibilities and Commitments</b><br/>
+                The Client asked CROYEZ, and CROYEZ with the guidance of RCIC has agreed to act for the Client in the matter<br/>
+                of Application for a Temporary Resident Visa followed by Permanent Resident Visa.<br/>
+                In consideration of the fees paid and the matter stated above, the CROYEZ agrees to do the following
+                <br/><br/>
+                <b style="color:red;font-size:100%">Prior to Application Submissio</b><br/>
+                <li>&nbsp;&nbsp;&nbsp;Assess client’s eligibility for particular Visa application</li>
+                <li>&nbsp;&nbsp;&nbsp;Assess Financial Status, Credibility and net assets of the client</li>
+                <li>&nbsp;&nbsp;&nbsp; Assess the scope of expansion into foreign market of client</li>
+                 <li>&nbsp;&nbsp;&nbsp;Instruct client about steps to be taken for application</li>
+                <li>&nbsp;&nbsp;&nbsp;Provide client with a checklist of information and documents required in support of application</li>
+                <li>&nbsp;&nbsp;&nbsp;Review and analyze documents received in support of clients’ education and training, work experience,<br/>
+                    &nbsp;&nbsp; business and civil status</li>
+                 <li>&nbsp;&nbsp;&nbsp;Advise the client whether additional evidence is required</li>
+                <li>&nbsp;&nbsp;&nbsp;Act in the best interests of the client within the limits of Canadian law</li>
+                <li>&nbsp;&nbsp;&nbsp;Educate the client regarding the information and documents required for the preparation of the client’s<br/>
+                  &nbsp;&nbsp; application</li>
+             </div>
+             <div Style= "float: left;  width: 100%; font-size:90%; margin-top: 260px; " >
+                   <apex:image url="{!$Resource.CroyezFooter1}" width="700" height="100"/>
+            </div >
+            
+            
+            
+            <div Style= "float: left;  width: 100%; font-size:90%;" >
+                 <apex:image url="{!$Resource.CroyezHeader}" width="700" height="100"/>
+            </div >
+            <div Style= "float: right;  width: 100%; font-size:70%; line-height: 1.8;   margin-top: 5px; margin-right: -150px;">
+                <li>&nbsp;&nbsp;&nbsp;Guide the client through the process of obtaining medical and security clearances when required, review all<br/>
+                 &nbsp;&nbsp;  documents to ensure consistency and accuracy. Complete the application forms to ensure that they best<br/>
+                &nbsp;&nbsp;    show the candidate’s qualifications</li>
+                <li>&nbsp;&nbsp;&nbsp;Prepare a detailed cover letter, addressed to the appropriate IRCC Visa Office, outlining the clients’<br/>
+                   &nbsp;&nbsp; qualifications and supporting the client’s candidacy for a Business Visitor Visa.</li>
+                <li>&nbsp;&nbsp;&nbsp;Cross-check documents against application forms to ensure consistency, conduct final review of the client’s<br/>
+                    &nbsp;&nbsp;application and related documents</li>
+                <li>&nbsp;&nbsp;&nbsp;Get Admission from the Canadian University/College and guide client to gather all required documents to<br/>
+                   &nbsp;&nbsp; Submit Study Permit application</li>
+                <br/>
+                <b style="color:red;font-size:100%">Application Submission</b><br/>
+                <li>&nbsp;&nbsp;&nbsp;Submit the client’s application package to the concerned IRCC Office and verify it has been received.</li>
+                <li>&nbsp;&nbsp;&nbsp;Provide the client with her Application file number (a letter issued by the IRCC Office)</li>
+                <br/>
+                <b style="color:red;font-size:100%">Post Application Submission</b><br/>
+                <li>&nbsp;&nbsp;&nbsp;Track the client’s file through the application process so as to facilitate the issuance of the Visa in a timely<br/>
+                   &nbsp;&nbsp; fashion</li>
+                <li>&nbsp;&nbsp;&nbsp;Appraise the client on the progress of the application</li>
+                <li>&nbsp;&nbsp;&nbsp;Keep the client updated on any progress on the client’s case and respond to all reasonable requests from<br/>
+                   &nbsp;&nbsp; and/or on behalf of the clien</li>
+                <li>&nbsp;&nbsp;&nbsp;Liaison between the IRCC and the client</li>
+                <li>&nbsp;&nbsp;&nbsp;Intervene with Canada’s authorities in the event of any problems related to the processing of the application</li>
+                <li>&nbsp;&nbsp;&nbsp;Handle all correspondence with IRCC on the client’s behalf in respect to the client application</li>
+                <li>&nbsp;&nbsp;&nbsp;Make additional written and/or oral representation to the IRCC Office and/or to the other related Canadian<br/>
+                   &nbsp;&nbsp; Government agencies, as necessary</li>
+                <li>&nbsp;&nbsp;&nbsp;Perform all duties on behalf of the client competently and in a professional and timely manner</li>
+                <li>&nbsp;&nbsp;&nbsp;Manage the application process to ensure all the COVID protocol is being followed</li>
+            </div>
+             
+             <div Style= "float: left;  width: 100%; font-size:90%; margin-top: 290px; " >
+           
+                  <apex:image url="{!$Resource.CroyezFooter1}" width="700" height="100"/>
+            </div >
+            
+            
+            
+            
+             <div Style= "float: left;  width: 100%; font-size:90%;" >
+                
+                  <apex:image url="{!$Resource.CroyezHeader}" width="700" height="100"/>
+            </div >
+            <div Style= "float: right;  width: 100%; font-size:70%; line-height: 1.8;   margin-top: 5px; margin-right: -150px;">
+                <b style="color:red;font-size:100%">Selection Interview</b><br/>
+                <li>&nbsp;&nbsp;&nbsp;Prepare the client in advance for mandatory selection Interview with an IRCC Officer.</li>
+                <li>&nbsp;&nbsp;&nbsp;Make resources available to the client, prior to the selection interview to better the chances of approval.</li>
+                <b style="color:red;font-size:100%">Post landing services:</b><br/>
+                &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;Croyez Immigration assures you that you will feel the presence of your homeland in your new country.<br/>
+                Immigration procedure to a country is just 30% of the entire process. We take care of the remaining 70%<br/> 
+                through our extensive service on settlement and placement services, which will help you to inhabit in Canada.<br/>
+                We will never let you fell the discomfit once you land in the country of your choice.<br/><br/>
+                <li>&nbsp;&nbsp;Pre Landing Guidance</li>
+                <li>&nbsp;&nbsp;Airport pickup</li>
+                <li>&nbsp;&nbsp;Accommodation</li>
+                <li>&nbsp;&nbsp;Social insurance number(SIN)</li>
+                <li>&nbsp;&nbsp;Bank Accounts</li>
+                <li>&nbsp;&nbsp;Job assistance</li>
+                <li>&nbsp;&nbsp;Transportation Facilities</li>
+                <li>&nbsp;&nbsp;Assist you in applying Canada child tax benefit(CCTB)</li>
+                <li>&nbsp;&nbsp;Health card</li>
+                <li>&nbsp;&nbsp;Educational Guidance</li>
+                <br/> <br/>
+                <i style="color:red;font-size:100%; margin-left: -50px;">Services Included:</i><br/> 
+                <br/>  
+                <b style="color:#2B65EC;font-size:100%; margin-left: -50px;">STUDY Permit :</b><br/> 
+                The study permit is a document issued by IRCC that allows foreign nationals to study at designated learning<br/>
+                institutions (DLIs) in Canada
+                <br/><br/>
+                <b style="color:#2B65EC;font-size:100%; margin-left: -50px;">PGWP :</b><br/>
+                The Post-Graduation Work Permit Program (PGWPP) allows students who have graduated from eligible<br/>
+                Canadian designated learning institutions (DLIs) to obtain an open work permit to gain valuable Canadian<br/>
+                work experience.
+             </div>
+            <div Style= "float: left;  width: 100%; font-size:90%; margin-top: 230px; " >
+                   <apex:image url="{!$Resource.CroyezFooter1}" width="700" height="100"/>
+            </div >
+            
+            
+            
+             <div Style= "float: left;  width: 100%; font-size:90%;" >
+                   <apex:image url="{!$Resource.CroyezHeader}" width="700" height="100"/>
+            </div >
+            <div Style= "float: right;  width: 100%; font-size:70%; line-height: 1.8;   margin-top: 5px; margin-right: -150px;">
+                <b style="color:#2B65EC	;font-size:100%; margin-left: -50px;">SOWP :</b><br/>
+                &nbsp;&nbsp;The Spousal Open Work Permit (SOWP) specifically provides inland sponsorship applicants with the<br/>
+               &nbsp;&nbsp; opportunity to work while their immigration application is processing<br/>
+                <b style="color:#2B65EC;font-size:100%; margin-left: -50px;">PGWP :</b><br/>
+                &nbsp;&nbsp;Permanent residency (PR) in Canada is a status granting someone who is not a Canadian citizen the right to<br/>
+                &nbsp;&nbsp;live and work in Canada without any time limit on their stay.<br/>
+                 <b style="color:#2B65EC;font-size:100%; margin-left: -50px;">BOWP:</b><br/>
+                &nbsp;&nbsp;The Bridging Open Work Permit (BOWP) allows foreign nationals who are currently working in Canada to<br/>
+               &nbsp;&nbsp; extend their status while awaiting a decision on their permanent residency application.<br/>
+                <b style="color:#2B65EC;font-size:100%; margin-left: -50px;">OSP:</b><br/>
+                &nbsp;&nbsp;A person will be qualified to apply for an open study permit only if the foreign national is a family member<br/>
+               &nbsp;&nbsp; who has also availed a valid study or work permit.<br/>
+                <b style="color:#2B65EC;font-size:100%; margin-left: -50px;">Super visa:</b><br/>
+                &nbsp;&nbsp;The parents and grandparents of a Canadian citizen or permanent resident of Canada is eligible to apply for a<br/>
+                &nbsp;&nbsp; Super Visa.<br/>
+                 <b style="color:#2B65EC;font-size:90%">2. Client Responsibilities and Commitments</b><br/>
+                The Client must provide, upon request from the CROYEZ:  <br/>      
+                <li>&nbsp;&nbsp;&nbsp;All necessary documentation</li>
+                <li>&nbsp;&nbsp;&nbsp;All documentation in English or French, or with an English or French translation</li>
+                The Client understands that he/she must be accurate and honest in the information he/she provides and that any <br/>  
+                misrepresentations or omissions may void this Agreement, or seriously affect the outcome of the application or the <br/>  
+                retention of any immigration status he/she may obtain. The RCIC’s obligations under the Retainer Agreement are <br/>  
+                null and void if the Client knowingly provides any inaccurate, misleading or false material information. The Client’s <br/>  
+                financial obligations remain. <br/>  
+                In the event Immigration, Refugees and Citizenship Canada (IRCC) or Employment and Social Development Canada <br/>  
+                (ESDC) or Provincial Government Administrator or processing Visa Office should contact the Client directly, the <br/>  
+                Client is instructed to notify the RCIC immediately
+             </div>
+             <div Style= "float: left;  width: 100%; font-size:90%; margin-top: 340px; " >
+                   <apex:image url="{!$Resource.CroyezFooter1}" width="700" height="100"/>
+            </div >
+            
+            
+            <div Style= "float: left;  width: 100%; font-size:90%;" >
+                <apex:image url="{!$Resource.CroyezHeader}" width="700" height="100"/>
+            </div >
+            <div Style= "float: right;  width: 100%; font-size:70%; line-height: 1.8;   margin-top: 5px; margin-right: -150px;">
+                The Client is to immediately advise the RCIC of any change in the marital, family, or civil status or change of<br/>
+                physical address or contact information for any person included in the application.<br/>
+                In the event of a Joint Retainer Agreement, the Clients agree that the CROYEZ must share information among all<br/>
+                clients, as required. Furthermore, if a conflict develops that cannot be resolved, the CROYEZ cannot continue to act<br/>
+                for both or all of the Clients. <br/> <br/> 
+                
+                <b style="color:#2B65EC;font-size:90%">3. Billing Method</b><br/>
+                Flat fee payment of Immigration consulting and representation fee. Details are listed in point 5 payment schedule.<br/><br/>
+                <b style="color:#2B65EC;font-size:90%">4. Payment Terms and Conditions</b><br/><br/>
+                <div Style= "float: right;  width: 100%; line-height: 1.2;">
+                    <table border="1px solid black;" style="width: 75%;  padding-left: 0px; margin-left:-40px;  font-size:100%;  border-collapse: collapse;">
+                        <tr  style="color:#FFFFFF;" ><td style="  padding-left:10px; font-size:120%;" bgcolor="#1974D2"><b>PROCESS:</b></td></tr>
+                        <tr><th style="  padding-left:10px;" bgcolor="#DBE9FA"> <span><b>Professional fees :</b>  </span>  <span style=" padding-left: 210px;"> INR {!fee}</span>   </th></tr>  
+                        <tr><td style="  padding-left:10px;"><b>Other[e.g., Disbursements, ECA,</b> <span style=" padding-left: 140px;">Payable directly to provider</span> <br/><b>IELTS...Etc.</b> </td></tr>
+                        <tr><td style="  padding-left:10px;" bgcolor="#DBE9FA"><b>Visa application fee </b>  <span style=" padding-left: 205px;">CAD 200per application<br/><sapn style=" padding-left: 300px;">"Indian government levy included"</sapn></span>
+                             </td></tr>  
+                        <tr><td style="  padding-left:10px;"><b>Other [Disbursements: Police clearance,</b> <span style=" padding-left: 110px;">Payable directly to provider</span><br/><b>Medical Examination, Finger printing, Etc.]</b>   </td></tr>
+                        <tr><td style="  padding-left:10px;" bgcolor="#DBE9FA"> <span><b>Bio-metrics</b>  </span>  <span style=" padding-left: 245px;">CAD 85per application</span>   </td></tr>  
+                        <tr><td style="  padding-left:10px;"><b>Canadian Federal Government Fees</b> <span style=" padding-left: 130px;">CAD 1365per adult and CAD 230 per child.<br/> <span style=" padding-left: 300px;">"Indian government levy included"</span> </span>    </td></tr>
+
+                    </table>
+                </div>
+                
+                <br/><br/><br/><br/><br/><br/><br/><br/> <br/> 
+                
+                
+                The above amount is to be paid by the Client and is subject to change upon agreement of both parties.<br/><br/>
+                 <b style="color:#2B65EC;font-size:90%">5. Payment Schedule:</b><br/> 
+                <i style="color:red;font-size:100%; margin-left: 0px;">Process:</i><br/>
+                <span style="color:red;">Due and fully earned once paid and this agreement is signed</span><br/><br/>
+                 <span style="color:#0020C2	;">Immigration Consultation and representation service fee, full one payment of INR xxx.</span>
+   
+                
+            </div>
+            <div Style= "float: left;  width: 100%; font-size:90%; margin-top: 360px; " >
+                   <apex:image url="{!$Resource.CroyezFooter1}" width="700" height="100"/>
+            </div >
+            
+            
+            
+            <div Style= "float: left;  width: 100%; font-size:90%;" >
+                <apex:image url="{!$Resource.CroyezHeader}" width="700" height="100"/>
+            </div >
+            <div Style= "float: right;  width: 100%; font-size:70%; line-height: 1.8;   margin-top: 5px; margin-right: -120px;">
+                <b style="color:#2B65EC;font-size:90%">6. Refund Policy</b><br/> 
+                The Client acknowledges that the granting of a visa or status and the time required for processing this application is<br/>
+                at the sole discretion of the government and not the Croyez. Furthermore, the Client acknowledges that fees are not<br/>
+                refundable in the event of an application refusal. The Client agrees that the fees paid are for services indicated above,<br/>
+                and any refund is strictly limited to the amount of Professional fees paid.<br/>  
+                1. In the event of no ITA received in one year you would be given the following options:<br/>
+                <li style="list-style-type: square;"> &nbsp;&nbsp;&nbsp;Resubmit the application in pool as per the terms and conditions applicable at that time as per the <br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; terms and conditions of this service agreement</li>
+                2.&nbsp;&nbsp;&nbsp;&nbsp; A refund of 50% is possible on the following grounds, and is confined to these grounds only: Occupation<br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; capped immediately i.e., in less than 60 days period after ITA and before making an application to CIC<br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; provided the delay is not from the clients end. Please note that the company has set the service cost on the<br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; basis of the work, effort, process and stages involved to make the application. Refund requests are<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;applicable and considered only when services costs are paid in full by the time of raising refund requests.<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Applicants are not entitled for raising any request in case of some balance amount is due in processing fee at<br/>
+              &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; the same time formats shared and documentation is in process <br/>
+                
+                Client fully understands that Immigration consulting and representation Fee paid is NOT refundable, including in<br/>
+                following situations:<br/>
+                  <li style="list-style-type: square;">&nbsp;&nbsp;&nbsp;Security Risk.</li>
+                 <li style="list-style-type: square;">&nbsp;&nbsp;&nbsp;Medical Inadmissibility.</li>
+                 <li style="list-style-type: square;">&nbsp;&nbsp;&nbsp;Criminal Record</li>
+                 <li style="list-style-type: square;">&nbsp;&nbsp;&nbsp;False declaration, false documentation, misrepresentation or failure to provide adequate documentation.</li>
+                 <li style="list-style-type: square;">&nbsp;&nbsp;&nbsp;Withdrawal from this contract for any reasons( including personal or non- confession reasons)</li>
+                 <li style="list-style-type: square;">&nbsp;&nbsp;&nbsp;If he/she declares that he/she has no intention of residing in Canada. </li>
+                 <li style="list-style-type: square;">&nbsp;&nbsp;&nbsp;Inadequate performance at the interview stage</li>
+                <li style="list-style-type: square;">&nbsp;&nbsp;&nbsp;Failure to proceed to Canada after a visa is issued due to circumstances within or beyond his/her<br/>
+                    &nbsp;&nbsp;&nbsp;control.</li>
+                 <li style="list-style-type: square;">&nbsp;&nbsp;&nbsp;Inadequate levels of IELTS or French Testing scores as required by Counsel for the application. </li>
+                 <li style="list-style-type: square;">&nbsp;&nbsp;&nbsp;Failure to convince the immigration officer at interview level.</li>
+                 <li style="list-style-type: square;">&nbsp;&nbsp;&nbsp;Failure to provide updated address for correspondence.</li>
+                 <li style="list-style-type: square;">&nbsp;&nbsp;&nbsp;Negative Education Credential assessment (ECA) by a Government designated organization. </li>
+                 <li style="list-style-type: square;">&nbsp;&nbsp;&nbsp;Failure to provide changes in family composition before or while the application is in process. </li>
+                 <li style="list-style-type: square;">&nbsp;&nbsp;&nbsp;Failure to provide changes in family composition before or while the application is in process. </li>
+             </div>
+             <div Style= "float: left;  width: 100%; font-size:90%; margin-top:210px; " >
+                   <apex:image url="{!$Resource.CroyezFooter1}" width="700" height="100"/>
+            </div >
+            
+             
+            <div Style= "float: left;  width: 100%; font-size:90%;" >
+                <apex:image url="{!$Resource.CroyezHeader}" width="700" height="100"/>
+            </div >
+            <div Style= "float: right;  width: 100%; font-size:70%; line-height: 1.8;   margin-top: 5px; margin-right: -120px;">
+                Clients understand that in the event of refusal of application, can opt for an administrative Review of the decision of<br/>
+                Immigration Department if available, then any such fees / expenses related to filing of Administrative review will be<br/>
+                additional &amp; will be paid by the client in full, before filing such review.<br/><br/>
+                Clients understand that between the period of signing this Retainer Agreement and submission of documents to the<br/>
+                relevant office, should there be any change in Regulation or Requirements of Immigration, liable to be reassessed for<br/>
+                eligibility and liable to meet the documentation requirements.<br/><br/>
+                <b>  Note: Government has not declared any standard minimum score required in ranking system , there is no<br/>
+                    mechanism to know or guess which candidate in pool (even with very low ranking score) will be lucky enough<br/>
+                    to get valid " Job offer" from Government's managed Job Bank employer(s) in future and get immediate ITA</b><br/><br/>
+                <b style="color:#2B65EC;font-size:90%">7. Dispute Resolution Related to the Code of Professional Ethicsy</b><br/>
+                In the event of a dispute related to the Code of Professional Ethics, the Client may make a complaint, in writing, to<br/><br/>
+                  <i style="color:red;font-size:100%;  ">ICCRC Contact Information:</i><br/> 
+                Immigration Consultants of Canada Regulatory Council (ICCRC)<br/> 
+                5500 North Service Rd., Suite 1002<br/> 
+                Burlington ON L7L 6W6<br/> 
+                Toll free: 1-877-836-7543<br/> <br/>  
+               <b style="color:#2B65EC;font-size:90%;">8. Confidentiality</b><br/><br/>
+                All information and documentation reviewed by the Croyez, required by IRCC and all other governing bodies, and<br/>
+                used for the preparation of the application will not be divulged to any third party, other than agents and employees,<br/>
+                without prior consent, except as demanded by law. The Croyez, and all agents and employees of the Croyez, are<br/>
+                also bound by the confidentiality requirement Code of Professional Ethics.<br/>
+                The Client agrees to the use of electronic communication and storage of confidential information. CROYEZ will use<br/>
+                its best efforts to maintain a high degree of security for electronic communication and information storage<br/>
+            </div>
+            <div Style= "float: left;  width: 100%; font-size:90%; margin-top:325px; " >
+                <apex:image url="{!$Resource.CroyezFooter1}" width="700" height="100"/>
+            </div >
+            
+            
+            
+             <div Style= "float: left;  width: 100%; font-size:90%;" >
+                 <apex:image url="{!$Resource.CroyezHeader}" width="700" height="100"/>
+            </div >
+            <div  Style= "float: right;  width: 100%; font-size:70%; line-height: 1.8;   margin-top: 5px; margin-right: -120px;">
+                <b style="color:#2B65EC;font-size:90%;">9. Termination</b><br/><br/>
+                This Agreement is considered terminated upon completion of tasks identified under section 2 of this agreement.<br/>
+                This Agreement is considered terminated if material changes occur to the Client’s application or eligibility, which<br/>
+                make it impossible to proceed with services detailed in section 2 of this Agreement.<br/>
+                This Agreement may be terminated, upon writing, by the Client, at which time any outstanding fees or<br/>
+                Disbursements will be refunded by CROYEZ to the Client/any outstanding fees or Disbursements will be remitted by<br/>
+                the Client to the CROYEZ.<br/><br/>
+                <b style="color:#2B65EC;font-size:90%;">10. Force Majeure</b><br/>
+                The Croyez and CROYEZ failure to perform any term of this Retainer Agreement, as a result of conditions beyond<br/>
+                their control such as, but not limited to, governmental restrictions or subsequent legislation, war, strikes, or acts of<br/>
+                God, shall not be deemed a breach of this Agreement.<br/><br/>
+                <b style="color:#2B65EC;font-size:90%;">11. Change Policy</b><br/>
+                The Client acknowledges that if the Croyez is asked to act on the Client’s behalf on matters other than those outlined<br/>
+                above in this Agreement, or because of a material change in the Client’s circumstances, or because of material facts<br/>
+                not disclosed at the outset of the application, or because of a change in government legislation regarding the<br/>
+                processing of immigration or citizenship-related applications, the Agreement can be modified accordingly.<br/><br/>
+                <b style="color:#2B65EC;font-size:90%;">12. Governing Law</b><br/>
+                This Agreement shall be governed by the laws in effect in the Ontario, Canada and the federal laws of Canada<br/>
+                applicable therein and except for disputes pursuant to Section 8 hereof, any dispute with respect to the terms of<br/>
+                this Agreement shall be decided by a court of competent jurisdiction within the Province/Territory of Chennai,<br/>
+                Tamil Nadu, India.<br/>
+                In addition should be governed by the laws in effect in the province/Territory of Ontario and Federal Laws of<br/>
+                Canada applicable therein. 
+             </div>
+            <div Style= "float: left;  width: 100%; font-size:90%; margin-top:365px; " >
+                <apex:image url="{!$Resource.CroyezFooter1}" width="700" height="100"/>
+            </div >
+            
+            
+             <div Style= "float: left;  width: 100%; font-size:90%;" >
+                 <apex:image url="{!$Resource.CroyezHeader}" width="700" height="100"/>
+            </div >
+            <div Style= "float: right;  width: 100%; font-size:70%; line-height: 1.8;   margin-top: 5px; margin-right: -120px;">
+                <b style="color:#2B65EC;font-size:90%;">13. Discharge or Withdrawal of Representation</b><br/> 
+                The Client may discharge representation and terminate this Agreement, upon writing, at which time any outstanding<br/> 
+                fees or Disbursements will be refunded by the CROYEZ to the Client/any outstanding fees or Disbursements will be<br/> 
+                remitted by the Client to the CROYEZ<br/> 
+                Pursuant to Article 11 of the Code of Professional Ethics, the CROYEZ may withdraw representation and<br/> 
+                terminate this Agreement, upon writing, provided withdrawal does not cause prejudice to the Client, at which<br/> 
+                time any outstanding fees or Disbursements will be refunded by the CROYEZ to the Client/any outstanding fees<br/> 
+                or Disbursements will be remitted by the Client to the CROYEZ.<br/> <br/> 
+                <b style="color:#2B65EC;font-size:90%;">14. Miscellaneous</b><br/>
+                This Agreement constitutes the entire agreement between the parties with respect to the subject matter hereof and<br/>
+                supersedes all prior agreements, understandings, warranties, representations, negotiations and discussions, whether<br/>
+                oral or written, of the parties except as specifically set forth herein.<br/><br/>
+                This Agreement shall be binding upon the parties hereto and their respective heirs, administrators, successors and<br/>
+                permitted assigns.<br/><br/>
+                This Agreement may only be altered or amended when such changes are made in writing and executed by
+                the parties hereto.<br/>
+                The provisions of this Agreement shall be deemed severable. If any provision of this Agreement shall be held<br/>
+                unenforceable by any court of competent jurisdiction, such provision shall be severed from this Agreement, and the<br/>
+                remaining provisions shall remain in full force and effect.<br/>
+                The headings utilized in this Agreement are for convenience only and are not to be construed in any way as<br/>
+                additions to or limitations of the covenants and agreements contained in this Agreement.<br/><br/>
+                Each of the parties hereto shall do and execute or cause to be done or executed all such further and other things,<br/>
+                acts, deeds, documents and assurances as may be necessary or reasonably required to carry out the intent and<br/>
+                purpose of this Agreement fully and effectively
+            </div>
+            <div Style= "float: left;  width: 100%; font-size:90%; margin-top:365px; " >
+                <apex:image url="{!$Resource.CroyezFooter1}" width="700" height="100"/>
+            </div >
+            
+            
+            <div Style= "float: left;  width: 100%; font-size:90%;" >
+                <apex:image url="{!$Resource.CroyezHeader}" width="700" height="100"/>
+            </div  >
+            <div Style= "float: right;  width: 100%; font-size:70%; line-height: 1.8;   margin-top: 5px; margin-right: -120px;">
+                The Client acknowledges that he/she has had sufficient time to review this Agreement and has been given an<br/>
+                opportunity to obtain independent legal advice and translation prior to the execution and delivery of this<br/>
+                Agreement. In the event the Client did not seek independent legal advice prior to signing this Agreement, he/she<br/>
+                did so voluntarily without any undue pressure and agrees that the failure to obtain independent legal advice shall<br/>
+                not be used as a defense to the enforcement of obligations created by this Agreement. Furthermore, the Client<br/>
+                acknowledges that he/she has received a copy of this Agreement and agrees to be bound by its terms.<br/><br/>
+                <b style="color:#2B65EC;font-size:90%;">15. Contact Information</b><br/><br/>
+                <h4 style="color:red;">CLIENT/DESIGNATE</h4><br/> 
+                Given Name  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Mr.{!name}<br/> 
+                Address No  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {!address}<br/> <br/>
+                Mobile Number   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  :{!phone}<br/> 
+                E-mail address &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; :{!email}<br/>  
+                <h4 style="color:red;">CROYEZ IMMIGRATION SERVICE PRIVATE LIMITEDE</h4><br/>  
+                Address:  <b>Croyez Immigration Service Private Limited</b><br/> <br/> 
+                E-mail address:<a href="https://Support@croyez.in">Support@croyez.in</a> <br/>
+
+                IN WITNESS WHEREOF this Agreement has been duly executed by the parties hereto on the date first above<br/> 
+                written
+            </div>
+            <div Style= "float: left;  width: 100%; font-size:90%; margin-top:385px; " >
+                <apex:image url="{!$Resource.CroyezFooter1}" width="700" height="100"/>
+            </div >
+            
+        </body>
+    </html>
+</apex:page>

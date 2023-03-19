@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Matching_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Matching Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>--None--</fullName>
+                <default>false</default>
+                <label>--None--</label>
+            </value>
+            <value>
+                <fullName>&lt;</fullName>
+                <default>false</default>
+                <label>&lt;</label>
+            </value>
+            <value>
+                <fullName>&gt;</fullName>
+                <default>false</default>
+                <label>&gt;</label>
+            </value>
+            <value>
+                <fullName>&lt;=</fullName>
+                <default>false</default>
+                <label>&lt;=</label>
+            </value>
+            <value>
+                <fullName>&gt;=</fullName>
+                <default>false</default>
+                <label>&gt;=</label>
+            </value>
+            <value>
+                <fullName>==</fullName>
+                <default>false</default>
+                <label>==</label>
+            </value>
+            <value>
+                <fullName>!=</fullName>
+                <default>false</default>
+                <label>!=</label>
+            </value>
+            <value>
+                <fullName>BETWEEN</fullName>
+                <default>false</default>
+                <label>BETWEEN</label>
+            </value>
+            <value>
+                <fullName>CONTAINS</fullName>
+                <default>false</default>
+                <label>CONTAINS</label>
+            </value>
+            <value>
+                <fullName>DOES NOT CONTAIN</fullName>
+                <default>false</default>
+                <label>DOES NOT CONTAIN</label>
+            </value>
+            <value>
+                <fullName>IN</fullName>
+                <default>false</default>
+                <label>IN</label>
+            </value>
+            <value>
+                <fullName>NOT IN</fullName>
+                <default>false</default>
+                <label>NOT IN</label>
+            </value>
+            <value>
+                <fullName>ENDS WITH</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ENDS WITH</label>
+            </value>
+            <value>
+                <fullName>STARTS WITH</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>STARTS WITH</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

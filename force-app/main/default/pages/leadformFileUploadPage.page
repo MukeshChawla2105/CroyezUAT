@@ -1,0 +1,22 @@
+<apex:page showHeader="false" sidebar="false">
+
+<apex:includeLightning />
+<apex:includeScript value="/lightning/lightning.out.js" />
+<div id="lightningapp" />
+<script>
+    debugger;
+    var LeadRecId = "{!$CurrentPage.parameters.id}";
+
+    $Lightning.use("c:LeadCreationFormAppForVFPage", function () {
+            $Lightning.createComponent("c:LeadCreationForm",
+                { "LeadrecordId": LeadRecId},
+                "lightningapp",
+                function (cmp) {
+                    console.log("Customer Detail is loaded in Vf page");
+                    // do some stuff
+                }
+            );
+        });
+</script>
+    
+</apex:page>

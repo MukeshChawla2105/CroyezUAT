@@ -1,0 +1,186 @@
+<aura:component controller= "CallDispositionHelper" implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" >
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>   
+    <aura:attribute name="callStatus" type="List" />
+    <aura:attribute name="callSubStatus" type="List" />
+    <aura:attribute name="notAnswered" type="List" /> 
+    <aura:attribute name="notAnsReasons" type="List" />
+    <aura:attribute name="disqualifiedReasons" type="List" />
+    <aura:attribute name="demoStatus" type="List" />
+    <aura:attribute name="demoConfirmation" type="List" />
+    <aura:attribute name="tempSubStatus" type="List" />
+    <aura:attribute name="leadRecord" type="Lead" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="notIntRemark" type="string" default= "Not Interested"/>
+    <aura:attribute name="disqualifiedRemark" type="string" default= "Disqualified"/>
+    <aura:attribute name="answeredStatus" type="List" /> 
+    
+    <aura:attribute name="subStatusAsFollowUp" type="boolean" default="false"/>
+    
+    <!--Component Start-->
+    <aura:html tag="style">
+        .slds-p-around–medium {
+        padding: 0rem !important;
+        }
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+    </aura:html>
+    
+    <div class="modal-header slds-modal__header slds-size_1-of-1">
+        <h2 class="title slds-text-heading–medium">Call Disposition</h2>
+    </div><br/>
+    
+    <lightning:select name="callStatus" label="Select a Call Status:" aura:id="select" onchange="{!c.changeSubStatusValues}" value="{!v.leadRecord.Call_Status__c}">
+        <option value="">--None--</option>
+        <aura:iteration items="{!v.callStatus}" var="option">
+            <option text="{!option}" value="{!option}"  />
+        </aura:iteration>
+    </lightning:select>
+    <br/>
+    
+    
+    <!--CHANGES-->
+    
+    <aura:if isTrue="{!v.leadRecord.Call_Status__c == 'Answered'}">
+        <lightning:select name="tempSubStatus" label="Select Call Sub Status:" value="{!v.leadRecord.Answered_Status__c}" onchange="{!c.onCallSubStatusChange}">
+            <option value="">--None--</option>
+            <aura:iteration items="{!v.tempSubStatus}" var="option">
+                <option text="{!option}" value="{!option}" />
+            </aura:iteration>
+        </lightning:select> <br/>
+        <aura:if isTrue="{!v.leadRecord.Answered_Status__c == 'Interested'}">
+            <lightning:textarea name="input1" label="Answered Remarks : " value="{!v.leadRecord.Answered_Remark__c}" />
+        </aura:if>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.leadRecord.Call_Status__c == 'Not Answered'}">
+        <lightning:select name="notAnswered" label="Select Call Sub Status:" value="{!v.leadRecord.Not_Answered__c}">
+            <option value="">--None--</option>
+            <aura:iteration items="{!v.notAnswered}" var="option">
+                <option text="{!option}" value="{!option}" />
+            </aura:iteration>
+        </lightning:select> <br/>
+    </aura:if>
+    
+    <!--Show If Call Status == 'Answered' And Call Sub-Status == 'Follow Up'-->
+    <aura:if isTrue="{!v.leadRecord.Call_Status__c == 'Answered'}">
+        <aura:if isTrue="{!v.leadRecord.Answered_Status__c == 'Follow Up'}">
+            <lightning:input type="datetime" name="input1" label="Follow Up Date and Time"  value="{!v.leadRecord.Follow_Up_Date_Time__c}"></lightning:input><br/>
+            <lightning:textarea name="input1" label="Follow Up Comments:" value="{!v.leadRecord.Follow_Up_Comments__c}" />
+        </aura:if>
+        
+        
+        <!--Show If If Call Status == 'Answered' and Call Sub-Status == Demo Scheduled-->
+        <aura:if isTrue="{!v.leadRecord.Answered_Status__c == 'Demo Scheduled'}">
+            <lightning:input type="datetime" name="input1" label="Demo Scheduled Date and Time"  value="{!v.leadRecord.Schedule_Demo_Date__c}"></lightning:input><br/>
+            
+            <lightning:select name="demoStatus" label="Select Demo Status:" aura:id="select" value="{!v.leadRecord.Demo_Status__c}">
+                <option value="">None</option>
+                <aura:iteration items="{!v.demoStatus}" var="option">
+                    <option text="{!option}" value="{!option}"  />
+                </aura:iteration>
+            </lightning:select> <br/>
+            
+            <lightning:select name="demoConfirmation" label="Select Demo Confirmation:" aura:id="select" value="{!v.leadRecord.Demo_Confirmation__c}">
+                <option value=""> None </option>
+                <aura:iteration items="{!v.demoConfirmation}" var="option">
+                    <option text="{!option}" value="{!option}" />
+                </aura:iteration>
+            </lightning:select> <br/>
+            
+            <lightning:textarea name="input1" label="Provide Demo Remarks:" value="{!v.leadRecord.Demo_Remarks__c}" /> <br/>
+            
+        </aura:if>
+        
+        
+        <!-- Show If If Call Status == 'Answered' and Call Sub-Status == 'Already a Customer'  --> 
+        
+        <aura:if isTrue="{!v.leadRecord.Answered_Status__c == 'Already a customer'}">
+            <lightning:textarea name="input1" label="Provide Remarks in case customer already exists :" value="{!v.leadRecord.Existing_Customer_Remarks__c}" /><br/>
+            <!--lightning:select name="tempSubStatus" label="Call Sub Status:" value="{!v.leadRecord.Call_Sub_Status__c}" disabled ="TRUE">
+            <option value="Already a Customer">Already a customer</option>
+        </lightning:select--><br/>      
+        </aura:if>
+        
+        
+        <!--Show If If Call Status == 'Answered' and Call Sub-Status == 'Wrong Party Connected' -->
+        
+        <aura:if isTrue="{!v.leadRecord.Answered_Status__c == 'Wrong party'}">
+            <lightning:textarea name="input1" label="Provide Wrong Party Remarks:" value="{!v.leadRecord.Existing_Customer_Remarks__c}" /><br/>
+            <!--lightning:select name="tempSubStatus" label="Call Sub Status:" value="{!v.leadRecord.Call_Sub_Status__c}" disabled= "TRUE">
+            <option value="Disqualified">Disqualified</option>
+        </lightning:select--> <br/>  
+        </aura:if>
+        
+        
+        <!--Show If If Call Status == 'Answered' and Call Sub-Status == 'Not Interested'  -->
+        
+        <aura:if isTrue="{!v.leadRecord.Answered_Status__c == 'Not Interested'}">
+            
+            <lightning:textarea name="input1" label="Provide Not Interested Remarks:" value="{!v.leadRecord.Not_Interested_Remark__c}"> </lightning:textarea>  <br/> 
+        </aura:if>
+        
+        
+        <!--Show If If Call Status == 'Answered' and Call Sub-Status == 'Disqualified'  --> 
+        
+        <aura:if isTrue="{!v.leadRecord.Answered_Status__c == 'Disqualified'}">
+            <lightning:select name="disqualifiedReasons" label="Select Disqualified Reasons:" aura:id="select" onchange="{!c.changeSubStatusValues}" value="{!v.leadRecord.Disqualified_Reasons__c}">
+                <option value="">--None--</option>
+                <aura:iteration items="{!v.disqualifiedReasons}" var="option">
+                    <option text="{!option}" value="{!option}"  />
+                </aura:iteration>
+            </lightning:select>
+            <lightning:textarea name="input1" label="Provide Disqualified Remarks:" value="{!v.disqualifiedRemark}"> </lightning:textarea>  <br/>  
+        </aura:if>
+    </aura:if>
+    <!--************************************************************************'Not Answered' **********************************************  -->    
+    <!--Show If Call Status == 'Not Answered' And Call Sub-Status == 'Switch Off'  -->
+    <aura:if isTrue="{!v.leadRecord.Call_Status__c == 'Not Answered'}">
+        <aura:if isTrue="{!v.leadRecord.Not_Answered__c == 'Switch off'}">
+            <lightning:input type="datetime" name="input1" label="Follow Up Date and Time"  value="{!v.leadRecord.Follow_Up_Date_Time__c}"></lightning:input><br/>
+            <lightning:textarea name="input1" label="Follow Up Comments:" value="{!v.leadRecord.Follow_Up_Comments__c}" />  
+        </aura:if>
+        
+        
+        <!--Show If If Call Status == 'Not Answered' and Call Sub-Status == 'Not Reachable'   -->
+        
+        <aura:if isTrue="{!v.leadRecord.Not_Answered__c == 'Not reachable'}">
+            <lightning:textarea name="input1" label="Provide Not Reachable Remarks:" value="{!v.leadRecord.Not_Answered_Remark__c}" /><br/>    
+        </aura:if>
+        
+        
+        <!--Show If Call Status == 'Not Answered' And Call Sub-Status == 'Ringing No Resposnse'   -->
+        
+        <aura:if isTrue="{!v.leadRecord.Not_Answered__c == 'Ringing no response'}">
+            <lightning:input type="datetime" name="input1" label="Follow Up Date and Time"  value="{!v.leadRecord.Follow_Up_Date_Time__c}"></lightning:input><br/>
+            <lightning:textarea name="input1" label="Follow Up Comments:" value="{!v.leadRecord.Follow_Up_Comments__c}" />   
+        </aura:if>
+        
+        
+        <!--Show If If Call Status == 'Not Answered' and Call Sub-Status == 'Temporarily Disconnected'   -->
+        
+        <aura:if isTrue="{!v.leadRecord.Not_Answered__c == 'Temporarily Disconnected'}">
+            <lightning:textarea name="input1" label="Provide Temporarily Disconnected Remarks:" value="{!v.leadRecord.Temporary_Disconnected_Remark__c}" /><br/>
+        </aura:if>         
+        
+        
+        <!--Show If If Call Status == 'Invalid' -->
+        
+        
+    </aura:if>
+    
+    <!-- -->
+    <aura:if isTrue="{!v.leadRecord.Call_Status__c == 'Invalid'}">
+        <lightning:textarea name="input1" label="Provide Invalid Remarks:" value="{!v.leadRecord.Invalid_Remarks__c}" /><br/>
+    </aura:if>           
+    
+    <!--Show If If Call Status == 'Language Issue'  -->
+    
+    <aura:if isTrue="{!v.leadRecord.Call_Status__c == 'Language Issue'}">
+        <lightning:textarea name="input1" label="Provide Language Issue Remarks:" value="{!v.leadRecord.Language_Remarks__c}" /><br/>
+    </aura:if> 
+    
+    <lightning:button class="slds-align_absolute-center" variant="brand" label="Save" title="Brand action" onclick="{! c.saveRecord }" />    
+</aura:component>

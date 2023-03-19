@@ -1,0 +1,19 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" 
+                access="global" controller="EvaluationScoreController">
+    <aura:html tag="style">
+        .slds-modal__container{
+        max-width: 70rem !important;
+        width:70% !important;
+        }
+    </aura:html>
+    
+    <aura:attribute name="ldPDFLink" type="string" default="{!$Label.c.Lead_PDF_Link}" />
+        <div style = "width:100%" >
+        <iframe src="{!v.ldPDFLink + v.recordId }" width="100%" height="500px;" frameBorder="0"/>
+        
+    <div class="modal-footer slds-modal__footer slds-size_1-of-1 slds-p-around_large slds-align_absolute-center">
+            <lightning:button variant="brand" label="Email To Lead" title="Email" onclick="{!c.emailToLead }" class="marginTop"/>
+            <lightning:button variant="brand" label="Cancel" title="Cancel" onclick="{!c.handleCancel }" class="marginTop"/>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,78 @@
+<aura:component>
+
+<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+<aura:attribute name="EducationDetailList" type="Education_Detail__c[]"/> 
+<aura:attribute name="type" type="String"/> 
+<aura:attribute name="LeadId" type="String"/> 
+
+<div class="container-fluid">        
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered slds-border_left slds-border_right"> 
+        <thead >
+            <tr class="slds-text-title_caps">
+                <!--th scope="col">
+                    <div class="slds-truncate">#</div>
+                </th -->
+                <th scope="col" style="background-color: rgb(25, 25, 138); color:aliceblue">
+                    <div class="slds-truncate slds-cell-wrap" title="">Started at(month and year)</div>
+                </th>
+                <th scope="col" style="background-color: rgb(25, 25, 138); color:aliceblue">
+                    <div class="slds-truncate slds-cell-wrap" title="">Ended at(month and year)</div>
+                </th>
+                <th scope="col" style="background-color: rgb(25, 25, 138); color:aliceblue">
+                    <div class="slds-truncate slds-cell-wrap" title="">Course/Academic Qualification</div>
+                </th>
+                <th scope="col" style="background-color: rgb(25, 25, 138); color:aliceblue">
+                    <div class="slds-truncate slds-cell-wrap" title="">Marks Obtained</div> 
+                </th>
+                <th scope="col" style="background-color: rgb(25, 25, 138); color:aliceblue">
+                    <div class="slds-truncate slds-cell-wrap" title="">Name of school/College/University with city/country</div>
+                </th>
+                <th scope="col" style="background-color: rgb(25, 25, 138); color:aliceblue">
+                    <div class="slds-truncate slds-cell-wrap" title="">Action</div>
+                </th>
+            </tr>
+        </thead>   
+        <tbody>      
+            <aura:iteration items="{!v.EducationDetailList}" var="Edu" indexVar="index">
+                <tr>
+                    <!--td> 
+                        {!index + 1}
+                    </td -->
+                    <td>
+                        <lightning:input type="date" name="input1" value="{!Edu.Starting_year__c}" />
+                        <!--lightning:input name="accName" type="text" value="{!Edu.Starting_year__c}" /-->
+                    </td>
+                    <td>
+                        <lightning:input type="date" name="input1" value="{!Edu.Ending_year__c}" />
+                        <!--lightning:input name="accNumber" type="text"    value="{!Edu.Ending_year__c}" / -->
+                    </td>
+                    <td>
+                        <lightning:input name="accPhone" type="text"  value="{!Edu.Qualification__c}" />
+                    </td>
+                    <td>
+                        <lightning:input name="accNumber" type="number"    value="{!Edu.Marks_Obtained__c}" />
+                    </td>
+                    <td>
+                        <lightning:input name="accPhone" type="text"  value="{!Edu.Institution__c}" />
+                    </td>
+                    <td>
+                        <a onclick="{!c.addRow}" data-record="{!index}">
+                            <lightning:icon iconName="action:new" size="small" alternativeText="Delete"/>
+                            <span class="slds-assistive-text">Add</span>
+                        </a>
+                        <!--lightning:buttonIcon iconName="action:new"  size="large" variant="bare" alternativeText="Add" onclick="{!c.addRow}"/ -->
+                        <a onclick="{!c.removeRow}" data-record="{!index}">
+                            <lightning:icon iconName="action:delete" size="small" alternativeText="Delete"/>
+                            <span class="slds-assistive-text">Delete</span>
+                        </a>
+                    </td> 
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+</div>
+
+
+
+</aura:component>

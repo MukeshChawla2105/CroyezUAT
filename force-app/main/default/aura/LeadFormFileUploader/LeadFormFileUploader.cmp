@@ -1,0 +1,53 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,force:appHostable"
+                access="global" controller="LeadFormFileUploader">
+    
+    <aura:attribute name="createlead" type="Lead" default="{'sObjectType' : 'Lead','Name' : 'Status'  }"/>
+    <aura:attribute name="statusList" type="List"/> 
+    <aura:attribute name="pickvalue" type="string"/> 
+    <aura:attribute name="fldName" type="String" default="LeadStatus"/> 
+    <aura:attribute name="CustomerPhoneNumber" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="leadId" type="String"  />
+    
+    <aura:attribute name="fileName" type="String" default="No File Selected.." />
+    
+    
+    <aura:attribute name="FilesUploaded" type="list" />
+    
+    <aura:attribute name="folders" type="List"/>
+    
+    <lightning:card >
+        
+        <lightning:input label='First Name' aura:id="firstname"  />
+        <lightning:input label='Last Name' aura:id="lastname"  />
+        <lightning:input label='Email' aura:id="email"  />
+        <lightning:input label='Phone' aura:id="phone"  />
+        <lightning:input label='Company' aura:id="company"  />
+        
+        <lightning:select label="Lead Status" aura:id="status" onchange="{!c.changehandler}" >
+            <option value="">—None—</option>
+            <aura:iteration items="{!v.statusList}" var="ld">
+                <option value="{!ld}">{!ld}</option>
+            </aura:iteration>
+        </lightning:select>
+        
+        <lightning:button variant="brand" label="Save" title="Brand action" onclick="{!c.CreateLead1 }"/>
+        <lightning:button variant="brand" label="Cancel" title="Brand action" onclick="{!c.Clearform }"/>
+        
+        
+        <lightning:input aura:id="fuploader" 
+                         onchange="{!c.handleFilesChange}" 
+                         type="file" 
+                         name="file" 
+                         label="Upload Resume" 
+                         multiple="false"/>
+        <div class="slds-text-body_small slds-text-color_error">{!v.fileName} </div>
+        <br/>
+        
+        <lightning:button label="Cancel" onclick="{!c.handleCancel}" class="slds-m-top--medium" />
+        <lightning:button label="Save" onclick="{!c.handleSave}"
+                          variant="brand" class="slds-m-top--medium"/>
+        
+    </lightning:card>
+</aura:component>

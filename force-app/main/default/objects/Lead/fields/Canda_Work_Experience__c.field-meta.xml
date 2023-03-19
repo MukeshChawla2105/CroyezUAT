@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Canda_Work_Experience__c</fullName>
+    <description>How many years of Work experience have you obtained INSIDE CANADA within the last 10 years?</description>
+    <externalId>false</externalId>
+    <label>Canda Work Experience</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Less than 1 year</fullName>
+                <default>false</default>
+                <label>Less than 1 year</label>
+            </value>
+            <value>
+                <fullName>1 year</fullName>
+                <default>false</default>
+                <label>1 year</label>
+            </value>
+            <value>
+                <fullName>2 years</fullName>
+                <default>false</default>
+                <label>2 years</label>
+            </value>
+            <value>
+                <fullName>3 years</fullName>
+                <default>false</default>
+                <label>3 years</label>
+            </value>
+            <value>
+                <fullName>4 years</fullName>
+                <default>false</default>
+                <label>4 years</label>
+            </value>
+            <value>
+                <fullName>5 years</fullName>
+                <default>false</default>
+                <label>5 years</label>
+            </value>
+            <value>
+                <fullName>6 years</fullName>
+                <default>false</default>
+                <label>6 years</label>
+            </value>
+            <value>
+                <fullName>More than 6 years</fullName>
+                <default>false</default>
+                <label>More than 6 years</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

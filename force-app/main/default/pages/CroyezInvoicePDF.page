@@ -1,0 +1,120 @@
+<apex:page renderAs="pdf" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" >
+    <html>
+        <head>
+            <style>
+table {
+  border: 1px solid black;
+  
+}
+
+</style>
+        </head>
+       
+        <body>
+            <table id="table2">
+                
+                
+                
+                <div style="100%">
+                    <tr><td><div class="header" style="float:center; ">
+                        <apex:image url="{!$Resource.CroyezHeader}" width="700" height="100"/>
+                        </div > 
+                        <div  style="float:right; font-size:70% " >
+                            <b>INVOICE NO:</b>  CRIM0223045 <br/>
+                            <b>INVOICE DATE:</b>   2/9/2023 
+                            
+                        </div></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:300px;"  bgcolor="#DBE9FA"   ><b ><h3 style="color:Navy; ">RECEIPT</h3></b> </td>
+                        <td></td>
+                        
+                    </tr>
+                    <tr>
+                        <td style="padding-left:0px;"  bgcolor="#DBE9FA">
+                            <div Style= "float: left;  width: 50%; font-size:90%;" >
+                                <br/>
+                                <h5><b>CROYEZ IMMIGRATION SERVICE PRIVATE LIMITED</b> </h5>    
+                                No:29, H.M Centre,1st Floor, Nungambakkam High Rd <br/><br/>
+                                Chennai, Tamil Nadu 600034
+                                <br/><br/>
+                                <table style="width:100%;   font-size:90%;">
+                                    <tr>
+                                        <th>Phone:</th>
+                                        <td>044 4952 1377</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <th>Email:</th>
+                                        <td>info@croyez.in</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <th>Corporate Identity #: </th>
+                                        <td>U74999TN2016PTC111379</td>
+                                    </tr>
+                                    <tr>
+                                        <th>STIN #: </th>
+                                        <td>33AAGCC5551K1ZM</td>
+                                    </tr>
+                                    <tr>
+                                        <th>PAN #: </th>
+                                        <td>AAGCC5551K</td>
+                                    </tr>
+                                </table>
+                                
+                            </div >
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="padding-left:0px;"  bgcolor="#DBE9FA">
+                            <div Style= "float: right;  width: 49%; font-size:90%;margin-top: -235px;" >
+                                <br/>
+                                <h5><b>CROYEZ IMMIGRATION SERVICE PRIVATE LIMITED</b> </h5>    
+                                No:29, H.M Centre,1st Floor, Nungambakkam High Rd <br/><br/>
+                                Chennai, Tamil Nadu 600034
+                                <br/><br/>
+                                <table style="width:100%;   font-size:90%;">
+                                    <tr>
+                                        <th>Phone:</th>
+                                        <td>044 4952 1377</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <th>Email:</th>
+                                        <td>info@croyez.in</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <th>Corporate Identity #: </th>
+                                        <td>U74999TN2016PTC111379</td>
+                                    </tr>
+                                    <tr>
+                                        <th>STIN #: </th>
+                                        <td>33AAGCC5551K1ZM</td>
+                                    </tr>
+                                    <tr>
+                                        <th>PAN #: </th>
+                                        <td>AAGCC5551K</td>
+                                    </tr>
+                                </table>
+                                
+                            </div >
+                        </td>                        
+                    </tr>
+
+                    
+                    
+                    
+                </div>
+               
+
+                
+            </table>
+        </body>
+    </html>
+    
+    
+    
+</apex:page>

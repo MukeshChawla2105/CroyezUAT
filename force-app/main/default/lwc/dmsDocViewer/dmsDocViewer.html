@@ -1,0 +1,118 @@
+<template>
+
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass"></lightning-spinner>
+    </template>
+    <div class="header">
+        <article class="slds-card" style="background-color: rgb(242, 241, 241);">
+            <div class="slds-card__header slds-grid">
+              <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div style="display: flex; justify-content: space-between; width: 100%;">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-media__figure slds-col" style="padding: 0px; margin-left: 15px;">
+                            <lightning-icon icon-name="standard:maintenance_asset" alternative-text="Event" title="Event"></lightning-icon>
+                        </div>
+                        <div class="slds-col" style="margin-left: -15px; margin-top: 7px">
+                            <h2 class="slds-card__header-title">
+                                <span>Document Explorer</span>
+                              </h2>
+                        </div>
+                    </div>
+                    <div>
+                        <lightning-button-group>
+                            <lightning-button label="Approve" icon-name="utility:check" disabled={fileDeletionDisable} onclick={approveFile}></lightning-button>
+                            <lightning-button label="Reject" icon-name="utility:close" disabled={fileDeletionDisable} onclick={rejectFile}></lightning-button>
+
+                            <!-- <lightning-button label="New File" icon-name="utility:add" onclick={showFileCreationHandler} disabled={isHomeActive}></lightning-button>
+                            <lightning-button label="New Folder" icon-name="utility:open_folder" onclick={showFolderCreationPopup} disabled={isHomeActive}></lightning-button>
+                            <lightning-button label="Delete File" icon-name="utility:delete" disabled={fileDeletionDisable} onclick={deleteFiles}></lightning-button>
+                            <lightning-button label="Delete Folder" icon-name="utility:delete" disabled={folderDeletionDisable} onclick={deleteFolders}></lightning-button> -->
+                        </lightning-button-group>
+                    </div>
+                </div>
+              </header>
+            </div>
+          </article>
+    </div>
+
+    <template if:true={isLoading}>
+
+    </template>
+    <template if:true={selectedFolder}>
+        <div class="slds-card slds-p-around_large" style="border-style: dotted; border-width: 1.2px;">
+            <ul style="display: flex; align-items: center;">
+                <template for:each={path} for:item="p">
+                    <li class="pathitem" key={p.index} data-index={p.index} onclick={pathClicked} style="cursor: pointer;">{p.name} ></li>
+                </template>
+            </ul>
+
+            <ul class="listcontainer" style="margin-top: 20px;">
+                <template for:each={selectedFolder.folders} for:item="item">
+                    <li key={item.Id} data-id={item.Id} class="list" ondblclick={folderClicked} onclick={onFolderSingleClick} style="cursor: pointer;">
+                        <div style="width: 70px; cursor: pointer;margin-right: 10px; text-align: center;">
+                            <lightning-icon icon-name="doctype:folder" alternative-text="Account" title={item.Name} size="large"></lightning-icon>
+                            <h1 class="slds-form-element__label" for="combobox-id-2" style={item.style}>{item.Name} ({item.Status__c})</h1>
+                        </div>
+                   </li>
+                </template>
+                <template for:each={selectedFolder.files} for:item="item">
+                    <li key={item.value} data-id={item.value} class="list" ondblclick={onFileDBClicked} onclick={onFileSingleClick} style="cursor: pointer;">
+                        <div style="width: 90px; cursor: pointer;margin-right: 10px; text-align: center;">
+                            <lightning-icon icon-name="doctype:attachment" alternative-text="Account" title={item.label} size="large"></lightning-icon>
+                            <h1 class="slds-form-element__label" for="combobox-id-2" style={item.style}>{item.label}</h1>
+                        </div>
+                   </li>
+                </template>
+            </ul>
+        </div>
+
+        <template if:true={showFileCreation}>
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Upload File</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium modalBody" id="modal-content-id-2">
+                        <template if:true={isFileUploading}>
+                            <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass"></lightning-spinner>
+                        </template>
+
+                        <lightning-input type="file" accept="image/*, .xlsx, .xls, .csv, .png, .doc, .docx, .pdf, .txt" 
+                            onchange={fileSelectedHandler}></lightning-input>
+                            <template if:true={fileData}>
+                                {fileData.filename}
+                            </template>
+                    </div>
+                  <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={closeFileCreation}>Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={createFileSP} disabled={disableFileCreation}>Upload</button>
+                  </div>
+                </div>
+              </section>
+              <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+
+        <template if:true={showFolderCreation}>
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Create Folder</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium modalBody" id="modal-content-id-1">
+                        <template if:true={isFileUploading}>
+                            <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass"></lightning-spinner>
+                        </template>
+                        <lightning-input type="text" label="Folder Name" onchange={inputHandler}></lightning-input>
+                    </div>
+                  <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={closeFolderCreation}>Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={createFolder} disabled={disableCreate}>Create</button>
+                  </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+
+        
+    </template>
+</template>

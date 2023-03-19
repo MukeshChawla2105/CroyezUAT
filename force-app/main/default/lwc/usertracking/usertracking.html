@@ -1,0 +1,25 @@
+<template>
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+          <header class="slds-media slds-media_center slds-has-flexi-truncate">
+            <div class="slds-media__figure">
+                    <lightning-icon icon-name="action:log_event"></lightning-icon>
+                <span class="slds-assistive-text">User tracking</span>
+            </div>
+            <div class="slds-media__body">
+              <h2 class="slds-card__header-title">
+                  <span>User tracking</span>
+              </h2>
+            </div>
+          </header>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <button class="slds-button slds-button_neutral" onclick={checkin} disabled={disable_checkin}>CheckIn</button>
+            
+            <button class="slds-button slds-button_neutral" onclick={checkout} disabled={disable_checkout}>Checkout</button>
+            
+        </div>
+        
+      </article>
+    
+  </template>

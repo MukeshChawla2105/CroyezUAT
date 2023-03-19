@@ -1,0 +1,842 @@
+<aura:component
+    implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,force:appHostable"
+    access="global" controller="LeadCreationFormClass">
+    <aura:attribute name="createlead" type="Lead" default="{'sObjectType' : 'Lead','Name' : 'Status'  }" />
+    <aura:attribute name="visaList" type="List" />
+    <aura:attribute name="pickvalue" type="string" />
+    <aura:attribute name="fldName" type="String" default="Visa_Type__c" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <aura:attribute name="recordId" type="String" />
+
+    <aura:attribute name="leadId" type="String" />
+    <aura:attribute name="GenderList" type="List" />
+    <aura:attribute name="ProficiencyList" type="List" />
+    <aura:attribute name="ChildrenList" type="List" />
+    <aura:attribute name="maritialStatusList" type="List" />
+    <aura:attribute name="BooleanList" type="List" />
+    <aura:attribute name="ExperienceList" type="List" />
+
+    <aura:attribute name="SelfEducationDetails" type="List" />
+    <aura:attribute name="SelfWorkExperienceRecords" type="List" />
+    <aura:attribute name="SpouseEducationDetails" type="List" />
+    <aura:attribute name="SpouseWorkExperienceRecords" type="List" />
+    <aura:attribute name="DocumentUploadTypelist" type="List" />
+
+    <aura:attribute name="fileNameList" type="List" default="No File Selected.." />
+    <aura:attribute name="ChildCompDetaillist" type="List" />
+
+    <aura:handler name="cmpEvent" 
+                event="c:uploadDocEvent" 
+                action="{!c.handleEvent}"/>
+
+
+
+    <aura:attribute name="fileName" type="String" default="No File Selected.." />
+    <aura:attribute name="fileName1" type="String" default="No File Selected.." />
+    <aura:attribute name="fileName2" type="String" default="No File Selected.." />
+    <aura:attribute name="fileName3" type="String" default="No File Selected.." />
+    <aura:attribute name="fileName4" type="String" default="No File Selected.." />
+
+    <aura:attribute name="truthy" type="boolean" default="true" />
+    <aura:attribute name="ShowOtherDetailsFiller" type="boolean" default="true" />
+    <aura:attribute name="ShowSpouseDetailFiller" type="boolean" default="false" />
+    <aura:attribute name="ShowUploadDocComp" type="boolean" default="false" />
+
+    <!-- ============================== Family Compostion attribute ===================================-->
+    <aura:attribute name="ShowFillFamilyComposition" type="boolean" default="false" />
+    <aura:attribute name="ShowFillOtherDetails" type="boolean" default="false" />
+    <aura:attribute name="rownumber" type="string" /> 
+    <aura:attribute name="showSpinner" type="boolean" default="false" />
+    <aura:attribute name="disableUploadSave" type="boolean" default="false" />
+
+
+    <!-- ===================================== Document Uploading Booleans ======================== -->
+    <aura:attribute name="ShowuploadResume" type="boolean" default="false" />
+    <aura:attribute name="ShowUploadExperienceLetter" type="boolean" default="false" />
+    <aura:attribute name="ShowUploadJobOfferLetter" type="boolean" default="false" />
+    <aura:attribute name="ShowUploadGraduationDegree" type="boolean" default="false" />
+    <aura:attribute name="ShowUploadOthers" type="boolean" default="false" />
+
+
+
+    <aura:attribute name="leadRec" type="sObject" default="{'sobjectType': 'Lead',
+                                                            'FirstName':'',
+                                                            'LastName':'',
+                                                            'Email': '',
+                                                            'Phone': '',
+                                                            'Date_of_Birth__c': '',
+                                                            'Gender__c': '',
+                                                            'Address__c' : '',
+                                                            'English_Proficiency_Reading__c': '',
+                                                            'English_Proficiency_Speaking__c': '',
+                                                            'English_Proficiency_Listening__c': '',
+                                                            'English_Proficiency_Writing__c': '',
+                                                            'French_Proficiency_Reading__c': '',
+                                                            'French_Proficiency_Speaking__c': '',
+                                                            'French_Proficiency_Listening__c': '',
+                                                            'French_Proficiency_Writing__c': '',
+                                                            'Maritial_Status__c': '',
+                                                            'Number_of_Children__c': '',
+                                                            'Ages_of_Children__c': '',
+                                                            'Spouse_Name__c': '',
+                                                            'Spouse_DoB__c': '',
+                                                            'Spouse_Gender__c': '',
+                                                            'Spouse_English_Proficiency_Reading__c': '',
+                                                            'Spouse_English_Proficiency_Speaking__c': '',
+                                                            'Spouse_English_Proficiency_Listening__c': '',
+                                                            'Spouse_English_Proficiency_Writing__c': '',
+                                                            'Spouse_French_Proficiency_Reading__c': '',
+                                                            'Spouse_French_Proficiency_Speaking__c': '',
+                                                            'Spouse_French_Proficiency_Listening__c': '',
+                                                            'Spouse_French_Proficiency_Writing__c': '',
+                                                            'Canda_Work_Experience__c': '',
+                                                            'Spouse_Canada_Work_Experience__c': '',
+                                                            'Close_Family_member_as_Canandian_Citizen__c': '',
+                                                            'Siblings_As_Canadian_Citizen__c': '',
+                                                            'Canada_Skilled_job_offer__c': ''}" />
+    <aura:attribute name="LeadrecordId" type="String" />
+    <!--lightning:card -->
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading, Please Wait..." title="Loading, Please Wait..." variant="brand" size="large"/>
+     </aura:if>
+    <div class="" style="margin: 50px;">
+        <h1 class="slds-align_absolute-center" style="font-weight: bolder; font-size: 25px;">
+            IMMIGRATION ASSESSMENT FORM
+        </h1>
+        <div style="background-color: rgb(25, 25, 138); color: #ffffff; font-weight: bolder; font-size: 20px;"
+            class="slds-align_absolute-center">
+            THE INFORMATION YOU SUPPLY ON THIS FORM WILL BE TREATED IN CONFIDENCE
+        </div>
+
+        <aura:if isTrue="{!v.truthy}">
+            <div class="slds-border_bottom" style="font-weight: bolder; font-size: 15px; margin-top: 20px; margin-bottom:5px">
+                1 - PERSONAL DETAILS
+            </div>
+            <div class="slds-box">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3" >
+
+                        <div style="" class="slds-box center">
+                            <span>
+                                Name
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="slds-col slds-size_2-of-3 slds-box" >
+                        <lightning:input name="input2" value="{!v.leadRec.Name}" />
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+
+                        <div class="slds-box center">
+                            <span>
+                                Email Address
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="slds-col slds-size_2-of-3 slds-box">
+                        <lightning:input value="{!v.leadRec.Email}" />
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+
+                        <div class="slds-box center">
+                            <span>
+                                Contact Number
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="slds-col slds-size_2-of-3 slds-box">
+                        <lightning:input value="{!v.leadRec.Phone}" />
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3 ">
+
+                        <div class="slds-box center">
+                            <span>
+                                Date of Birth
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="slds-col slds-size_2-of-3 slds-box">
+                        <lightning:input type="date" name="input1" value="{!v.leadRec.Date_of_Birth__c}" />
+                        <!-- ui:inputDate aura:id="EndDateField" value="{!v.leadRec.Date_of_Birth__c}" displayDatePicker="true" format="MM/yyyy"/  onchange="{!c.changehandler}" -->
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3 ">
+
+                        <div class="slds-box center">
+                            <span>
+                                Gender
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="slds-col slds-size_2-of-3 slds-box">
+                        <lightning:select aura:id="gender" value="{!v.leadRec.Gender__c}">
+                            <option value="">—None—</option>
+                            <aura:iteration items="{!v.GenderList}" var="ld">
+                                <option value="{!ld}" selected="{!ld == v.leadRec.Gender__c}">{!ld}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3 ">
+
+                        <div class="slds-box" style="text-align: center;
+                        height:93px;
+                        font-size: 15px; 
+                        text-align: right; 
+                        padding-right: 30px;
+                        padding-top:20px; ">
+                            <span>
+                                Address
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="slds-col slds-size_2-of-3 slds-box">
+                        <!-- textarea value="{!v.leadRec.Address__c}" style="height:5rem;" class="slds-textarea"></textarea -->
+                        <lightning:textarea name="input4" value="{!v.leadRec.Address__c}" />
+                        <!-- lightning:inputAddress style="max-height: 200px;"
+                                                            streetLabel="Street"
+                                                            cityLabel="City"
+                                                            countryLabel="Country"
+                                                            provinceLabel="Province/State"
+                                                            postalCodeLabel="PostalCode"
+                                                            street="{! v.leadRec.street }"
+                                                            city="{! v.leadRec.city }"
+                                                            province="{! v.leadRec.state }"
+                                                            country="{! v.leadRec.country }"
+                                                            postalCode="{! v.leadRec.postalCode }"
+                                                        / -->
+                    </div>
+                </div>
+
+            </div>
+            <div style="margin-top: 20px;">
+                <div class="slds-border_bottom" style="font-weight: bolder; font-size: 15px;">
+                    2 - EDUCATION DETAILS
+                </div>
+                <div style="font-size: 15px;">
+                    Qualifications obtained from Schools, Colleges and Universities. Please list highest qualification
+                    first:
+                </div>
+
+                <c:EducationalDetailsCmp aura:id="selfEdudetailCmp" type="Self" LeadId="{!v.LeadrecordId}"
+                    EducationDetailList="{!v.SelfEducationDetails}" />
+
+            </div>
+
+            <div style="margin-top: 20px;">
+                <div class="slds-border_bottom" style="font-weight: bolder; font-size: 15px;">
+                    3 - EMPLOYMENT/WORK EXPERIENCE HISTORY
+                </div>
+                <div style="font-size: 15px;">
+                    Employment history, beginning with current or latest employment with complete history of past 10
+                    years.
+                </div>
+
+                <c:WorkExperienceDetailsCmp aura:id="selfWorkExpCmp" type="Self" LeadId="{!v.LeadrecordId}"
+                    WorkExperienceDetailsList="{!v.SelfWorkExperienceRecords}" />
+
+            </div>
+
+            <div style="margin-top: 20px;">
+                <div class="slds-border_bottom" style="font-weight: bolder; font-size: 15px; margin-bottom:5px;">
+                    4 - ABILITY IN LANGUAGE
+                </div>
+
+                <table
+                    class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered slds-border_left slds-border_right">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+
+                            <th scope="col">
+
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate slds-cell-wrap" title="">Reading</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate slds-cell-wrap" title="">Speaking</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate slds-cell-wrap" title="">Listening</div>
+                            </th>
+
+                            <th scope="col">
+                                <div class="slds-truncate slds-cell-wrap" title="">Writing</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div>
+                                    English Proficiency
+                                </div>
+
+                            </td>
+                            <td>
+                                <lightning:select aura:id="gender" value="{!v.leadRec.English_Proficiency_Reading__c}">
+                                    <option value="">—None—</option>
+                                    <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                        <option value="{!pro}" selected="{!pro == v.leadRec.English_Proficiency_Reading__c}">{!pro}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                                <!-- lightning:input name="" type="text" value="{!Edu.Ending_year__c}" / -->
+                            </td>
+                            <td>
+                                <lightning:select aura:id="gender" value="{!v.leadRec.English_Proficiency_Speaking__c}">
+                                    <option value="">—None—</option>
+                                    <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                        <option value="{!pro}" selected="{!pro == v.leadRec.English_Proficiency_Speaking__c}">{!pro}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                                <!-- lightning:input name="" type="text" value="{!Edu.Qualification__c}" / -->
+                            </td>
+                            <td>
+                                <lightning:select aura:id="gender"
+                                    value="{!v.leadRec.English_Proficiency_Listening__c}">
+                                    <option value="">—None—</option>
+                                    <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                        <option value="{!pro}" selected="{!pro == v.leadRec.English_Proficiency_Listening__c}">{!pro}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                                <!-- lightning:input name="" type="Integer" value="{!Edu.Marks_Obtained__c}" / -->
+                            </td>
+                            <td>
+                                <lightning:select aura:id="gender" value="{!v.leadRec.English_Proficiency_Writing__c}">
+                                    <option value="">—None—</option>
+                                    <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                        <option value="{!pro}" selected="{!pro == v.leadRec.English_Proficiency_Writing__c}">{!pro}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                                <!-- lightning:input name="" type="phone" value="{!Edu.Institution__c}" / -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    French Proficiency
+                                </div>
+
+                            </td>
+                            <td>
+                                <lightning:select aura:id="gender" value="{!v.leadRec.French_Proficiency_Reading__c}">
+                                    <option value="">—None—</option>
+                                    <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                        <option value="{!pro}" selected="{!pro == v.leadRec.French_Proficiency_Reading__c}">{!pro}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                                <!-- lightning:input name="" type="text" value="{!Edu.Ending_year__c}" / -->
+                            </td>
+                            <td>
+                                <lightning:select aura:id="gender" value="{!v.leadRec.French_Proficiency_Speaking__c}">
+                                    <option value="">—None—</option>
+                                    <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                        <option value="{!pro}" selected="{!pro == v.leadRec.French_Proficiency_Speaking__c}">{!pro}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                                <!-- lightning:input name="" type="text" value="{!Edu.Qualification__c}" / -->
+                            </td>
+                            <td>
+                                <lightning:select aura:id="gender" value="{!v.leadRec.French_Proficiency_Listening__c}">
+                                    <option value="">—None—</option>
+                                    <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                        <option value="{!pro}" selected="{!pro == v.leadRec.French_Proficiency_Listening__c}">{!pro}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                                <!-- lightning:input name="" type="Integer" value="{!Edu.Marks_Obtained__c}" / -->
+                            </td>
+                            <td>
+                                <lightning:select aura:id="gender" value="{!v.leadRec.French_Proficiency_Writing__c}">
+                                    <option value="">—None—</option>
+                                    <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                        <option value="{!pro}" selected="{!pro == v.leadRec.French_Proficiency_Writing__c}">{!pro}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                                <!-- lightning:input name="" type="phone" value="{!Edu.Institution__c}" / -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+
+            <div style="font-weight: bolder; font-size: 15px; margin-top: 20px;">
+                If your spouse or partner is not coming with you to Canada, Please fill marital status as UNMARRIED.
+            </div>
+
+            <div style="margin-top: 20px;">
+                <div class="slds-border_bottom" style="font-weight: bolder; font-size: 15px;">
+                    5 – FAMILY COMPOSITION
+                </div>
+                <div class="c-container">
+                    <lightning:layout multipleRows="true">
+                    <lightning:layoutItem size="6" padding="around-small">
+                        <div class="custom-box" style="font-size: 15px;">
+                            Present marital status
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="6" padding="around-small">
+                        <div class="custom-box">
+                            <lightning:select aura:id="gender" value="{!v.leadRec.Maritial_Status__c}" onchange="{! c.MaritialStatusOnchange }" >
+                                <option value="">—None—</option>
+                                <aura:iteration items="{!v.maritialStatusList}" var="MS">
+                                    <option value="{!MS}" selected="{!MS == v.leadRec.Maritial_Status__c}">{!MS}</option>
+                                </aura:iteration>
+                            </lightning:select>
+
+                        </div>
+                    </lightning:layoutItem>
+                    <aura:if isTrue="{!v.ShowFillFamilyComposition}">
+                        <lightning:layoutItem size="2" padding="around-small">
+                        <div class="custom-box" style="font-size: 15px;">
+                            Number of Children
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <div class="custom-box">
+                            <lightning:select aura:id="gender" value="{!v.leadRec.Number_of_Children__c}">
+                                <option value="">—None—</option>
+                                <aura:iteration items="{!v.ChildrenList}" var="children">
+                                    <option value="{!children}">{!children}</option>
+                                </aura:iteration>
+                            </lightning:select>
+
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="2" padding="around-small">
+                        <div class="custom-box" style="font-size: 15px;">
+                            Ages of Children(Comma separated)
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <div class="custom-box">
+                            <lightning:input name="input2" value="{!v.leadRec.Ages_of_Children__c}" />
+
+                        </div>
+                    </lightning:layoutItem>
+
+                    </aura:if>
+                    
+                </lightning:layout>
+
+                </div>
+                
+
+            </div>
+
+            <aura:if isTrue="{!v.ShowFillFamilyComposition}">
+                <div style="margin-top: 20px;">
+                    <div class="slds-border_bottom" style="font-weight: bolder; font-size: 15px; margin-bottom: 5px">
+                        6 - SPOUSE INFORMATION (APPLICANT’S HUSBAND OR WIFE)
+                    </div>
+                    <div class="slds-box">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+    
+                                <div  class="slds-box center">
+                                    <span>
+                                        Name
+                                    </span>
+                                </div>
+    
+                            </div>
+                            <div class="slds-col slds-size_2-of-3 slds-box" >
+                                <lightning:input name="input2" value="{!v.leadRec.Spouse_Name__c}" />
+                            </div>
+                        </div>
+    
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3 ">
+    
+                                <div class="slds-box center">
+                                    <span>
+                                        Date of Birth
+                                    </span>
+                                </div>
+    
+                            </div>
+                            <div class="slds-col slds-size_2-of-3 slds-box">
+                                <lightning:input type="date" name="input1" value="{!v.leadRec.Spouse_DoB__c}" />
+                                <!-- ui:inputDate aura:id="EndDateField" value="{!v.leadRec.Date_of_Birth__c}" displayDatePicker="true" format="MM/yyyy"/  -->
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+    
+                                <div class="slds-box center">
+                                    <span>
+                                        Gender
+                                    </span>
+                                </div>
+    
+                            </div>
+                            <div class="slds-col slds-size_2-of-3 slds-box">
+                                <lightning:select aura:id="gender" value="{!v.leadRec.Spouse_Gender__c}">
+                                    <option value="">—None—</option>
+                                    <aura:iteration items="{!v.GenderList}" var="ld">
+                                        <option value="{!ld}">{!ld}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div style="margin-top: 20px;">
+                    <div class="slds-border_bottom" style="font-weight: bolder; font-size: 15px; margin-bottom: 5px">
+                        7 - SPOUSE EDUCATION DETAILS
+                    </div>
+                    <div style="font-size: 15px;">
+                        Qualifications obtained from Schools, Colleges and Universities. Please list highest qualification
+                        first:
+                    </div>
+    
+                    <c:EducationalDetailsCmp aura:id="spouseEdudetailCmp" type="Spouse" LeadId="{!v.LeadrecordId}"
+                        EducationDetailList="{!v.SpouseEducationDetails}" />
+    
+                </div>
+    
+                <div style="margin-top: 20px;">
+                    <div class="slds-border_bottom" style="font-weight: bolder; font-size: 15px;">
+                        8 - EMPLOYMENT/WORK EXPERIENCE HISTORY OF SPOUSE
+                    </div>
+                    <div style="font-size: 15px;">
+                        Employment history, beginning with current or latest employment with complete history of past 10
+                        years.
+                    </div>
+    
+                    <c:WorkExperienceDetailsCmp aura:id="selfWorkExpCmp" type="Spouse" LeadId="{!v.LeadrecordId}"
+                        WorkExperienceDetailsList="{!v.SpouseWorkExperienceRecords}" />
+    
+                </div>
+    
+                <div style="margin-top: 20px;">
+                    <div class="slds-border_bottom" style="font-weight: bolder; font-size: 15px; margin-bottom: 5px">
+                        9 - SPOUSE ABILITY IN LANGUAGE
+                    </div>
+    
+                    <table
+                        class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered slds-border_left slds-border_right">
+                        <thead>
+                            <tr class="slds-text-title_caps">
+    
+                                <th scope="col">
+    
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate slds-cell-wrap" title="">Reading</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate slds-cell-wrap" title="">Speaking</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate slds-cell-wrap" title="">Listening</div>
+                                </th>
+    
+                                <th scope="col">
+                                    <div class="slds-truncate slds-cell-wrap" title="">Writing</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div>
+                                        English Proficiency
+                                    </div>
+    
+                                </td>
+                                <td>
+                                    <lightning:select aura:id="gender"
+                                        value="{!v.leadRec.Spouse_English_Proficiency_Reading__c}">
+                                        <option value="">—None—</option>
+                                        <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                            <option value="{!pro}">{!pro}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    <!-- lightning:input name="" type="text" value="{!Edu.Ending_year__c}" / -->
+                                </td>
+                                <td>
+                                    <lightning:select aura:id="gender"
+                                        value="{!v.leadRec.Spouse_English_Proficiency_Speaking__c}">
+                                        <option value="">—None—</option>
+                                        <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                            <option value="{!pro}">{!pro}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    <!-- lightning:input name="" type="text" value="{!Edu.Qualification__c}" / -->
+                                </td>
+                                <td>
+                                    <lightning:select aura:id="gender"
+                                        value="{!v.leadRec.Spouse_English_Proficiency_Listening__c}">
+                                        <option value="">—None—</option>
+                                        <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                            <option value="{!pro}">{!pro}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    <!-- lightning:input name="" type="Integer" value="{!Edu.Marks_Obtained__c}" / -->
+                                </td>
+                                <td>
+                                    <lightning:select aura:id="gender"
+                                        value="{!v.leadRec.Spouse_English_Proficiency_Writing__c}">
+                                        <option value="">—None—</option>
+                                        <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                            <option value="{!pro}">{!pro}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    <!-- lightning:input name="" type="phone" value="{!Edu.Institution__c}" / -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        French Proficiency
+                                    </div>
+    
+                                </td>
+                                <td>
+                                    <lightning:select aura:id="gender"
+                                        value="{!v.leadRec.Spouse_French_Proficiency_Reading__c}">
+                                        <option value="">—None—</option>
+                                        <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                            <option value="{!pro}">{!pro}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    <!-- lightning:input name="" type="text" value="{!Edu.Ending_year__c}" / -->
+                                </td>
+                                <td>
+                                    <lightning:select aura:id="gender"
+                                        value="{!v.leadRec.Spouse_French_Proficiency_Speaking__c}">
+                                        <option value="">—None—</option>
+                                        <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                            <option value="{!pro}">{!pro}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    <!-- lightning:input name="" type="text" value="{!Edu.Qualification__c}" / -->
+                                </td>
+                                <td>
+                                    <lightning:select aura:id="gender"
+                                        value="{!v.leadRec.Spouse_French_Proficiency_Listening__c}">
+                                        <option value="">—None—</option>
+                                        <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                            <option value="{!pro}">{!pro}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    <!-- lightning:input name="" type="Integer" value="{!Edu.Marks_Obtained__c}" / -->
+                                </td>
+                                <td>
+                                    <lightning:select aura:id="gender"
+                                        value="{!v.leadRec.Spouse_French_Proficiency_Writing__c}">
+                                        <option value="">—None—</option>
+                                        <aura:iteration items="{!v.ProficiencyList}" var="pro">
+                                            <option value="{!pro}">{!pro}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    <!-- lightning:input name="" type="phone" value="{!Edu.Institution__c}" / -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+    
+    
+                </div>
+
+            </aura:if>
+
+            
+            <aura:if isTrue="{!v.ShowFillOtherDetails}">
+                <div style="margin-top: 20px;">
+                    <div class="slds-border_bottom" style="font-weight: bolder; font-size: 15px;">
+                        {!v.rownumber} – OTHER DETAILS
+                    </div>
+    
+                    <div  class="c-container">
+    
+                        <lightning:layout multipleRows="true">
+                            <lightning:layoutItem size="6" padding="around-small">
+                                <div class="custom-box" style="font-size: 15px;">
+                                    How many years of Work experience have you obtained INSIDE CANADA within the last 10
+                                    years?
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="6" padding="around-small">
+                                <div class="custom-box">
+                                    <lightning:select aura:id="gender" value="{!v.leadRec.Canda_Work_Experience__c}">
+                                        <option value="">—None—</option>
+                                        <aura:iteration items="{!v.ExperienceList}" var="exp">
+                                            <option value="{!exp}">{!exp}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </lightning:layoutItem>
+
+                            <aura:if isTrue="{!v.ShowFillFamilyComposition}">
+                                <lightning:layoutItem size="6" padding="around-small">
+                                <div class="custom-box" style="font-size: 15px;">
+                                    How many years of Work experience has your Spouse obtained INSIDE CANADA within the last
+                                    10 years?
+                                </div>
+                            </lightning:layoutItem>
+
+                            <lightning:layoutItem size="6" padding="around-small">
+                                <div class="custom-box">
+                                    <lightning:select aura:id="gender"
+                                        value="{!v.leadRec.Spouse_Canada_Work_Experience__c}">
+                                        <option value="">—None—</option>
+                                        <aura:iteration items="{!v.ExperienceList}" var="exp">
+                                            <option value="{!exp}">{!exp}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </lightning:layoutItem>
+
+                            </aura:if>
+                            
+
+                            <lightning:layoutItem size="6" padding="around-small">
+                                <div class="custom-box" style="font-size: 15px;">
+                                    Do you have a close family member who is a Canadian citizen or permanent resident, who
+                                    is currently living in Canada and is 18 years of age or older?
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="6" padding="around-small">
+                                <div class="custom-box">
+                                    <lightning:select aura:id="gender"
+                                        value="{!v.leadRec.Close_Family_member_as_Canandian_Citizen__c}">
+                                        <option value="">—None—</option>
+                                        <aura:iteration items="{!v.BooleanList}" var="bool">
+                                            <option value="{!bool}">{!bool}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="6" padding="around-small">
+                                <div class="custom-box" style="font-size: 15px;">
+                                    Do you have a sibling (Brother or Sister) who is a Canadian citizen or permanent
+                                    resident, who is currently living in Canada and is 18 years of age or older?
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="6" padding="around-small">
+                                <div class="custom-box">
+                                    <lightning:select aura:id="gender" value="{!v.leadRec.Siblings_As_Canadian_Citizen__c}">
+                                        <option value="">—None—</option>
+                                        <aura:iteration items="{!v.BooleanList}" var="bol">
+                                            <option value="{!bol}">{!bol}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="6" padding="around-small">
+                                <div class="custom-box" style="font-size: 15px;">
+                                    Do you have a skilled job offer from a Canadian employer?
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="6" padding="around-small">
+                                <div class="custom-box">
+                                    <lightning:select aura:id="gender" value="{!v.leadRec.Canada_Skilled_job_offer__c}">
+                                        <option value="">—None—</option>
+                                        <aura:iteration items="{!v.BooleanList}" var="bool">
+                                            <option value="{!bool}">{!bool}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+    
+                    </div>
+    
+                </div>
+
+            </aura:if>
+            
+
+
+
+            <div class="slds-m-top_large">
+                <div class="slds-form-element buttons slds-text-align_center">
+                    <lightning:button variant="brand" label="Save" title="Brand action" onclick="{!c.CreateLead1 }" />
+                    <lightning:button variant="brand" label="Cancel" title="Brand action" onclick="{!c.Clearform }" />
+                </div>
+            </div>
+        </aura:if>
+
+        <aura:if isTrue="{!v.ShowUploadDocComp}">
+
+            <!--aura:iteration items="{!v.DocumentUploadTypelist}" var="doc">
+                
+                <c:uploadDocComp childcmpauraId ="{!doc.ChildDocAuraId}" aura:id="{!doc.ChildDocAuraId}" UploadLabel="{!doc.DocumentLabel}" UploadAuraId="{!doc.DocumentAuraId}"></c:uploadDocComp>
+                <br />
+            </aura:iteration -->
+            <aura:if isTrue="{!v.ShowuploadResume}">
+                <lightning:input aura:id="Resumeuploader" onchange="{!c.ResumehandleFilesChange}" type="file" name="file"
+                label="Upload Resume" multiple="false" required="true" />
+
+            <div class="slds-text-body_small slds-text-color_error">{!v.fileName} </div>
+
+            </aura:if>
+            
+            <br />
+            <aura:if isTrue="{!v.ShowUploadExperienceLetter}">
+                <lightning:input aura:id="ExpLetuploader" onchange="{!c.ExpLethandleFilesChange}" type="file" name="file"
+                label="Upload Experience Letter" multiple="false" required="true" />
+            <div class="slds-text-body_small slds-text-color_error">{!v.fileName1} </div>
+
+            </aura:if>
+            
+            <br />
+
+            <aura:if isTrue="{!v.ShowUploadJobOfferLetter}">
+                <lightning:input aura:id="JobOffLetteruploader" onchange="{!c.JobOffLethandleFilesChange}" type="file" name="file"
+                label="Upload Job Offer Letter" multiple="false" required="true" />
+            <div class="slds-text-body_small slds-text-color_error">{!v.fileName2} </div>
+
+            </aura:if>
+            
+            <br />
+
+            <aura:if isTrue="{!v.ShowUploadGraduationDegree}">
+                <lightning:input aura:id="GradDeguploader" onchange="{!c.GradDegreehandleFilesChange}" type="file" name="file"
+                label="Upload Graduation Degree" multiple="false" required="true" />
+            <div class="slds-text-body_small slds-text-color_error">{!v.fileName3} </div>
+
+            </aura:if>
+            
+            <br />
+
+            <aura:if isTrue="{!v.ShowUploadOthers}">
+                <lightning:input aura:id="Othersuploader" onchange="{!c.OthershandleFilesChange}" type="file" name="file"
+                label="Upload Others File" multiple="false" required="true" />
+            <div class="slds-text-body_small slds-text-color_error">{!v.fileName4} </div>
+
+            </aura:if>
+            
+            
+            <br />
+
+            <div class="slds-form-element buttons slds-text-align_center">
+                <lightning:button label="Save" onclick="{!c.handleSave}" variant="brand" disabled="{!v.disableUploadSave}"  class="slds-m-top--medium" />
+            </div>
+
+        </aura:if>
+    </div>
+    <!--/lightning:card -->
+
+</aura:component>

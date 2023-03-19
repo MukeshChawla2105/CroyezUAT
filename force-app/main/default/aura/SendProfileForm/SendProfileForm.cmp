@@ -1,0 +1,13 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" 
+                access="global" Controller="EmailIUtility">
+    
+     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="showSpinner" type="boolean"  default="false" />
+    
+         <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading, Please Wait..." title="Loading, Please Wait..." variant="brand" size="large"/>
+             </aura:if>
+
+	
+</aura:component>

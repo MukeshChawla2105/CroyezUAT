@@ -1,0 +1,13 @@
+.THIS .center {
+    text-align: center;
+    height:69px;
+    font-size: 15px; 
+    text-align: right; 
+    padding-right: 30px;
+    padding-top:20px; 
+  }
+
+  .THIS .c-container {
+    border: 1px solid #c9cbcf;
+    margin: 10px 0 20px;
+}

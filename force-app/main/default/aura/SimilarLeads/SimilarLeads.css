@@ -1,0 +1,32 @@
+.THIS .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
+
+.THIS .RightDiv {
+    background-color:#ECF3FE; 
+    border-radius:5px; 
+    font-size: 15px;
+    overflow-wrap: break-word; 
+    inline-size: 250px;
+    padding-left: 10px;
+    border: 2px solid #cee0fd;
+}
+
+.THIS Header {
+    font-weight: bold;
+    text-align: left;
+    font-size: large;
+}
+
+.THIS .LeftDiv {
+    font-size: 15px; 
+    text-align: left; 
+}
+
+.THIS .CenterDiv {
+    padding-right: 30px;
+    font-size: 15px;
+}

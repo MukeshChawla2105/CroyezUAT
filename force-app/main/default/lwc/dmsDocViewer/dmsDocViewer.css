@@ -1,0 +1,32 @@
+.listcontainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: auto;
+    align-content: space-around;
+
+}
+
+.list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-between;
+    align-content: space-around;
+
+    /* justify-content: flex-start; */
+    list-style-type: none;
+}
+.list h1 li{
+    color: blueviolet;
+    background-color: blue;
+    align-content: space-between;
+}
+
+.pathitem:hover{
+    text-decoration: underline;
+    color: blue;
+}
+
+.modalBody {
+    position: relative;
+}

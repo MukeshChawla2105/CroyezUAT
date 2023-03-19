@@ -1,0 +1,7 @@
+.card-hover:hover{
+    background-color: #4723d9;
+    transition: 500ms;
+    color:white;
+    font-weight: 500;
+    cursor: pointer;
+}

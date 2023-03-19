@@ -1,0 +1,29 @@
+<apex:page renderAs="pdf" applyHtmlTag="false" applyBodyTag="false" showHeader="false" sidebar="false">
+      <html>
+        <head>
+            <style>
+                .watermark {
+                
+                background-repeat: repeat;
+                background-image: url("{!URLFOR($Resource.CroyezPdfWaterMark)}");
+                 background-position: center;
+                background-size: -14in -14in!important ;
+                }
+                @page {
+                size: 19.0cm 29.7cm !important ;
+                margin-top: 0cm !important;
+                margin-left: -2cm !important;
+                margin-right: -1cm !important;
+                margin-bottom: 0cm !important;
+                padding-left : 2cm !important
+                
+                }
+            </style>
+        </head>
+        <body class="watermark">
+            <div>
+                aersrfssr
+            </div>
+          </body>
+    </html>
+</apex:page>

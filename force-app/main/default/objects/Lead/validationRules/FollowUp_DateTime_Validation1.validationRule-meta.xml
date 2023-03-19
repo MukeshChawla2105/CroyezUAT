@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FollowUp_DateTime_Validation1</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISPICKVAL( Status , &quot;Contacted&quot;),
+ISPICKVAL( Lead_Substatus__c , &quot;Follow up&quot;), OR(ISBLANK( Follow_Up_Date_Time__c ) ,
+DATETIMEVALUE( Follow_Up_Date_Time__c )&lt;  NOW()) 
+)</errorConditionFormula>
+    <errorMessage>FollowUp Date time should not be blank and FollowUp Date Time should be greater than present Date Time</errorMessage>
+</ValidationRule>

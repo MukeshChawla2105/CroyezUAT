@@ -1,0 +1,16 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" 
+                access="global" controller = "SendPaymentLinkHandler">
+    
+    <aura:html tag="style">
+        .slds-modal__container{
+        max-width: 80rem !important;
+        width:80% !important;
+        }
+    </aura:html>
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--aura:handler name="init" value="{!this}" action="{!c.sendPaymentLinkToLead}"/-->
+    <aura:attribute name="recordId" type="String" default=""/>
+    
+</aura:component>

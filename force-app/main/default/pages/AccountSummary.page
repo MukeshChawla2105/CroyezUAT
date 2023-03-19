@@ -1,0 +1,1311 @@
+<apex:page controller="AccountSummary_Controller" standardStylesheets="false" showHeader="false" sidebar="true">
+  <html>
+
+  <head>
+    <link rel='stylesheet' type='text/css' media='screen' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css'
+      crossorigin='anonymous'></link>
+    <link rel='stylesheet' type='text/css' media='screen' href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css'
+      crossorigin='anonymous'></link>
+    <apex:stylesheet value="{!$Resource.navCss}" />
+    <apex:stylesheet value="{!$Resource.appCss}" />
+    <link rel="stylsheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" crossorigin='anonymous'></link>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" /> -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js" crossorigin='anonymous'></script>
+    <style>
+      td {
+                position: relative;
+            }
+
+            div.arrow {
+                display:none;
+                position: absolute;
+                right:    30%;
+                top: 0px;   
+            }
+
+            tr:hover div.arrow {
+                display:block;
+            }
+
+            .loadingBackground {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        background: #F6F6F6;
+        z-index: 11111;
+        opacity: 0.7;
+        top: 0px;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        }
+        .loading {
+        top: 50%;
+        left: 50%;
+        margin: -50px 0px 0px -50px;
+        z-index: 111111;
+        position: fixed;
+        }
+
+    </style>
+  </head>
+
+  <body id="body-pd" ng-app="myApp" ng-controller="myCtrl">
+
+    <div class="loadingSection" id="spinner" ng-if="showSpinner">
+      <div class="loadingBackground"></div>
+      <div>
+          <apex:image url="{!$Resource.CLoader}" styleClass="loading" />
+      </div>
+  </div>
+
+    <header class="header" id="header" style="border-bottom: solid 1px #ddd">
+      <div class="header_toggle">
+        <i class='bx bx-menu' id="header-toggle"></i>
+      </div>
+      <div>
+        <a href="#">
+          <i class="fa-solid fa-bell me-3"></i>
+        </a>
+        <a href="#">
+          <i class="fa-solid fa-envelope me-3"></i>
+        </a>
+        <a href="#">
+          <i class="fa-solid fa-user"></i>
+        </a>
+      </div>
+    </header>
+    <div class="l-navbar" id="nav-bar">
+      <nav class="nav">
+        <div>
+          <a href="#" class="nav_logo">
+            <i class='bx bx-layer nav_logo-icon'></i>
+            <span class="nav_logo-name">Croyez Immigration</span>
+          </a>
+          <div ng-if="isAccount" class="nav_list">
+            <a href="#" class="nav_link active" ng-click="getAccount()">
+              <i class='bx bx-grid-alt nav_icon'></i>
+              <span class="nav_name">Account</span>
+            </a>
+            <a href="#" ng-click="getContact()" class="nav_link">
+              <i class='bx bx-user nav_icon'></i>
+              <span class="nav_name">Contacts</span>
+            </a>
+            <a href="#" ng-click="getDocument()" class="nav_link">
+              <i class='bx bx-folder-open nav_icon'></i>
+              <span class="nav_name">Documents</span>
+            </a>
+            <a href="#" ng-click="getOpportunity()" class="nav_link">
+              <i class='bx bx-gift nav_icon'></i>
+              <span class="nav_name">Opportunity</span>
+            </a>
+            <!--a href="#" ng-click="getCase()" class="nav_link">
+              <i class='bx bx-comment-error nav_icon'></i>
+              <span class="nav_name">Enquiries</span>
+            </a -->
+          </div>
+          <div ng-if="!isAccount" class="nav_list">
+            <a href="#" class="nav_link active" ng-click="getAccount()">
+              <i class='bx bx-grid-alt nav_icon'></i>
+              <span class="nav_name">Lead</span>
+            </a>
+            <a href="#" ng-click="getDocument()" class="nav_link">
+              <i class='bx bx-folder-open nav_icon'></i>
+              <span class="nav_name">Documents</span>
+            </a>
+            <a href="#" ng-click="getCase()" class="nav_link">
+              <i class='bx bx-comment-error nav_icon'></i>
+              <span class="nav_name">Enquiries</span>
+            </a>
+          </div>
+        </div>
+        <!-- a href="#" class="nav_link">
+          <i class='bx bx-log-out nav_icon'></i>
+          <span class="nav_name">SignOut</span>
+        </a -->
+      </nav>
+    </div>
+    <!--Container Main start-->
+    <div class="container-fluid" style="margin-top:5rem;">
+      <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-md-2 d-flex align-items-center justify-content-center">
+                <!-- <img src="..." class="img-fluid rounded-start" alt="..."> -->
+                <i class="fa-solid fa-building-columns img-fluid rounded-start fa-3x text-info ms-1"></i>
+              </div>
+              <div class="col-md-4 d-flex align-items-center justify-content-start">
+                <div class="card-body">
+                  <h5 class="card-title">{{isAccount?'Account':'Lead'}}</h5>
+                  <p class="card-text">Total 1</p>
+                  <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                </div>
+              </div>
+
+              <div class="col-md-6 d-flex align-items-center justify-content-start">
+                <div class="card-body">
+                  <h5 class="card-title" style="font-size: 17px">Stage</h5>
+                  <p class="card-text" style="font-size: 15px">{{isAccount?accData.Processing_Stage__c:leadData.status}}</p>
+                  <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <!-- <img src="..." class="img-fluid rounded-start" alt="..."> -->
+                <i class="fa-solid fa-user-plus img-fluid rounded-start fa-3x text-success ms-3"></i>
+              </div>
+              <div class="col-md-8 d-flex align-items-center justify-content-center">
+                <div class="card-body">
+                  <h5 class="card-title">Contact</h5>
+                  <p class="card-text">Total {{contacts !=null?contacts.length:0}}</p>
+                  <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <!-- <img src="..." class="img-fluid rounded-start" alt="..."> -->
+                <i class="fa-solid fa-gift img-fluid rounded-start fa-3x text-warning ms-3"></i>
+              </div>
+              <div class="col-md-8 d-flex align-items-center justify-content-center">
+                <div class="card-body">
+                  <h5 class="card-title">Opportunity</h5>
+                  <p class="card-text">Total {{opportunities!=null ? opportunities.length:0}}</p>
+                  <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <! <img src="..." class="img-fluid rounded-start" alt="..."> -->
+                <!-- i class="fa-solid fa-ticket img-fluid rounded-start fa-3x text-danger ms-3"></i>
+              </div>
+              <div class="col-md-8 d-flex align-items-center justify-content-center">
+                <div class="card-body">
+                  <h5 class="card-title">Case</h5>
+                  <p class="card-text">Total {{cases!=null?cases.length:0}}</p>
+                  <! <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                <!--/div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button ng-show="showCase" type="button" data-bs-toggle="modal" data-bs-target="#modelCreateCase" class="btn btn-primary" >Create Case</button>
+
+      <div class="card mt-3">
+        <!-- <div ng-show="isAccount && showAccount">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-3">Accoun Name</div>
+              <div class="col-md-3">Account Number</div>
+              <div class="col-md-2">Rating</div>
+              <div class="col-md-3">Website</div>
+              <div class="col-md-1">Action</div>
+            </div>
+          </div>
+          <div class="row ms-1">
+            <div class="col-md-3 mb-1 mt-1">{{accData.Name}}</div>
+            <div class="col-md-3 mb-1 mt-1">{{accData.AccountNumber}}</div>
+            <div class="col-md-2 mb-1 mt-1">{{accData.Rating}}</div>
+            <div class="col-md-3 mb-1 mt-1">{{accData.Website}}</div>
+            <div class="col-md-1 mb-1 mt-1">
+              <a href="#" ng-click="updateAccountRecordDet(accData.Id,'acc')" data-bs-toggle="modal" data-bs-target="#modelAccount">
+                <i class="fa-solid fa-pencil text-primary"></i>
+              </a>
+            </div>
+          </div>
+        </div> -->
+
+        <div ng-show="isAccount && showAccount" class="card-body">
+          <a ng-show ="!showAccEditForm" href="#" ng-click="showAccEditFormHandler()" class="d-flex flex-row-reverse">
+            <i class="fa-solid fa-pencil text-primary"></i>
+          </a>
+          <form>
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row mb-4">
+              <div class="col">
+                <div class="form-outline">
+                  <label class="form-label" for="form6Example1">Name</label>
+                  <input type="text" id="form6Example1" class="form-control" ng-model="accData.Name" ng-disabled="!showLeadEdit"/>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-outline">
+                  <label class="form-label" for="form6Example2">Email</label>
+                  <input type="text" id="form6Example2" class="form-control" ng-model="accData.Email__c" ng-disabled="!showLeadEdit"/>
+                </div>
+              </div>
+            </div>
+          
+            <!-- Text input -->
+            <div class="row mb-4">
+              <div class="col">
+                <div class="form-outline">
+                  <label class="form-label" for="form6Example1">Type</label>
+                  <input type="text" id="form6Example1" class="form-control" ng-model="accData.Type" ng-disabled="!showLeadEdit"/>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-outline">
+                  <label class="form-label" for="form6Example2">Account Type</label>
+                  <input type="text" id="form6Example2" class="form-control" ng-model="accData.Account_Type__c" ng-disabled="!showLeadEdit"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col">
+                <div class="form-outline">
+                  <label class="form-label" for="form6Example1">Industry</label>
+                  <input type="text" id="form6Example1" class="form-control" ng-model="accData.Industry" ng-disabled="!showLeadEdit"/>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-outline">
+                  <label class="form-label" for="form6Example2">Website </label>
+                  <input type="text" id="form6Example2" class="form-control" ng-model="accData.Website" ng-disabled="!showLeadEdit"/>
+                </div>
+              </div>
+            </div>
+          
+            <!-- Submit button -->
+            <div ng-if="showLeadEdit" class="d-flex justify-content-center">
+              <button type="submit" class="btn btn-primary btn-block me-2" ng-click="updateAccForm()">Save</button>
+              <button type="submit" class="btn btn-secondary btn-block" ng-click="closeAccEditFormHandler()">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+
+        <div ng-show="!isAccount && showAccount" class="card-body">
+          <a ng-show ="!showLeadEdit" href="#" ng-click="editLeadEditForm()" class="d-flex flex-row-reverse">
+            <i class="fa-solid fa-pencil text-primary"></i>
+          </a>
+          <form>
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row mb-4">
+              <div class="col">
+                <div class="form-outline">
+                  <label class="form-label" for="form6Example1">Name</label>
+                  <input type="text" id="form6Example1" class="form-control" ng-model="leadData.Name" ng-disabled="!showLeadEdit"/>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-outline">
+                  <label class="form-label" for="form6Example2">Email</label>
+                  <input type="text" id="form6Example2" class="form-control" ng-model="leadData.Email" ng-disabled="!showLeadEdit"/>
+                </div>
+              </div>
+            </div>
+          
+            <!-- Text input -->
+            <div class="row mb-4">
+              <div class="col">
+                <div class="form-outline">
+                  <label class="form-label" for="form6Example1">Phone</label>
+                  <input type="text" id="form6Example1" class="form-control" ng-model="leadData.Phone" ng-disabled="!showLeadEdit"/>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-outline">
+                  <label class="form-label" for="form6Example2">Company</label>
+                  <input type="text" id="form6Example2" class="form-control" ng-model="leadData.Company" ng-disabled="!showLeadEdit"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col">
+                <div class="form-outline">
+                  <label class="form-label" for="form6Example1">Title</label>
+                  <input type="text" id="form6Example1" class="form-control" ng-model="leadData.Title" ng-disabled="!showLeadEdit"/>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-outline">
+                  <label class="form-label" for="form6Example2">Designation </label>
+                  <input type="text" id="form6Example2" class="form-control" ng-model="leadData.Designation__c" ng-disabled="!showLeadEdit"/>
+                </div>
+              </div>
+            </div>
+          
+            <!-- Submit button -->
+            <div ng-if="showLeadEdit" class="d-flex justify-content-center">
+              <button type="submit" class="btn btn-primary btn-block me-2" ng-click="updateAccForm()">Save</button>
+              <button type="submit" class="btn btn-secondary btn-block" ng-click="closeLeadEditForm()">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        
+
+        <div ng-if="showContact">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-3">First Name</div>
+              <div class="col-md-3">Last Name</div>
+              <div class="col-md-3">E-mail</div>
+              <div class="col-md-2">Phone</div>
+              <div class="col-md-1">Action</div>
+            </div>
+          </div>
+          <div class="row ms-1" ng-repeat="c in contacts">
+            <div class="col-md-3 mb-1 mt-1">{{c.FirstName}}</div>
+            <div class="col-md-3 mb-1 mt-1">{{c.LastName}}</div>
+            <div class="col-md-3 mb-1 mt-1">{{c.Email}}</div>
+            <div class="col-md-2 mb-1 mt-1">{{c.Phone}}</div>
+            <div class="col-md-1 mb-1 mt-1">
+              <a href="#" ng-click="deleteContactRecord(c.Id)">
+                <i class="fa-solid fa-trash-can text-danger me-3"></i>
+              </a>
+              <a href="#" ng-click="getContactDet($index)" data-bs-toggle="modal" data-bs-target="#modelContact">
+                <i class="fa-solid fa-pencil text-primary"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div ng-if="showDocument">
+          
+            <table class="table table-striped">
+              <tr>
+                  <th>Name</th>
+                  <th>Status</th>
+                  <th>Total Files</th>
+                  <th>Action</th>
+              </tr>
+              <tr ng-repeat="file in files track by $index">
+                  <td>{{file.Name}}</td>
+                  <td>{{file.Status__c}}</td>
+                  <td>{{file.ContentDocumentLinks?file.ContentDocumentLinks.length:0}}</td>
+                  <td >
+                      <button ng-disabled="file.Status__c=='Uploaded'" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#docupload" ng-click="showDocUpload($index)"><i class="fa fa-upload"/></button>
+                      <div class="arrow row card pt-3">
+                          <ul style="list-style: none;" ng-repeat="f in file.ContentDocumentLinks">
+                              <li> <i class="fa fa-download" style="color: rgb(0, 85, 231)"/> <a href="https://sales-production--fsldemo--c.sandbox.vf.force.com/sfc/servlet.shepherd/document/download/{{f.ContentDocumentId}}?operationContext=S1">{{f.ContentDocument.Title}}</a></li>
+                          </ul>
+                      </div>
+                  </td>
+              </tr>
+          </table>
+        </div>
+
+        <div class="modal"  id="docupload" tabindex="-1" aria-labelledby="docupload">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Choose Document :</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <input type="file" class="form-control" id="attachmentFiles" onchange="angular.element(this).scope().fileSelected()"/>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" id="file-upload-close-btn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" ng-click="uploadDocument();" ng-disabled="!isFileSelected">Upload</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+        <div ng-if="showOpportunity">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-3">Stage Name</div>
+              <div class="col-md-3">Close Date</div>
+              <div class="col-md-3">Amount</div>
+              <div class="col-md-3">Action</div>
+            </div>
+          </div>
+          <div class="row ms-1" ng-repeat="a in opportunities">
+            <div class="col-md-3 mb-1 mt-1">{{a.StageName}}</div>
+            <div class="col-md-3 mb-1 mt-1">{{a.CloseDate}}</div>
+            <div class="col-md-3 mb-1 mt-1">{{a.Amount}}</div>
+            <div class="col-md-3 mb-1 mt-1">
+              <a href="#" ng-click="deleteOpportunityRecord(a.Id)">
+                <i class="fa-solid fa-trash-can text-danger me-3"></i>
+              </a>
+              <a href="#" ng-click="getOppDet($index)" data-bs-toggle="modal" data-bs-target="#modelOpportunity">
+                <i class="fa-solid fa-pencil text-primary"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div ng-if="showCase">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-3">Subject</div>
+              <div class="col-md-3">Priority</div>
+              <div class="col-md-3">Status</div>
+              <div class="col-md-3">Action</div>
+            </div>
+          </div>
+          <div class="row ms-1" ng-repeat="c in cases">
+            <div class="col-md-3 mb-1 mt-1">{{c.Subject}}</div>
+            <div class="col-md-3 mb-1 mt-1">{{c.Priority}}</div>
+            <div class="col-md-3 mb-1 mt-1">{{c.Status}}</div>
+            <div class="col-md-3 mb-1 mt-1">
+              <a href="#" ng-click="deleteCaseRecord(c.Id)">
+                <i class="fa-solid fa-trash-can text-danger me-3"></i>
+              </a>
+              <a href="#" ng-click="getCaseDet($index)" data-bs-toggle="modal" data-bs-target="#modelCase">
+                <i class="fa-solid fa-pencil text-primary"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal" id="modelAccount" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Update Account</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" ng-model="objAccount.Name" id="txtAccname" placeholder="account name" />
+                    <label for="txtAccname">Account Name</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" ng-model="objAccount.Rating" id="txtrating" placeholder="account rating" />
+                    <label for="txtrating">Rating</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" ng-click="updateAccountRecord()" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal" id="modelContact" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Update Contact</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" ng-model="objContact.FirstName" id="txtConFirstName" placeholder="contact first name"
+                    />
+                    <label for="txtConFirstName">First Name</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" ng-model="objContact.LastName" id="txtConLastName" placeholder="contact last name"
+                    />
+                    <label for="txtConLastName">Last Name</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" ng-model="objContact.Email" id="txtConEmail" placeholder="contact email" />
+                    <label for="txtConEmail">Email</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" ng-model="objContact.Phone" id="txtConPhone" placeholder="contact phone" />
+                    <label for="txtConPhone">Phone</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" ng-click="updateContactRecord()" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal" id="modelOpportunity" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Update Opportunity</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="col-md-12 mb-3">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" ng-model="objOpportunity.StageName" id="txtOppStageName" placeholder="stage name"/>
+                  <label for="txtOppStageName">Stage Name</label>
+                </div>
+              </div>
+              <div class="col-md-12 mb-3">
+                <div class="form-floating">
+                  <input type="text" class="form-control" ng-model="objOpportunity.CloseDate" id="txtCloseDate" placeholder="close date" />
+                  <label for="txtCloseDate">Close Date</label>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-floating">
+                  <input type="text" class="form-control" ng-model="objOpportunity.Amount" id="txtOppAmount" placeholder="amount" />
+                  <label for="txtOppAmount">Amount</label>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" ng-click="updateOppRecord()" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal" id="modelCase" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Update Case</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" ng-model="objCase.Priority" id="txtCasePriority" placeholder="priority" />
+                    <label for="txtCasePriority">Priority</label>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" ng-model="objCase.Status" id="txtcaseStatus" placeholder="status" />
+                    <label for="txtcaseStatus">Status</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" ng-click="updateCaseRecord()" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="modelCreateCase" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Create Case</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" ng-model="createCaseObj.Subject" id="txtCasePriority" placeholder="Subject" />
+                    <label for="txtCasePriority">Subject</label>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-floating">
+
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" ng-model="createCaseObj.Description"  placeholder="Description"></textarea>
+                    <!-- <input type="text" class="form-control" ng-model="createCaseObj.Description" id="txtcaseStatus" placeholder="Description" /> -->
+                    <label for="txtcaseStatus">Description</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" ng-click="createCase()" class="btn btn-primary">Create</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Container Main end-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <script>
+      debugger
+      var accObj;
+      var leadObj;
+      
+
+      var isAccount = {!isAccount}
+
+      if(!isAccount){
+        leadObj = JSON.parse('{!leadRecordString}')
+        console.log('LeadObj---',leadObj);
+      }else{
+        accObj = JSON.parse('{!accRecordString}');
+      }
+
+      debugger;
+      var app = angular.module('myApp', [])
+        .controller('myCtrl', function ($scope) {
+          $scope.showAccount = true;
+          $scope.isAccount = isAccount;
+
+          const urlParams = new URLSearchParams(window.location.search);
+          const cId = urlParams.get('id');
+
+          $scope.showLeadEdit = false;
+          $scope.showAccEditForm = false;
+          $scope.accData = accObj;
+          $scope.leadData = leadObj;
+
+          $scope.objAccount = {};
+          $scope.objContact = {};
+          $scope.objOpportunity = {};
+          $scope.objCase = {};
+          $scope.files = [];
+          $scope.showSpinner = false;
+          var IndexContact = 0;
+          var IndexOpp = 0;
+          var IndexCase = 0;
+
+          $scope.createCaseObj = {
+            Subject:'',
+            Description:''
+          }
+
+
+          $scope.createCase = function(){
+            console.log('NewCase---',$scope.createCaseObj);
+            $scope.showSpinner = true;
+            AccountSummary_Controller.createCase(cId,$scope.createCaseObj,$scope.isAccount,function(res,evt){
+              console.log('Result to create case---',res);
+              $scope.showSpinner = false;
+              if(res=='Success'){
+                swal(res,{
+                  icon:'success'
+                })
+                    .then((value) => {
+                      location.reload();
+                    });
+              }else{
+                swal("something went wrong, please contact to administrator!", {
+                    icon: "error",
+                  });
+              }
+            })
+          }
+
+          var maxStringSize = 6000000;    //Maximum String size is 6,000,000 characters 6 MB
+          var maxFileSize = 4350000;      //After Base64 Encoding, this is the max file size
+          var chunkSize = 950000;         //Maximum Javascript Remoting message size is 1,000,000 characters
+          var attachment;
+          var attachmentName;
+          var fileSize;
+          // $scope.getCaseDet = function (index) {
+          //   $scope.IndexCase = index;
+          //   $scope.objCase.Priority = $scope.accData.Cases && $scope.accData.Cases.records[index].Priority;
+          //   $scope.objCase.Status = $scope.accData.Cases && $scope.accData.Cases.records[index].Status;
+          // }
+
+          $scope.isFileSelected = false;
+          $scope.fileSelected = function(){
+              debugger;
+              var choosedFile = document.getElementById('attachmentFiles').files[0];
+
+              console.log("ChoosedFile----",choosedFile);
+              $scope.isFileSelected = true;
+              $scope.$apply();
+          }
+
+          $scope.editLeadEditForm = function(){
+            $scope.showLeadEdit = true;
+          }
+
+          $scope.showAccEditFormHandler = function(){
+            $scope.showLeadEdit = true;
+          }
+
+          $scope.closeAccEditFormHandler = function(){
+            $scope.showLeadEdit = false;
+          }
+          
+          $scope.closeLeadEditForm = function(){
+            $scope.showLeadEdit = false;
+          }
+
+          $scope.updateLeadForm = function(){
+            //updateLead;
+            
+            console.log('LEadData---',$scope.leadData);
+            delete $scope.leadData.attributes;
+            $scope.showSpinner = true;
+            AccountSummary_Controller.updateLead(cId,$scope.leadData,function(res,evt){
+
+              if(res=='Success'){
+                swal('Record updated successfully!', {
+                          icon: "success",
+                        });
+              }else{
+                swal("something went wrong, please contact to administrator!", {
+                    icon: "error",
+                  });
+              }
+
+              $scope.showSpinner = false;
+              $scope.showLeadEdit = false;
+              $scope.$apply();
+            })
+          }
+
+          $scope.updateAccForm = function(){
+            //updateLead;
+            
+            console.log('LEadData---',$scope.accData);
+            let obj = {...$scope.accData};
+            delete obj.Cases;
+            delete obj.Contacts;
+            delete obj.Opportunities;
+            delete obj.attributes;
+            $scope.showSpinner = true;
+            AccountSummary_Controller.updateAccount(cId,obj,function(res,evt){
+
+              if(res=='Success'){
+                swal('Record updated successfully!', {
+                          icon: "success",
+                        });
+              }else{
+                swal("something went wrong, please contact to administrator!", {
+                    icon: "error",
+                  });
+              }
+
+              $scope.showSpinner = false;
+              $scope.showLeadEdit = false;
+              $scope.$apply();
+            })
+          }
+
+          $scope.selectedDocId;
+          $scope.showDocUpload = function(index){
+              debugger;
+              $scope.selectedDocId = $scope.files[index].Id;
+              console.log('Index---',index);
+              $scope.isFileSelected = false;
+              $scope.showUplaodUserDoc = true;
+              //$scope.$apply();
+          }
+
+          $scope.updateCaseRecord = function () {
+            Visualforce.remoting.Manager.invokeAction(
+              '{!$RemoteAction.AccountSummary_Controller.updateCaseRecord}',
+              $scope.accData.Cases.records[$scope.IndexCase].Id,$scope.objCase,
+              function (result, event) {
+                debugger
+                if (event.status) {
+                  // Get DOM IDs for HTML and Visualforce elements like this
+                  swal(result)
+                    .then((value) => {
+                      location.reload();
+                    });
+                  // swal(result, {
+                  //   icon: "success",
+                  // });
+                }
+                else {
+                  swal("something went wrong, please contact to administrator!", {
+                    icon: "error",
+                  });
+                }
+              },
+              { escape: true }
+            );
+          }
+          $scope.getOppDet = function (index) {
+            $scope.IndexOpp=index;
+            $scope.objOpportunity.StageName = $scope.accData.Opportunities.records[index].StageName;
+            $scope.objOpportunity.CloseDate = $scope.accData.Opportunities.records[index].CloseDate;
+            $scope.objOpportunity.Amount = $scope.accData.Opportunities.records[index].Amount;
+            // $scope.objOpportunity.Id = $scope.accData.Opportunities.records[index].Id;
+          }
+          $scope.updateOppRecord = function () {
+            debugger;
+            AccountSummary_Controller.updateOppRecord($scope.accData.Opportunities.records[$scope.IndexOpp].Id,$scope.objOpportunity,function (result, event) {
+              console.log(result);
+              console.log(event);
+              if (event.status) {
+                
+                swal(result)
+                    .then((value) => {
+                      location.reload();
+                    });
+              }
+            },
+              { escape: true }
+            )
+            // Visualforce.remoting.Manager.invokeAction(
+            //   '{!$RemoteAction.AccountSummary_Controller.updateOppRecord}',
+            //   $scope.accData.Opportunities.records[$scope.IndexOpp].Id,$scope.objOpportunity,
+            //   function (result, event) {
+            //     debugger
+            //     console.log('opportunity'+result);
+            //     if (event.status) {
+            //       // Get DOM IDs for HTML and Visualforce elements like this
+            //       swal(result)
+            //         .then((value) => {
+            //           location.reload();
+            //         });
+            //       // swal(result, {
+            //       //   icon: "success",
+            //       // });
+            //     }
+            //     else
+            //     {
+            //       swal("something went wrong, please contact to administrator!", {
+            //         icon: "error",
+            //       });
+            //     }
+            //   },
+            //   { escape: true }
+            // );         
+          }
+          $scope.getContactDet = function (index) {
+            $scope.IndexContact = index;
+            $scope.objContact.FirstName = $scope.accData.Contacts.records[index].FirstName;
+            $scope.objContact.LastName = $scope.accData.Contacts.records[index].LastName;
+            $scope.objContact.Email = $scope.accData.Contacts.records[index].Email;
+            $scope.objContact.Phone = $scope.accData.Contacts.records[index].Phone;
+          }
+
+          $scope.fetchDocument = function(){
+            let recId = $scope.isAccount?$scope.accData.Id:$scope.leadData.Id;
+            Visualforce.remoting.Manager.invokeAction(
+              $scope.isAccount?'{!$RemoteAction.AccountSummary_Controller.getAccDocumet}':'{!$RemoteAction.AccountSummary_Controller.getLeadDocumet}',
+              recId,
+              function (result, event) {
+                debugger
+                if (event.status) {
+                  $scope.files = result;
+                  $scope.$apply();
+                  console.log('Result----',result);
+                }
+                else {
+                  swal("something went wrong, please contact to administrator!", {
+                    icon: "error",
+                  });
+                }
+              },
+              { escape: true }
+            );
+          }
+          $scope.updateContactRecord = function () {
+            Visualforce.remoting.Manager.invokeAction(
+              '{!$RemoteAction.AccountSummary_Controller.updateContactRecord}',
+              $scope.accData.Contacts.records[$scope.IndexContact].Id, $scope.objContact,
+              function (result, event) {
+                debugger
+                if (event.status) {
+                  // Get DOM IDs for HTML and Visualforce elements like this
+                  swal(result)
+                    .then((value) => {
+                      location.reload();
+                    });
+                  // swal(result, {
+                  //   icon: "success",
+                  // });
+                }
+                else {
+                  swal("something went wrong, please contact to administrator!", {
+                    icon: "error",
+                  });
+                }
+              },
+              { escape: true }
+            );
+          }
+          $scope.updateAccountRecord = function () {
+            Visualforce.remoting.Manager.invokeAction(
+              '{!$RemoteAction.AccountSummary_Controller.updateAccountRecord}',
+              $scope.accData.Id, $scope.objAccount,
+              function (result, event) {
+                if (event.status) {
+                  // Get DOM IDs for HTML and Visualforce elements like this
+                  swal(result)
+                    .then((value) => {
+                      location.reload();
+                    });
+                  // swal(result, {
+                  //   icon: "success",
+                  // });
+                }
+                else {
+                  swal("something went wrong, please contact to administrator!", {
+                    icon: "error",
+                  });
+                }
+              },
+              { escape: true }
+            );
+          }
+          $scope.updateAccountRecordDet = function () {
+            $scope.objAccount.Name = $scope.accData.Name;
+            $scope.objAccount.Rating = $scope.accData.Rating;
+          }
+
+          $scope.contacts = accObj && accObj.Contacts&&accObj.Contacts.records;
+
+          if(!$scope.isAccount){
+            $scope.cases =  leadObj && leadObj.Cases__r && leadObj.Cases__r.records;
+          }else{
+            $scope.cases = accObj && accObj.Cases && accObj.Cases.records;
+          }
+          
+          $scope.opportunities = accObj && accObj.Opportunities && accObj.Opportunities.records;
+          $scope.getContact = function () {
+            $scope.showAccount = false;
+            $scope.showOpportunity = false;
+            $scope.showCase = false;
+            $scope.showContact = true;
+            $scope.showDocument = false;
+          }
+          $scope.getOpportunity = function () {
+            $scope.showAccount = false;
+            $scope.showOpportunity = true;
+            $scope.showCase = false;
+            $scope.showContact = false;
+            $scope.showDocument = false;
+          }
+          $scope.getCase = function () {
+            $scope.showAccount = false;
+            $scope.showOpportunity = false;
+            $scope.showCase = true;
+            $scope.showContact = false;
+            $scope.showDocument = false;
+          }
+          $scope.getAccount = function () {
+            $scope.showAccount = true;
+            $scope.showOpportunity = false;
+            $scope.showCase = false;
+            $scope.showContact = false;
+            $scope.showDocument = false;
+          }
+          $scope.getDocument = function () {
+            $scope.showAccount = false;
+            $scope.showOpportunity = false;
+            $scope.showCase = false;
+            $scope.showContact = false;
+            $scope.showDocument = true;
+
+            $scope.fetchDocument();
+          }
+          //deleteOpportunityRecord
+          $scope.deleteAccountRecord = function (accountId) {
+            console.log(accountId);
+            swal({
+              title: "Are you sure? " + accountId + "",
+              text: "Once deleted, you will not be able to recover this record!",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+              .then((willDelete) => {
+                if (willDelete) {
+                  Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.AccountSummary_Controller.deleteAccountRecord}',
+                    accountId,
+                    function (result, event) {
+                      if (event.status) {
+                        // Get DOM IDs for HTML and Visualforce elements like this
+                        swal(result, {
+                          icon: "success",
+                        });
+                      }
+                    },
+                    { escape: true }
+                  );
+
+                }
+                // else {
+                //     swal("Record is safe!");
+                // }
+              });
+          }
+          $scope.deleteContactRecord = function (contactId) {
+            console.log(contactId);
+            swal({
+              title: "Are you sure? " + contactId + "",
+              text: "Once deleted, you will not be able to recover this record!",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+              .then((willDelete) => {
+                if (willDelete) {
+                  Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.AccountSummary_Controller.deleteContactRecord}',
+                    contactId,
+                    function (result, event) {
+                      if (event.status) {
+                        // Get DOM IDs for HTML and Visualforce elements like this
+                        swal(result, {
+                          icon: "success",
+                        });
+                      }
+                    },
+                    { escape: true }
+                  );
+
+                }
+                // else {
+                //     swal("Record is safe!");
+                // }
+              });
+          }
+          $scope.deleteOpportunityRecord = function (oppid) {
+            console.log(oppid);
+            swal({
+              title: "Are you sure? " + oppid + "",
+              text: "Once deleted, you will not be able to recover this record!",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+              .then((willDelete) => {
+                if (willDelete) {
+                  Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.AccountSummary_Controller.deleteOpportunityRecord}',
+                    oppid,
+                    function (result, event) {
+                      if (event.status) {
+                        // Get DOM IDs for HTML and Visualforce elements like this
+                        swal(result, {
+                          icon: "success",
+                        });
+                      }
+                    },
+                    { escape: true }
+                  );
+
+                }
+                // else {
+                //     swal("Record is safe!");
+                // }
+              });
+          }
+          $scope.deleteCaseRecord = function (caseid) {
+            console.log(caseid);
+            swal({
+              title: "Are you sure? " + caseid + "",
+              text: "Once deleted, you will not be able to recover this record!",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+              .then((willDelete) => {
+                if (willDelete) {
+                  Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.AccountSummary_Controller.deleteCaseRecord}',
+                    caseid,
+                    function (result, event) {
+                      if (event.status) {
+                        // Get DOM IDs for HTML and Visualforce elements like this
+                        swal(result, {
+                          icon: "success",
+                        });
+                      }
+                    },
+                    { escape: true }
+                  );
+
+                }
+                // else {
+                //     swal("Record is safe!");
+                // }
+              });
+          }
+
+
+
+        $scope.uploadDocument = function(){
+            var file = document.getElementById('attachmentFiles').files[0]; 
+            
+            
+            var userDocId=$scope.selectedDocId
+
+            console.log('UserDocId---',userDocId);
+            
+
+            if (file != undefined) {
+                if (file.size <= maxFileSize) {
+                  $scope.showSpinner = true;
+                    
+                    attachmentName = file.name;
+                    fileChoosen = file.name;
+                    const myArr = attachmentName.split(".");
+                    /* if (myArr[1] != "pdf") {
+                                alert("Please upload in PDF format only");
+                                return;
+                            } */
+                    if($scope.selectedDocName != undefined){
+                        attachmentName = $scope.selectedDocName+".pdf";
+                    }
+                    var fileReader = new FileReader();
+                    fileReader.onloadend = function (e) {
+                        attachment = window.btoa(this.result);  //Base 64 encode the file before sending it
+                        positionIndex = 0;
+                        fileSize = attachment.length;
+                        // $scope.showSpinner = false;
+                        console.log("Total Attachment Length: " + fileSize);
+                        doneUploading = false;
+                        var fileId='';
+                        if (fileSize < maxStringSize) {
+                            
+                            $scope.uploadAttachment(userDocId, fileId); //Attachment, userdocId, 
+                        } else {
+                            alert("Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".");
+                        }
+                        
+                    }
+                    fileReader.onerror = function (e) {
+                        alert("There was an error reading the file.  Please try again.");
+                    }
+                    fileReader.onabort = function (e) {
+                        alert("There was an error reading the file.  Please try again.");
+                    }
+                    
+                    fileReader.readAsBinaryString(file);  //Read the body of the file
+                    
+                } else {
+                    alert("File must be under 4.3 MB in size.  Your file is too large.  Please try again.");
+                    //$scope.showSpinner = false;
+                }
+            } else {
+                alert("You must choose a file before trying to upload it");
+                //$scope.showSpinner = false;
+            }
+          }
+
+          $scope.uploadAttachment = function (userDocId, fileId) { 
+            debugger;
+            var attachmentBody = "";
+            if (fileId == undefined) {
+                fileId = "";
+            }
+            if (fileSize <= positionIndex + chunkSize) {
+                attachmentBody = attachment.substring(positionIndex);
+                doneUploading = true;
+            } else {
+                attachmentBody = attachment.substring(positionIndex, positionIndex + chunkSize);
+            }
+            console.log("Uploading " + attachmentBody.length + " chars of " + fileSize);
+            
+            console.log("attachmentBody----", attachmentBody);
+            console.log("attachmentName----", attachmentName);
+            console.log("userDocId----", userDocId);
+            console.log("fileId----", fileId);
+            
+            //$rootScope.showSpinner=true
+
+            AccountSummary_Controller.doCUploadAttachment(attachmentBody, attachmentName, '', userDocId,function (cvId, event) {
+              if(cvId === 'ERROR') {
+                    alert('Something went wrong, please contact support@ondonte.com');
+                    return;
+                }
+                if (event.type === 'exception') {
+                    console.log("exception");
+                    console.log(event);
+                } else if (event.status) {
+                    if (doneUploading == true) {
+                      $scope.showSpinner = false;
+                        $scope.showUplaodUserDoc = false;
+                        $scope.fetchDocument();
+                        swal('Uploaded Succesfully', {
+                          icon: "success",
+                        });
+                        //$rootScope.showSpinner=false;
+                        try{
+                          $('#docupload').modal('hide');
+                        }catch(error){
+                          console.log('Error---',error);
+                        }
+                        
+                        $scope.$apply();
+                    } 
+                    else {
+                        debugger;
+                        positionIndex += chunkSize;
+                        $scope.uploadAttachment(userDocId, cvId);
+                    }
+                } 
+                    else {
+                        console.log(event.message);
+                    }
+            },
+              { buffer: true, escape: true, timeout: 120000 }
+            )
+          }
+        });
+      document.addEventListener("DOMContentLoaded", function (event) {
+
+        const showNavbar = (toggleId, navId, bodyId, headerId) => {
+          const toggle = document.getElementById(toggleId),
+            nav = document.getElementById(navId),
+            bodypd = document.getElementById(bodyId),
+            headerpd = document.getElementById(headerId)
+
+          // Validate that all variables exist
+          if (toggle && nav && bodypd && headerpd) {
+            toggle.addEventListener('click', () => {
+              // show navbar
+              nav.classList.toggle('show')
+              // change icon
+              toggle.classList.toggle('bx-x')
+              // add padding to body
+              bodypd.classList.toggle('body-pd')
+              // add padding to header
+              headerpd.classList.toggle('body-pd')
+            })
+          }
+        }
+
+        showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
+
+        /*===== LINK ACTIVE =====*/
+        const linkColor = document.querySelectorAll('.nav_link')
+
+        function colorLink() {
+          if (linkColor) {
+            linkColor.forEach(l => l.classList.remove('active'))
+            this.classList.add('active')
+          }
+        }
+        linkColor.forEach(l => l.addEventListener('click', colorLink))
+
+        // Your code to run since DOM is loaded and ready
+      });
+    </script>
+  </body>
+
+  </html>
+</apex:page>
