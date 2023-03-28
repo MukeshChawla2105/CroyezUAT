@@ -1,0 +1,20 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" controller="ShareRecordController" >
+    <aura:attribute name="leadId" type="String" />
+    <aura:attribute name="users" type="User[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-2">
+            <lightning:select name="userSelect" label="Select User(s)"   aura:id="userSelect">
+                <aura:iteration items="{!v.users}" var="user">
+                    <option value="{!user.Id}">{!user.Name}</option>
+                </aura:iteration>
+            </lightning:select>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            <lightning:button variant="brand" label="Share" onclick="{!c.shareLead}" />
+        </div>
+    </div>
+    
+</aura:component>

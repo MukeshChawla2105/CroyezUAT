@@ -61,6 +61,501 @@
                 <default>false</default>
                 <label>Robotics</label>
             </value>
+            <value>
+                <fullName>Values</fullName>
+                <default>false</default>
+                <label>Values</label>
+            </value>
+            <value>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+                <label>Marketing</label>
+            </value>
+            <value>
+                <fullName>Statistics</fullName>
+                <default>false</default>
+                <label>Statistics</label>
+            </value>
+            <value>
+                <fullName>Accounting &amp; Finance</fullName>
+                <default>false</default>
+                <label>Accounting &amp; Finance</label>
+            </value>
+            <value>
+                <fullName>Economics</fullName>
+                <default>false</default>
+                <label>Economics</label>
+            </value>
+            <value>
+                <fullName>Finance</fullName>
+                <default>false</default>
+                <label>Finance</label>
+            </value>
+            <value>
+                <fullName>Banking &amp; Insurance</fullName>
+                <default>false</default>
+                <label>Banking &amp; Insurance</label>
+            </value>
+            <value>
+                <fullName>B.sc. IT</fullName>
+                <default>false</default>
+                <label>B.sc. IT</label>
+            </value>
+            <value>
+                <fullName>B.sc. Computer Science</fullName>
+                <default>false</default>
+                <label>B.sc. Computer Science</label>
+            </value>
+            <value>
+                <fullName>B.sc. Chemistry</fullName>
+                <default>false</default>
+                <label>B.sc. Chemistry</label>
+            </value>
+            <value>
+                <fullName>B.sc. Physics</fullName>
+                <default>false</default>
+                <label>B.sc. Physics</label>
+            </value>
+            <value>
+                <fullName>B.sc. Biotechnology</fullName>
+                <default>false</default>
+                <label>B.sc. Biotechnology</label>
+            </value>
+            <value>
+                <fullName>Computer Graphics</fullName>
+                <default>false</default>
+                <label>Computer Graphics</label>
+            </value>
+            <value>
+                <fullName>Database Management Systems (DBMS)</fullName>
+                <default>false</default>
+                <label>Database Management Systems (DBMS)</label>
+            </value>
+            <value>
+                <fullName>Internet Technologies</fullName>
+                <default>false</default>
+                <label>Internet Technologies</label>
+            </value>
+            <value>
+                <fullName>IT Technologies</fullName>
+                <default>false</default>
+                <label>IT Technologies</label>
+            </value>
+            <value>
+                <fullName>Management Information System (MIS)</fullName>
+                <default>false</default>
+                <label>Management Information System (MIS)</label>
+            </value>
+            <value>
+                <fullName>Music and Video Processing</fullName>
+                <default>false</default>
+                <label>Music and Video Processing</label>
+            </value>
+            <value>
+                <fullName>Network Systems</fullName>
+                <default>false</default>
+                <label>Network Systems</label>
+            </value>
+            <value>
+                <fullName>Systems Analysis</fullName>
+                <default>false</default>
+                <label>Systems Analysis</label>
+            </value>
+            <value>
+                <fullName>Programming Languages (C++/Java)</fullName>
+                <default>false</default>
+                <label>Programming Languages (C++/Java)</label>
+            </value>
+            <value>
+                <fullName>Business Law</fullName>
+                <default>false</default>
+                <label>Business Law</label>
+            </value>
+            <value>
+                <fullName>Ethics</fullName>
+                <default>false</default>
+                <label>Ethics</label>
+            </value>
+            <value>
+                <fullName>Entrepreneurship</fullName>
+                <default>false</default>
+                <label>Entrepreneurship</label>
+            </value>
+            <value>
+                <fullName>Human Resource Management</fullName>
+                <default>false</default>
+                <label>Human Resource Management</label>
+            </value>
+            <value>
+                <fullName>Management Information Systems</fullName>
+                <default>false</default>
+                <label>Management Information Systems</label>
+            </value>
+            <value>
+                <fullName>Project Management</fullName>
+                <default>false</default>
+                <label>Project Management</label>
+            </value>
+            <value>
+                <fullName>BBA in Business Administration</fullName>
+                <default>false</default>
+                <label>BBA in Business Administration</label>
+            </value>
+            <value>
+                <fullName>BBA in International Business</fullName>
+                <default>false</default>
+                <label>BBA in International Business</label>
+            </value>
+            <value>
+                <fullName>BBA in Computer Application</fullName>
+                <default>false</default>
+                <label>BBA in Computer Application</label>
+            </value>
+            <value>
+                <fullName>BBA in Finance</fullName>
+                <default>false</default>
+                <label>BBA in Finance</label>
+            </value>
+            <value>
+                <fullName>BBA in Entrepreneurship</fullName>
+                <default>false</default>
+                <label>BBA in Entrepreneurship</label>
+            </value>
+            <value>
+                <fullName>BBA in Hospitality</fullName>
+                <default>false</default>
+                <label>BBA in Hospitality</label>
+            </value>
+            <value>
+                <fullName>BBA in Human Resources</fullName>
+                <default>false</default>
+                <label>BBA in Human Resources</label>
+            </value>
+            <value>
+                <fullName>BBA in Information Systems</fullName>
+                <default>false</default>
+                <label>BBA in Information Systems</label>
+            </value>
+            <value>
+                <fullName>BBA in Global Business</fullName>
+                <default>false</default>
+                <label>BBA in Global Business</label>
+            </value>
+            <value>
+                <fullName>BBA in Tourism</fullName>
+                <default>false</default>
+                <label>BBA in Tourism</label>
+            </value>
+            <value>
+                <fullName>BBA in Human Resource Management</fullName>
+                <default>false</default>
+                <label>BBA in Human Resource Management</label>
+            </value>
+            <value>
+                <fullName>BBA in Marketing</fullName>
+                <default>false</default>
+                <label>BBA in Marketing</label>
+            </value>
+            <value>
+                <fullName>BBA in Management</fullName>
+                <default>false</default>
+                <label>BBA in Management</label>
+            </value>
+            <value>
+                <fullName>BA English Subjects</fullName>
+                <default>false</default>
+                <label>BA English Subjects</label>
+            </value>
+            <value>
+                <fullName>BA Economics Subjects</fullName>
+                <default>false</default>
+                <label>BA Economics Subjects</label>
+            </value>
+            <value>
+                <fullName>BA Psychology Subjects</fullName>
+                <default>false</default>
+                <label>BA Psychology Subjects</label>
+            </value>
+            <value>
+                <fullName>BA Geography</fullName>
+                <default>false</default>
+                <label>BA Geography</label>
+            </value>
+            <value>
+                <fullName>BA Sociology Subjects</fullName>
+                <default>false</default>
+                <label>BA Sociology Subjects</label>
+            </value>
+            <value>
+                <fullName>BA in Literature, Language and Linguistics</fullName>
+                <default>false</default>
+                <label>BA in Literature, Language and Linguistics</label>
+            </value>
+            <value>
+                <fullName>BA History</fullName>
+                <default>false</default>
+                <label>BA History</label>
+            </value>
+            <value>
+                <fullName>BA/BA [Hons] in Fine Arts</fullName>
+                <default>false</default>
+                <label>BA/BA [Hons] in Fine Arts</label>
+            </value>
+            <value>
+                <fullName>BA Economics</fullName>
+                <default>false</default>
+                <label>BA Economics</label>
+            </value>
+            <value>
+                <fullName>BA in Journalism</fullName>
+                <default>false</default>
+                <label>BA in Journalism</label>
+            </value>
+            <value>
+                <fullName>BA Psychology</fullName>
+                <default>false</default>
+                <label>BA Psychology</label>
+            </value>
+            <value>
+                <fullName>BA Political Science</fullName>
+                <default>false</default>
+                <label>BA Political Science</label>
+            </value>
+            <value>
+                <fullName>BA LLB</fullName>
+                <default>false</default>
+                <label>BA LLB</label>
+            </value>
+            <value>
+                <fullName>MA Political Science</fullName>
+                <default>false</default>
+                <label>MA Political Science</label>
+            </value>
+            <value>
+                <fullName>MA Economics</fullName>
+                <default>false</default>
+                <label>MA Economics</label>
+            </value>
+            <value>
+                <fullName>MA Language</fullName>
+                <default>false</default>
+                <label>MA Language</label>
+            </value>
+            <value>
+                <fullName>MA History</fullName>
+                <default>false</default>
+                <label>MA History</label>
+            </value>
+            <value>
+                <fullName>MA Psychology</fullName>
+                <default>false</default>
+                <label>MA Psychology</label>
+            </value>
+            <value>
+                <fullName>MA Communication Studies</fullName>
+                <default>false</default>
+                <label>MA Communication Studies</label>
+            </value>
+            <value>
+                <fullName>MA Archaeology</fullName>
+                <default>false</default>
+                <label>MA Archaeology</label>
+            </value>
+            <value>
+                <fullName>MA Sociology</fullName>
+                <default>false</default>
+                <label>MA Sociology</label>
+            </value>
+            <value>
+                <fullName>MA Literature</fullName>
+                <default>false</default>
+                <label>MA Literature</label>
+            </value>
+            <value>
+                <fullName>M.Phil Physics</fullName>
+                <default>false</default>
+                <label>M.Phil Physics</label>
+            </value>
+            <value>
+                <fullName>M.Phil Mathematics</fullName>
+                <default>false</default>
+                <label>M.Phil Mathematics</label>
+            </value>
+            <value>
+                <fullName>M.Phil Biotechnology</fullName>
+                <default>false</default>
+                <label>M.Phil Biotechnology</label>
+            </value>
+            <value>
+                <fullName>M.Phil History</fullName>
+                <default>false</default>
+                <label>M.Phil History</label>
+            </value>
+            <value>
+                <fullName>M.Phil Computer Science</fullName>
+                <default>false</default>
+                <label>M.Phil Computer Science</label>
+            </value>
+            <value>
+                <fullName>M.Phil Sociology</fullName>
+                <default>false</default>
+                <label>M.Phil Sociology</label>
+            </value>
+            <value>
+                <fullName>M.Phil Chemistry</fullName>
+                <default>false</default>
+                <label>M.Phil Chemistry</label>
+            </value>
+            <value>
+                <fullName>M.Phil Commerce</fullName>
+                <default>false</default>
+                <label>M.Phil Commerce</label>
+            </value>
+            <value>
+                <fullName>M.Phil Botany</fullName>
+                <default>false</default>
+                <label>M.Phil Botany</label>
+            </value>
+            <value>
+                <fullName>M.Phil Economics</fullName>
+                <default>false</default>
+                <label>M.Phil Economics</label>
+            </value>
+            <value>
+                <fullName>M.Phil Education</fullName>
+                <default>false</default>
+                <label>M.Phil Education</label>
+            </value>
+            <value>
+                <fullName>M.Phil English</fullName>
+                <default>false</default>
+                <label>M.Phil English</label>
+            </value>
+            <value>
+                <fullName>Others</fullName>
+                <default>false</default>
+                <label>Others</label>
+            </value>
+            <value>
+                <fullName>Systems Development</fullName>
+                <default>false</default>
+                <label>Systems Development</label>
+            </value>
+            <value>
+                <fullName>Systems Engineering</fullName>
+                <default>false</default>
+                <label>Systems Engineering</label>
+            </value>
+            <value>
+                <fullName>Networking</fullName>
+                <default>false</default>
+                <label>Networking</label>
+            </value>
+            <value>
+                <fullName>Internet</fullName>
+                <default>false</default>
+                <label>Internet</label>
+            </value>
+            <value>
+                <fullName>Application Software</fullName>
+                <default>false</default>
+                <label>Application Software</label>
+            </value>
+            <value>
+                <fullName>Software Development</fullName>
+                <default>false</default>
+                <label>Software Development</label>
+            </value>
+            <value>
+                <fullName>Troubleshooting</fullName>
+                <default>false</default>
+                <label>Troubleshooting</label>
+            </value>
+            <value>
+                <fullName>Hardware Technology</fullName>
+                <default>false</default>
+                <label>Hardware Technology</label>
+            </value>
+            <value>
+                <fullName>Taxation</fullName>
+                <default>false</default>
+                <label>Taxation</label>
+            </value>
+            <value>
+                <fullName>Mathematics</fullName>
+                <default>false</default>
+                <label>Mathematics</label>
+            </value>
+            <value>
+                <fullName>Accounting</fullName>
+                <default>false</default>
+                <label>Accounting</label>
+            </value>
+            <value>
+                <fullName>Banking</fullName>
+                <default>false</default>
+                <label>Banking</label>
+            </value>
+            <value>
+                <fullName>E-Commerce</fullName>
+                <default>false</default>
+                <label>E-Commerce</label>
+            </value>
+            <value>
+                <fullName>Business Management</fullName>
+                <default>false</default>
+                <label>Business Management</label>
+            </value>
+            <value>
+                <fullName>Computer Application</fullName>
+                <default>false</default>
+                <label>Computer Application</label>
+            </value>
+            <value>
+                <fullName>Computer Science</fullName>
+                <default>false</default>
+                <label>Computer Science</label>
+            </value>
+            <value>
+                <fullName>Mechanical Engineering</fullName>
+                <default>false</default>
+                <label>Mechanical Engineering</label>
+            </value>
+            <value>
+                <fullName>Electronics &amp; Communication ( ECE)</fullName>
+                <default>false</default>
+                <label>Electronics &amp; Communication ( ECE)</label>
+            </value>
+            <value>
+                <fullName>Electrical and Electronics(EEE)</fullName>
+                <default>false</default>
+                <label>Electrical and Electronics(EEE)</label>
+            </value>
+            <value>
+                <fullName>Electrical Engineering</fullName>
+                <default>false</default>
+                <label>Electrical Engineering</label>
+            </value>
+            <value>
+                <fullName>Information Technology</fullName>
+                <default>false</default>
+                <label>Information Technology</label>
+            </value>
+            <value>
+                <fullName>Systems Management</fullName>
+                <default>false</default>
+                <label>Systems Management</label>
+            </value>
+            <value>
+                <fullName>Civil Engineering</fullName>
+                <default>false</default>
+                <label>Civil Engineering</label>
+            </value>
+            <value>
+                <fullName>Human Resources</fullName>
+                <default>false</default>
+                <label>Human Resources</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

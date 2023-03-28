@@ -1,0 +1,18 @@
+<apex:page standardController="Lead" extensions="LeadController"  sidebar="false" showHeader="false">
+    <apex:form >
+        	<apex:pageBlock >
+                <apex:pageMessages id="showmsg"></apex:pageMessages>
+         		<apex:pageBlockSection title="Create a Lead" columns="2">
+                    <apex:inputField value="{!newLead.FirstName}" />
+                    <apex:inputField value="{!newLead.LastName}" required="true" />
+                    <apex:inputField value="{!newLead.Company}"  /> 
+                    <apex:inputField value="{!newLead.Email}" />
+                    <apex:inputField value="{!newLead.Phone}" />
+                    <apex:inputField value="{!newLead.Status}" />
+         		</apex:pageBlockSection>
+         		<apex:pageBlockButtons location="bottom">
+            		<apex:commandButton value="Save" action="{!saveLead}" rerender="showmsg"/>
+         		</apex:pageBlockButtons>
+      </apex:pageBlock>
+    </apex:form>
+</apex:page>

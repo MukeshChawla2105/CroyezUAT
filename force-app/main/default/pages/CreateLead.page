@@ -1,0 +1,16 @@
+<apex:page controller="LeadCreationController" showHeader="false" sidebar="false">
+    <apex:form >
+        <apex:pageBlock title="Create Lead">
+            <apex:pageBlockSection columns="2">
+                <apex:inputField value="{!newLead.FirstName}" label="First Name"/>
+                <apex:inputField value="{!newLead.LastName}" label="Last Name"/>
+                <apex:inputField value="{!newLead.Company}" label="Company"/>
+                <apex:inputField value="{!newLead.Email}" label="Email"/>
+                <apex:inputField value="{!newLead.Phone}" label="Phone"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!saveLead}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
