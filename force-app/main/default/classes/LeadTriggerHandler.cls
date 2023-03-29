@@ -189,4 +189,154 @@ public class LeadTriggerHandler{
             HandleBusinessException.captureError('LeadTriggerHandler', 'CreateFollowuptask', e, null);
         }
     }
+
+    public void tagSalesMemberToOpportunity(List<Lead> leadList){
+        for(Lead ld : leadList){
+            ld.Sales_Team_Member__c = '0052w00000AfrmPAAR';
+        }
+    }
+
+    public void createVisaInquiryRecord(List<Lead> newLeadList){
+        List<Visa_Inquiry__c> visaInqListTobeInsert = new List<Visa_Inquiry__c>();
+        for(Lead ld : newLeadList){
+            Visa_Inquiry__c visaInq = new Visa_Inquiry__c();
+            visaInq.Stage__c = 'New';
+            visaInq.Name = ld.Visa_Type__c;
+            visaInq.Visa_Type__c = ld.Visa_Type__c;
+            visaInq.Visa_Purpose__c = ld.Visa_Purpose__c;
+            visaInq.Sales_Team_Member__c = ld.Sales_Team_Member__c;
+            visaInq.Lead__c = ld.Id;
+            visaInqListTobeInsert.add(visaInq);
+        }
+        
+        if(!visaInqListTobeInsert.isEmpty()){
+            insert visaInqListTobeInsert;
+        }
+    }
+
+    public void afterInsert(Map<Id,Lead> leadMap){
+        System.debug('RUN--'+leadMap);
+        Explorer_Configuration__c  leDocConfig = Explorer_Configuration__c.getValues('Lead');
+        String accFoldersString = leDocConfig.Folders__c;
+        
+        List<String> leadFolders = accFoldersString.split(';');
+        System.debug('Folder Selected---'+leadFolders);
+        
+        List<Folder__c> folders = new List<Folder__c>();
+        
+        for(Lead le : leadMap.values()){
+            for(String fName : leadFolders){
+                Folder__c folder = new Folder__c(Name=fName,Lead__c = le.Id);
+                folders.add(folder);
+            }
+        }
+        
+        if(!folders.isEmpty()){
+         	insert folders;   
+        }
+    }
+
+    public void convertDuplicateLeadsToConvertedOpp(Map<Id,Lead> oldleadMap, Map<Id,Lead> NewleadMap){
+
+        System.debug('oldleadMap ===> '+ oldleadMap);
+        System.debug('NewleadMap ===> '+ NewleadMap);
+        List<Lead> ConvertingDuplicateLeadList = new List<Lead>();
+
+        List<String> EmailListString = new List<String>();
+        Map<String, Lead> MapOfLeadWithEmail = new Map<String, Lead>();
+        
+        List<String> PhoneListString = new List<String>();
+        Map<String, Lead> MapOfLeadWithPhone = new Map<String, Lead>();
+
+        Map<string, List<Lead>> existingLeadsByEmail = new Map<string, List<Lead>>();
+        Map<string, List<Lead>> existingLeadsByPhone = new Map<string, List<Lead>>();
+
+        // ================================= After converison ===============================
+
+        Map<String, String> MapofLeadIdWithConvertedAccountId = new Map<String, String>();
+        Map<String, String> MapofLeadIdWithConvertedOppId = new Map<String, String>();
+        Map<String, String> MapofAccountIDWithConvertedOpporuntyId = new Map<String, String>();
+
+        String LeadQueryString = 'select Id, Email, status, course__c, CID__c,Customers__c,OwnerId,Alternate_Phone__c,Phone,Alternate_Email__c From Lead';
+        String whereClauses = '( ';
+        try {
+            for (lead  LeadRec : NewleadMap.values()) {
+                if (LeadRec.IsConverted && LeadRec.IsConverted != oldleadMap.get( LeadRec.Id ).IsConverted) {
+                    if (LeadRec.Email != null) {
+                        EmailListString.add(LeadRec.Email);
+                        MapOfLeadWithEmail.put(LeadRec.Email, LeadRec);
+                    }
+                    if (LeadRec.Phone != null) {
+                        PhoneListString.add(LeadRec.Phone);
+                        MapOfLeadWithPhone.put(LeadRec.Phone, LeadRec);
+                    }
+                    if (LeadRec.ConvertedAccountId != null) {
+                        MapofLeadIdWithConvertedAccountId.put(LeadRec.Id,  LeadRec.ConvertedAccountId );
+                        
+                    }
+                    if (LeadRec.ConvertedOpportunityId != null) {
+                        MapofLeadIdWithConvertedAccountId.put(LeadRec.Id,  LeadRec.ConvertedOpportunityId );
+                        
+                    }
+                    if (LeadRec.ConvertedOpportunityId != null && LeadRec.ConvertedAccountId != null) {
+                        MapofAccountIDWithConvertedOpporuntyId.put(LeadRec.ConvertedAccountId, LeadRec.ConvertedOpportunityId);
+                        
+                    }
+                } 
+            }
+            if (!EmailListString.isEmpty()) {
+                whereClauses = whereClauses + ' ( Email IN : emailList) ';
+            }
+            if (!PhoneListString.isEmpty()) {
+                if (!string.isBlank(whereClauses) && whereClauses.length() > 2) {
+                    whereClauses = whereClauses + 'OR  (Phone LIKE : phoneList  ) ';
+                    
+                }else {     
+                    whereClauses = whereClauses + ' ( Phone LIKE : phoneList ) ';
+                }
+            }
+            if (whereClauses.length() > 2 ) {
+                LeadQueryString = LeadQueryString +' Where '+ whereClauses+ ' )  and isConverted = false order by CreatedDate Desc';
+                ConvertingDuplicateLeadList = Database.query(LeadQueryString);
+                if (!ConvertingDuplicateLeadList.isEmpty()) {
+                    
+                    for (Lead DuplicateLead : ConvertingDuplicateLeadList) {
+                        if (!EmailListString.isEmpty()) {
+                            if (!EmailListString.contains(DuplicateLead.Email)) {
+                                if (existingLeadsByEmail.containsKey(DuplicateLead.Email)) {
+                                    List<Lead> ExistinLeadWithEmail = existingLeadsByEmail.get(DuplicateLead.Email);
+                                    ExistinLeadWithEmail.add(DuplicateLead);
+                                    existingLeadsByEmail.put(DuplicateLead.Email, ExistinLeadWithEmail);
+                                }
+                                else {
+                                    List<Lead> NewEmailLeadList = new List<Lead>();
+                                    NewEmailLeadList.add(DuplicateLead);
+                                    existingLeadsByEmail.put(DuplicateLead.Email, NewEmailLeadList);
+                                }
+                            }
+                        }
+
+                        if (!PhoneListString.isEmpty()) {
+                            if (!PhoneListString.contains(DuplicateLead.Phone)) {
+                                if (existingLeadsByPhone.containsKey(DuplicateLead.Phone)) {
+                                    List<Lead> ExistinLeadWithPhone = existingLeadsByEmail.get(DuplicateLead.Phone);
+                                    ExistinLeadWithPhone.add(DuplicateLead);
+                                    existingLeadsByPhone.put(DuplicateLead.Phone, ExistinLeadWithPhone);                                    
+                                }
+                                else {
+                                    List<Lead> NewPhoneLeadList = new List<Lead>();
+                                    NewPhoneLeadList.add(DuplicateLead);
+                                    existingLeadsByEmail.put(DuplicateLead.Phone, NewPhoneLeadList);
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        } catch (Exception e) {
+            
+        }
+
+    }
 }

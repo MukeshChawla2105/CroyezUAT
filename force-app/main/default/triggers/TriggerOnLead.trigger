@@ -4,7 +4,7 @@ trigger TriggerOnLead on Lead (before insert, after insert, after update, before
     LeadTriggerDMSHandler leadTriggerHandlerinstance = LeadTriggerDMSHandler.getInstance();
     if (trigger.isInsert && trigger.isBefore){
             //handlerInstance.assignInboundLeadToDefaultQueue(trigger.new );
-            LeadTriggerHelper.tagSalesMemberToOpportunity(trigger.new);
+            handlerInstance.tagSalesMemberToOpportunity(trigger.new);
             
 
         }
@@ -12,8 +12,8 @@ trigger TriggerOnLead on Lead (before insert, after insert, after update, before
     if (trigger.isInsert && trigger.isafter){
           //LeadAssignmentExecutionCriteria.validateEntryCriteria(trigger.new );
           //handlerInstance.triggerRRLogic(Trigger.New);
-          leadTriggerHandlerinstance.afterInsert(Trigger.newMap);
-          LeadTriggerHelper.createVisaInquiryRecord(Trigger.new);
+          handlerInstance.afterInsert(Trigger.newMap);
+          handlerInstance.createVisaInquiryRecord(Trigger.new);
           handlerInstance.Createtask(trigger.new);
         }
 

@@ -1,0 +1,81 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" 
+                access="global" controller = "TransferAndExitModuleController">
+    
+    <aura:attribute name="allUserandSobject" type="Object" access="PRIVATE"/>
+    <aura:attribute name="allUser" type="List" access="PRIVATE"/>
+    <aura:attribute name="AllSobjectMap" type="List" access="PRIVATE"/>
+    
+    <aura:attribute name="UserExceptExistingUser" type="List" access="PRIVATE"/>
+    <aura:attribute name="selectedExistingUser" type="String" access="PRIVATE"/>
+    <aura:attribute name="selectedNewuser" type="String" access="PRIVATE"/> 
+    
+    <aura:attribute name="selectedObject" type="String" access="PRIVATE"/>
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+    <div class="slds-box slds-theme_shade slds-theme_alert-texture">
+        
+        <div class="modal-header slds-modal__header slds-size_1-of-1">
+            <h2 class="title slds-text-heading--medium">Transfer and Exit Module</h2>
+        </div>
+        
+        <div class="slds-modal__content slds-p-around--x-small slds-align_absolute-center slds-size_1-of-1 slds-is-relative">
+            <form class="slds-form--stacked">
+                Select any Object and get All the Fields...
+            </form>
+        </div>
+        <lightning:layout>
+            <lightning:layoutItem padding="around-small" size="2">
+               
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="8">
+                <div class="slds-grid slds-gutters slds-p-around_small">
+                    
+                    <div class="slds-col slds-size_1-of-3">
+                        <span><lightning:select name="User" label="Select Existing User" aura:id="existinguserId" value="{!v.selectedExistingUser}" onchange="{!c.OnExistingUserChange}">
+                            <option value="">choose one...</option>
+                            <aura:iteration items="{!v.allUser}" var="object">
+                                <option text="{!object.value.Name}" value="{!object.value.Id}" selected="{!object.selected}"/>
+                            </aura:iteration>
+                            </lightning:select>
+                        </span>
+                    </div>
+                    
+                    
+                    
+                    <div class="slds-col slds-size_1-of-3">
+                        <span><lightning:select name="User" label="Select New user" aura:id="NewuserId" value="{!v.selectedNewuser}" >
+                            <option value="">choose one...</option>
+                            <aura:iteration items="{!v.UserExceptExistingUser}" var="object">
+                                <option text="{!object.value.Name}" value="{!object.value.Id}" selected="{!object.selected}"/>
+                            </aura:iteration>
+                            </lightning:select>
+                        </span>
+                    </div>
+                    
+                    <div class="slds-col slds-size_1-of-3">
+                            <div>
+                                <span><lightning:select name="objects" label="Select a Object" aura:id="objectId" value="{!v.selectedObject}" >
+                                    <option value="">choose one...</option>
+                                    <aura:iteration items="{!v.AllSobjectMap}" var="object">
+                                        <option text="{!object.value}" value="{!object.key}" selected="{!object.selected}"/>
+                                    </aura:iteration>
+                                    </lightning:select>
+                                </span>
+                            </div>
+                    </div>
+                    
+                </div>  
+                <div class="slds-align_absolute-center">
+                    
+                     <lightning:button variant="brand" label="Transfer All Records" onclick="{!c.TransferAndExit}" />
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="2">
+               
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+    
+</aura:component>

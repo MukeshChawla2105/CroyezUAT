@@ -91,7 +91,7 @@ public class LeadTriggerHelper{
             System.debug('The Error Has occured due to ======> ' + e.getMessage() + ' at line number ======> ' + e.getLineNumber());
 
         }
-    }*/
+    }
     
     public static void tagSalesMemberToOpportunity(List<Lead> leadList){
         for(Lead ld : leadList){
@@ -115,6 +115,6 @@ public class LeadTriggerHelper{
         if(!visaInqListTobeInsert.isEmpty()){
             insert visaInqListTobeInsert;
         }
-    }
+    }*/
 
 }
