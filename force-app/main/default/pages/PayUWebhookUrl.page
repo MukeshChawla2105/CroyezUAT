@@ -72,38 +72,9 @@
                  var url = new URL($scope.urlParams);
                  return url.searchParams.get(result);
              }
-            // }   function getParameters(param){
-            //     var url = new URL($scope.respUrl);
-            //     return url.searchParams.get(param);
-            // }
             })
 
-        //     App.controller('myctrl',function ($scope,$rootScope)){
-        //         debugger;
-        //         alert("hi")
-        //         $scope.respUrl = doucment.URL;
-        //         $scope.phone = getParameters('phone');
-        //         $scope.txnid = getParameters('txn_id');
-        //         $scope.status = getParameters('status');
-        //         $scope.curl = getParameters('curl');
-        //         $scope.firstname = getParameters('firstname');
-        //         $scope.cardno = getParameters('card_no');
-        //         $scope.furl = getParameters('furl');
-        //         $scope.mode = getParameters('mode');
-        //         $scope.amount = getParameters('amount');
-        //         $scope.surl = getParameters('status');
-        //         $scope.card_hash = getParameters('status');
-
-        //         updateRecord()
-        //         function updateRecord(){
-        //             PayuWebhook_Controller.updatePageParameter($scope.recordId,'Success',function(res,evt){
-        //             console.log('Status Updated');
-        //         })
-        //     }   function getParameters(param){
-        //         var url = new URL($scope.respUrl);
-        //         return url.searchParams.get(param);
-        //     }
-        // }) 
+       
                 
             
     </script>
