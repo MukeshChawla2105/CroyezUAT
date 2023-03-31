@@ -45,20 +45,7 @@
                 obj.email = urlParams.get('email');
                 obj.mihpayid = urlParams.get('mihpayid');
 
-
-//                 var db = JSON.stringify(data);
-// var db = JSON.parse(db);
-
-
                var data = JSON.stringify(obj);
-              // var result = JSON.parse(data);
-
-//                var rv = {};
-//   for (var i = 0; i < result.length; ++i)
-//     if (result[i] !== undefined) rv[i] = result[i];
-//     debugger;
-//     console.log('rv'+rv);  
-//     var stringformat = JSON.stringify(rv);
 
                updateRecord();
                  function updateRecord(){
@@ -74,9 +61,6 @@
              }
             })
 
-       
-                
-            
     </script>
      <body ng-app="myApp" ng-controller="myctrl">
 
