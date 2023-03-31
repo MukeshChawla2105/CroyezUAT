@@ -1,20 +1,65 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
                 access="global" controller="ShareRecordController" >
-    <aura:attribute name="leadId" type="String" />
-    <aura:attribute name="users" type="User[]" />
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
-
-    <div class="slds-grid slds-wrap">
-        <div class="slds-col slds-size_1-of-2">
-            <lightning:select name="userSelect" label="Select User(s)"   aura:id="userSelect">
-                <aura:iteration items="{!v.users}" var="user">
-                    <option value="{!user.Id}">{!user.Name}</option>
-                </aura:iteration>
-            </lightning:select>
-        </div>
-        <div class="slds-col slds-size_1-of-2">
-            <lightning:button variant="brand" label="Share" onclick="{!c.shareLead}" />
-        </div>
-    </div>
+    <aura:attribute name="recId" type="String" />
+    <aura:attribute name="users" type="list" />
     
+    <aura:attribute name="userlist" type="list"/>
+    <aura:handler   name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="data" type="List"/>
+    <aura:attribute name="userIdList" type="List"/>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute name="selectedCount" type="integer" default="0"/>
+     
+    
+    <lightning:card title="Lead Details">
+       
+        
+        <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+            <thead class="dinesh">
+                <tr class="slds-text-title--caps">
+                    <th style="auto" class="slds-text-align--right">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                <label class="slds-checkbox">
+                                    <ui:inputCheckbox aura:id="box3" change="{!c.selectAll}"/>
+                                    <span class="slds-checkbox--faux"></span>
+                                    <span class="slds-form-element__label text"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <span class="slds-truncate" title="Name"> Name</span>      
+                    </th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <aura:iteration items="{!v.data}" var="con" indexVar="i">
+                    <tr>
+                        <td scope="row" class="slds-text-align--right" style="width:3.25rem;">
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox text="{!con.Id}" aura:id="boxPack" value="" change="{!c.checkboxSelect}"/>
+                                        <span class="slds-checkbox--faux"></span>
+                                        <span class="slds-form-element__label text"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </td>  
+                        <td scope="row">
+                            <div class="slds-truncate"><a>{!con.Name}</a></div>
+                        </td>
+                        
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+        
+        <br/>
+        <lightning:button variant="brand" label="Share" onclick="{!c.shareAllRecord}" />
+    </lightning:card>
+     
 </aura:component>

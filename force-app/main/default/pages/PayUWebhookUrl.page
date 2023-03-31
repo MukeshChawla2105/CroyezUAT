@@ -1,0 +1,114 @@
+<apex:page controller="PayuWebhook_Controller">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="angular-cdn-src.min.js"></script>
+    <script>
+            var app = angular.module('myApp',[]);
+            app.controller('myctrl',function($scope,$rootScope){
+                debugger;
+               // alert("hi")
+                // const params = new URLSearchParams(window.location.search);
+               // $scope.respUrl = doucment.URL;
+                var obj = {};
+                 
+
+               $scope.objectList = [];
+               const queryString = window.location.search;
+               const urlParams = new URLSearchParams(queryString);
+
+               obj.phone = urlParams.get('phone');
+               $scope.objectList.push($scope.phone);
+               obj.txnid = urlParams.get('txnid');
+               $scope.objectList.push($scope.txn_id);
+               obj.status =  urlParams.get('status');
+               $scope.objectList.push($scope.status);
+               obj.curl = urlParams.get('curl');
+               $scope.objectList.push($scope.curl); 
+                obj.firstname = urlParams.get('firstname');
+                $scope.objectList.push($scope.firstname);
+                obj.card_no = urlParams.get('card_no');
+                 $scope.objectList.push($scope.card_no);
+                 obj.furl = urlParams.get('furl');
+                $scope.objectList.push($scope.furl);
+                obj.mode = urlParams.get('mode');
+                $scope.objectList.push($scope.mode);
+                obj.amount = urlParams.get('amount');
+                $scope.objectList.push($scope.amount);
+                obj.surl = urlParams.get('status');
+                 $scope.objectList.push($scope.status);
+                 obj.card_hash = urlParams.get('card_hash');
+                $scope.objectList.push($scope.card_hash);
+                obj.hash = urlParams.get('hash');
+                obj.field4 = urlParams.get('field4');
+                obj.field3 = urlParams.get('field3');
+                obj.field2 = urlParams.get('field2');
+                obj.field9 = urlParams.get('field9');
+                obj.email = urlParams.get('email');
+                obj.mihpayid = urlParams.get('mihpayid');
+
+
+//                 var db = JSON.stringify(data);
+// var db = JSON.parse(db);
+
+
+               var data = JSON.stringify(obj);
+              // var result = JSON.parse(data);
+
+//                var rv = {};
+//   for (var i = 0; i < result.length; ++i)
+//     if (result[i] !== undefined) rv[i] = result[i];
+//     debugger;
+//     console.log('rv'+rv);  
+//     var stringformat = JSON.stringify(rv);
+
+               updateRecord();
+                 function updateRecord(){
+                    debugger;
+                    PayuWebhook_Controller.updatePageParameter( data,function(res,evt){
+                     console.log('Status Updated');
+                 })
+            }
+            function getParameters(result){
+                deubgger;
+                 var url = new URL($scope.urlParams);
+                 return url.searchParams.get(result);
+             }
+            // }   function getParameters(param){
+            //     var url = new URL($scope.respUrl);
+            //     return url.searchParams.get(param);
+            // }
+            })
+
+        //     App.controller('myctrl',function ($scope,$rootScope)){
+        //         debugger;
+        //         alert("hi")
+        //         $scope.respUrl = doucment.URL;
+        //         $scope.phone = getParameters('phone');
+        //         $scope.txnid = getParameters('txn_id');
+        //         $scope.status = getParameters('status');
+        //         $scope.curl = getParameters('curl');
+        //         $scope.firstname = getParameters('firstname');
+        //         $scope.cardno = getParameters('card_no');
+        //         $scope.furl = getParameters('furl');
+        //         $scope.mode = getParameters('mode');
+        //         $scope.amount = getParameters('amount');
+        //         $scope.surl = getParameters('status');
+        //         $scope.card_hash = getParameters('status');
+
+        //         updateRecord()
+        //         function updateRecord(){
+        //             PayuWebhook_Controller.updatePageParameter($scope.recordId,'Success',function(res,evt){
+        //             console.log('Status Updated');
+        //         })
+        //     }   function getParameters(param){
+        //         var url = new URL($scope.respUrl);
+        //         return url.searchParams.get(param);
+        //     }
+        // }) 
+                
+            
+    </script>
+     <body ng-app="myApp" ng-controller="myctrl">
+
+     </body>
+   
+</apex:page>

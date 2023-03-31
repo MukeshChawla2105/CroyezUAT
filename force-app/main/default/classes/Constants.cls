@@ -32,4 +32,8 @@ public without sharing class Constants{
 
     public static final string INVOICE_REALIZED = 'Realized';
 
+    // ==================================== Opportunity Stage ============================== 
+
+    
+
 }

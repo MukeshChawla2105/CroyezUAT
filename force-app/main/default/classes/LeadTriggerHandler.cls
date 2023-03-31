@@ -302,38 +302,44 @@ public class LeadTriggerHandler{
                     
                     for (Lead DuplicateLead : ConvertingDuplicateLeadList) {
                         if (!EmailListString.isEmpty()) {
-                            if (!EmailListString.contains(DuplicateLead.Email)) {
-                                if (existingLeadsByEmail.containsKey(DuplicateLead.Email)) {
-                                    List<Lead> ExistinLeadWithEmail = existingLeadsByEmail.get(DuplicateLead.Email);
-                                    ExistinLeadWithEmail.add(DuplicateLead);
-                                    existingLeadsByEmail.put(DuplicateLead.Email, ExistinLeadWithEmail);
-                                }
-                                else {
-                                    List<Lead> NewEmailLeadList = new List<Lead>();
-                                    NewEmailLeadList.add(DuplicateLead);
-                                    existingLeadsByEmail.put(DuplicateLead.Email, NewEmailLeadList);
-                                }
+                            if (!EmailListString.contains(DuplicateLead.Email) && MapOfLeadWithEmail.containsKey(DuplicateLead.Email)) {
+                                Opportunity opp = new Opportunity();
+                                opp.name = DuplicateLead.name;
+                                opp.AccountId = MapOfLeadWithEmail.get(DuplicateLead.Email).ConvertedAccountId;
+                                //opp.StageName = Cons
+
+
+                                // if (existingLeadsByEmail.containsKey(DuplicateLead.Email)) {
+                                //     List<Lead> ExistinLeadWithEmail = existingLeadsByEmail.get(DuplicateLead.Email);
+                                //     ExistinLeadWithEmail.add(DuplicateLead);
+                                //     existingLeadsByEmail.put(DuplicateLead.Email, ExistinLeadWithEmail);
+                                // }
+                                // else {
+                                //     List<Lead> NewEmailLeadList = new List<Lead>();
+                                //     NewEmailLeadList.add(DuplicateLead);
+                                //     existingLeadsByEmail.put(DuplicateLead.Email, NewEmailLeadList);
+                                // }
                             }
                         }
 
-                        if (!PhoneListString.isEmpty()) {
+                        else if (!PhoneListString.isEmpty()) {
                             if (!PhoneListString.contains(DuplicateLead.Phone)) {
-                                if (existingLeadsByPhone.containsKey(DuplicateLead.Phone)) {
-                                    List<Lead> ExistinLeadWithPhone = existingLeadsByEmail.get(DuplicateLead.Phone);
-                                    ExistinLeadWithPhone.add(DuplicateLead);
-                                    existingLeadsByPhone.put(DuplicateLead.Phone, ExistinLeadWithPhone);                                    
-                                }
-                                else {
-                                    List<Lead> NewPhoneLeadList = new List<Lead>();
-                                    NewPhoneLeadList.add(DuplicateLead);
-                                    existingLeadsByEmail.put(DuplicateLead.Phone, NewPhoneLeadList);
-                                }
+                                // if (existingLeadsByPhone.containsKey(DuplicateLead.Phone)) {
+                                //     List<Lead> ExistinLeadWithPhone = existingLeadsByEmail.get(DuplicateLead.Phone);
+                                //     ExistinLeadWithPhone.add(DuplicateLead);
+                                //     existingLeadsByPhone.put(DuplicateLead.Phone, ExistinLeadWithPhone);                                    
+                                // }
+                                // else {
+                                //     List<Lead> NewPhoneLeadList = new List<Lead>();
+                                //     NewPhoneLeadList.add(DuplicateLead);
+                                //     existingLeadsByEmail.put(DuplicateLead.Phone, NewPhoneLeadList);
+                                // }
                             }
                         }
-                        
                     }
                 }
             }
+           
         } catch (Exception e) {
             
         }
