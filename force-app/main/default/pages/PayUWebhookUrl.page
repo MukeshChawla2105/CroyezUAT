@@ -5,13 +5,33 @@
             var app = angular.module('myApp',[]);
             app.controller('myctrl',function($scope,$rootScope){
                 debugger;
-               // alert("hi")
-                // const params = new URLSearchParams(window.location.search);
-               // $scope.respUrl = doucment.URL;
                 var obj = {};
+                
+
+                //$scope.recordId = getParameters('order_id');
+
+                $scope.urlParams = document.URL;
+                console.log('URL----',$scope.respUrl);
+                obj.phone = getParameters('order_id');
+                obj.txnid = getParameters('txnid');
+                obj.status =  getParameters('status');
+                obj.curl = getParameters('curl');
+                obj.firstname = getParameters('firstname');
+                obj.card_no = getParameters('card_no');
+                obj.furl = getParameters('furl');
+                obj.mode = getParameters('mode');
+                obj.amount = getParameters('amount');
+                obj.card_hash = getParameters('card_hash');
+                obj.field4 = getParameters('field4');
+                obj.field3 = getParameters('field3');
+                obj.field2 = getParameters('field2');
+                obj.field9 = getParameters('field9');
+                obj.email = getParameters('email');
+                obj.mihpayid = getParameters('mihpayid');
+                $Scope.dataForApex = JSON.stringify(obj);
                  
 
-               $scope.objectList = [];
+              /* $scope.objectList = [];
                const queryString = window.location.search;
                const urlParams = new URLSearchParams(queryString);
 
@@ -45,19 +65,20 @@
                 obj.email = urlParams.get('email');
                 obj.mihpayid = urlParams.get('mihpayid');
 
-               var data = JSON.stringify(obj);
+               var data = JSON.stringify(obj);*/
 
                updateRecord();
                  function updateRecord(){
                     debugger;
-                    PayuWebhook_Controller.updatePageParameter( data,function(res,evt){
+                    PayuWebhook_Controller.updatePageParameter( $Scope.dataForApex,function(res,evt){
+                        console.log('res =====> ', res );
                      console.log('Status Updated');
                  })
             }
-            function getParameters(result){
+            function getParameters(param){
                 deubgger;
                  var url = new URL($scope.urlParams);
-                 return url.searchParams.get(result);
+                 return url.searchParams.get(param);
              }
             })
 
