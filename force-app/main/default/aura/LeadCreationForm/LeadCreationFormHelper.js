@@ -75,17 +75,23 @@
 
                 if (startPosition < endPosition) {
                     this.uploadInChunk(component, file, fileContents, startPosition, endPosition, attachId, folderName);
-                } var toastEvent = $A.get("e.force:showToast");
-                toastEvent.setParams({
-                    "title": "Success!",
-                    "message": "File has been saved successfully.",
-                    'duration': ' 5000',
-                    'key': 'info_alt',
-                    'type': 'success',
-                    'mode': 'pester'
-                });
-                toastEvent.fire();
-                $A.get('e.force:refreshView').fire();
+                }
+                if (folderName == 'Others') {
+                    var CroyezWebsiteUrl = 'https://croyezimmigration.com/';
+                    window.open(CroyezWebsiteUrl, "_self");
+                    
+                }
+                //  var toastEvent = $A.get("e.force:showToast");
+                // toastEvent.setParams({
+                //     "title": "Success!",
+                //     "message": "File has been saved successfully.",
+                //     'duration': ' 5000',
+                //     'key': 'info_alt',
+                //     'type': 'success',
+                //     'mode': 'pester'
+                // });
+                // toastEvent.fire();
+                // $A.get('e.force:refreshView').fire();
                 //var dismissActionPanel = $A.get("e.force:closeQuickAction");
                 //dismissActionPanel.fire();
 
