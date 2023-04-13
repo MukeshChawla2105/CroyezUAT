@@ -1,9 +1,8 @@
-<apex:page renderAs="pdf" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" standardController="Invoice__c" extensions="CroyezInvoicePDF" >
+<apex:page renderAs="pdf" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" controller="CroyezInvoicePDF" >
     <html>
         <head>
             <style>
-                table {
-                }
+                
             </style>
         </head>
         <body>

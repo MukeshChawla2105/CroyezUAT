@@ -1,0 +1,24 @@
+<apex:page standardController="Lead" extensions="LeadCreationViaQRCodeHelper"  sidebar="false" showHeader="false">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <apex:form >
+        	<apex:pageBlock >
+                <apex:pageMessages id="showmsg"></apex:pageMessages>
+         		<apex:pageBlockSection title="CREATE LEAD" columns="2">
+                    <apex:inputField value="{!newLead.FirstName}" label="First Name"/>
+                <apex:inputField value="{!newLead.LastName}" label="Last Name"/>
+                <apex:inputField value="{!newLead.Company}" label="Company"/>
+                <apex:inputField value="{!newLead.Email}" label="Email"/>
+                <apex:inputField value="{!newLead.Phone}" label="Phone"/>
+                <apex:inputField value="{!newLead.Visa_Type__c}" label="Visa Type"/>
+                 <apex:inputField value="{!newLead.CustomState__c}" label="City"/>
+         		</apex:pageBlockSection>
+         		<apex:pageBlockButtons location="bottom">
+            		<div style="width:400px; text-align:center;">
+                        <apex:commandButton value="Save" style="float:centre"  action="{!saveLead}" rerender="showmsg"/>
+                        </div>
+         		</apex:pageBlockButtons>
+      </apex:pageBlock>
+    </apex:form>
+</apex:page>

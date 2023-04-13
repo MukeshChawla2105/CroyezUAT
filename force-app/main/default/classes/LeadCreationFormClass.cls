@@ -65,7 +65,7 @@ public without sharing class LeadCreationFormClass{
         List<Work_Experience__c> SpouseWorkExpHandledInApex = new List<Work_Experience__c>();
         if (!SpouseEducationDetails.isEmpty() && SpouseEducationDetails.size() >0) {
             for (Integer i = 0; i < SpouseEducationDetails.size(); i++) {
-                if (SpouseEducationDetails[i].Starting_year__c != null && SpouseEducationDetails[i].Ending_year__c != null && SpouseEducationDetails[i].Qualification__c != null && SpouseEducationDetails[i].Marks_Obtained__c != null
+                if (SpouseEducationDetails[i].Starting_year__c != null && SpouseEducationDetails[i].Ending_year__c != null   && SpouseEducationDetails[i].Marks_Obtained__c != null
                     && SpouseEducationDetails[i].Institution__c != null) {
                         SpouseEduHandledInApex.add(SpouseEducationDetails[i]);
                     //tempSpouseEduDetails.push(SpouseEducationrecords[i]);
@@ -121,11 +121,11 @@ public without sharing class LeadCreationFormClass{
                                 Description,Designation__c,Discovery_Demo_Date__c,Email,English_Proficiency_Listening__c,English_Proficiency_Reading__c,English_Proficiency_Speaking__c,English_Proficiency_Writing__c,
                                 French_Proficiency_Listening__c,FirstName,French_Proficiency_Reading__c,French_Proficiency_Speaking__c,French_Proficiency_Writing__c,Gender__c,
                                 Has_Budget__c,Id,Ilets__c,InValid_Remark__c,Language_Remark__c,LastName,Lead_Assigned_Date__c,Lead_Assigned_Time__c,Lead_Capture_Date__c,Lead_Substatus__c,Maritial_Status__c,MobilePhone,Name,Non_Intrested_Reason__c,Not_Answered_Remark__c,Not_Answered__c,
-                                Not_Interested_Reason__c,Not_Interested_Remark__c,Number_of_Children__c,Payment_Initiated_Date_Time__c,Product__c,Profession__c,Project_Defined_Score__c,Project_Defined__c,Qualification_Score__c,Qualification__c,Quantity__c,Relevant_Experience__c,
+                                Not_Interested_Reason__c,Not_Interested_Remark__c,Number_of_Children__c,Payment_Initiated_Date_Time__c,Product__c,Profession__c,Project_Defined_Score__c,Project_Defined__c,Qualification_Score__c,Quantity__c,Relevant_Experience__c,
                                 Sales_Team_Member__c,Schedule_Demo_Date__c,Should_be_Converted__c,Siblings_As_Canadian_Citizen__c,Site_Visit_Date__c,Specialization__c,Spouse_Canada_Work_Experience__c,Spouse_DoB__c,Spouse_English_Proficiency_Listening__c,Spouse_English_Proficiency_Reading__c,
                                 Spouse_English_Proficiency_Speaking__c,Spouse_English_Proficiency_Writing__c,Spouse_French_Proficiency_Listening__c,Spouse_French_Proficiency_Reading__c,Spouse_French_Proficiency_Speaking__c,Spouse_French_Proficiency_Writing__c,Spouse_Gender__c,Spouse_Name__c,
                                 State,Temporary_Disconnected_Remark__c,IsLeadFormUpdated__c,Title_Job_Title_Score__c,Title_Job_Title__c,Total_Amount__c,Total_Score__c,Visa_Purpose__c,Visa_Type__c,Year_of_Experience__c,Year_of_Graduation__c,Phone,
-                                (SELECT Ending_year__c,Id,Institution__c,Lead__c,Marks_Obtained__c,Qualification__c,Starting_year__c,Type__c FROM Education_Details__r),
+                                (SELECT Ending_year__c,Id,Institution__c,Lead__c,Marks_Obtained__c,Starting_year__c,Type__c FROM Education_Details__r),
                                 (SELECT Company__c,Designation__c,Ended_at__c,Id,Lead__c,Name,Started_at__c,Type__c FROM Work_Experiences__r) 
                                 FROM Lead Where Id=: LeadrecId];
         LeadDetailWrap.LeadRecord = LeadList[0];
@@ -136,13 +136,13 @@ public without sharing class LeadCreationFormClass{
             LeadDetailWrap.MarriedOrNot = null;
         }
 
-        List<Education_Detail__c> EduDetail = [SELECT Ending_year__c,Id,Institution__c,Lead__c,Marks_Obtained__c,Qualification__c,Starting_year__c,Type__c FROM Education_Detail__c Where Lead__c =:LeadrecId AND Type__c = 'Self'];
+        List<Education_Detail__c> EduDetail = [SELECT Ending_year__c,Id,Institution__c,Lead__c,Marks_Obtained__c, Starting_year__c,Type__c FROM Education_Detail__c Where Lead__c =:LeadrecId AND Type__c = 'Self'];
         LeadDetailWrap.LeadSelfEducationDetails = EduDetail;
         List<Work_Experience__c> WorkExpDetail = [SELECT Company__c,Designation__c,Ended_at__c,Id,Lead__c,Name,Started_at__c,Type__c FROM Work_Experience__c Where Lead__c =: LeadrecId AND Type__c = 'Self'];
         LeadDetailWrap.LeadSelfWorkExperienceDetails = WorkExpDetail;
 
 
-        List<Education_Detail__c> SpouseEduDetail = [SELECT Ending_year__c,Id,Institution__c,Lead__c,Marks_Obtained__c,Qualification__c,Starting_year__c,Type__c FROM Education_Detail__c Where Lead__c =:LeadrecId AND Type__c = 'Spouse'];
+        List<Education_Detail__c> SpouseEduDetail = [SELECT Ending_year__c,Id,Institution__c,Lead__c,Marks_Obtained__c, Starting_year__c,Type__c FROM Education_Detail__c Where Lead__c =:LeadrecId AND Type__c = 'Spouse'];
 
         if (!SpouseEduDetail.isEmpty() && SpouseEduDetail.size()>0) {
             LeadDetailWrap.LeadSpouseEducationDetails = SpouseEduDetail;

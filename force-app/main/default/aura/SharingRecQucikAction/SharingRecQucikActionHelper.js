@@ -1,24 +1,4 @@
 ({
-    getUsers1 : function(component, event, helper) {
-        debugger;
-        var action = component.get("c.getUsers");
-        action.setParams({
-            "recordId" : component.get("v.recordId")
-        });
-        action.setCallback(this,function(response){
-           
-            
-            if(response.getState()== 'SUCCESS'){
-                var result = response.getReturnValue();
-                component.set('v.data',result );
-                //   component.set('v.users',response.getReturnValue());  
-            } else{
-                console.error(response.getError());
-            }               
-        });
-        
-        $A.enqueueAction(action);
-    },
     shareRecordMethod: function(component,  selectedUsers) {
         debugger;
         var action = component.get("c.shareRecord");
@@ -46,7 +26,6 @@
                 console.error(response.getError());
             }
         });
-        
         $A.enqueueAction(action);
     }
 })

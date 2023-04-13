@@ -16,14 +16,14 @@
                 <label>Study</label>
             </value>
             <value>
-                <fullName>Temporary</fullName>
+                <fullName>TRV</fullName>
                 <default>false</default>
-                <label>Temporary</label>
+                <label>TRV</label>
             </value>
             <value>
-                <fullName>Permanent</fullName>
+                <fullName>PR</fullName>
                 <default>false</default>
-                <label>Permanent</label>
+                <label>PR</label>
             </value>
         </valueSetDefinition>
     </valueSet>

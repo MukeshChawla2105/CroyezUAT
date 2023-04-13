@@ -1,90 +1,53 @@
-<apex:page controller="PayuWebhook_Controller">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-    <script src="angular-cdn-src.min.js"></script>
-    <script>
-            var app = angular.module('myApp',[]);
-            app.controller('myctrl',function($scope,$rootScope){
-                debugger;
-                var obj = {};
-                
+<apex:page sidebar="false"
+           showHeader="false"
+           controller="PayUWebhook"
+           action="{!CCAvenueresponse}"
+           applyhtmltag="false"
+           standardstylesheets="false" 
+           cache="false">
+    
+     <script>
+    
+    var status = "{!$CurrentPage.parameters.status}";
+    console.log('status----',status); //
+    var curl = "{!$CurrentPage.parameters.curl}";
+    console.log('status----',curl);
+    $scope.respUrl = document.URL;
+    console.log('URL----',$scope.respUrl);
+    
+        
+    /*var App = angular.module('myApp', []);
+        App.controller('myctrl', function ($scope,$rootScope) {
+            debugger;
+            $scope.respUrl = document.URL;
 
-                //$scope.recordId = getParameters('order_id');
+            console.log('URL----',$scope.respUrl);
+            $scope.recordId = getParameters('order_id');
 
-                $scope.urlParams = document.URL;
-                console.log('URL----',$scope.respUrl);
-                obj.phone = getParameters('order_id');
-                obj.txnid = getParameters('txnid');
-                obj.status =  getParameters('status');
-                obj.curl = getParameters('curl');
-                obj.firstname = getParameters('firstname');
-                obj.card_no = getParameters('card_no');
-                obj.furl = getParameters('furl');
-                obj.mode = getParameters('mode');
-                obj.amount = getParameters('amount');
-                obj.card_hash = getParameters('card_hash');
-                obj.field4 = getParameters('field4');
-                obj.field3 = getParameters('field3');
-                obj.field2 = getParameters('field2');
-                obj.field9 = getParameters('field9');
-                obj.email = getParameters('email');
-                obj.mihpayid = getParameters('mihpayid');
-                $Scope.dataForApex = JSON.stringify(obj);
-                 
-
-              /* $scope.objectList = [];
-               const queryString = window.location.search;
-               const urlParams = new URLSearchParams(queryString);
-
-               obj.phone = urlParams.get('phone');
-               $scope.objectList.push($scope.phone);
-               obj.txnid = urlParams.get('txnid');
-               $scope.objectList.push($scope.txn_id);
-               obj.status =  urlParams.get('status');
-               $scope.objectList.push($scope.status);
-               obj.curl = urlParams.get('curl');
-               $scope.objectList.push($scope.curl); 
-                obj.firstname = urlParams.get('firstname');
-                $scope.objectList.push($scope.firstname);
-                obj.card_no = urlParams.get('card_no');
-                 $scope.objectList.push($scope.card_no);
-                 obj.furl = urlParams.get('furl');
-                $scope.objectList.push($scope.furl);
-                obj.mode = urlParams.get('mode');
-                $scope.objectList.push($scope.mode);
-                obj.amount = urlParams.get('amount');
-                $scope.objectList.push($scope.amount);
-                obj.surl = urlParams.get('status');
-                 $scope.objectList.push($scope.status);
-                 obj.card_hash = urlParams.get('card_hash');
-                $scope.objectList.push($scope.card_hash);
-                obj.hash = urlParams.get('hash');
-                obj.field4 = urlParams.get('field4');
-                obj.field3 = urlParams.get('field3');
-                obj.field2 = urlParams.get('field2');
-                obj.field9 = urlParams.get('field9');
-                obj.email = urlParams.get('email');
-                obj.mihpayid = urlParams.get('mihpayid');
-
-               var data = JSON.stringify(obj);*/
-
-               updateRecord();
-                 function updateRecord(){
-                    debugger;
-                    PayuWebhook_Controller.updatePageParameter( $Scope.dataForApex,function(res,evt){
-                        console.log('res =====> ', res );
-                     console.log('Status Updated');
-                 })
+            updateRecord();
+            function updateRecord(){
+                CCAvenueCatchResponse.updatePaymentStatus($scope.recordId,'Success',function(res,evt){
+                    console.log('Status Updated');
+                })
             }
+
             function getParameters(param){
-                deubgger;
-                 var url = new URL($scope.urlParams);
-                 return url.searchParams.get(param);
-             }
-            })
-
+            var url = new URL($scope.respUrl);
+            return url.searchParams.get(param);
+            }
+        })*/
     </script>
-     <body ng-app="myApp" ng-controller="myctrl">
 
-     </body>
-   
+    <!--body ng-app="myApp" ng-controller="myctrl">
+
+    </body -->
+    
+    
 </apex:page>
+
+<!-- 
+unmappedstatus=success&phone=9999999999&txnid=FCDA1R100870163781&hash=84e335094bbcb2ddaa0f9a488eb338e143b273765d89c9dfa502402562d0b6f3c7935e28194ca92f7380be7c84c3695415b106dcf52cb016a15fcf6adc98d724&status=success&
+curl=https://www.abc.in/payment/handlepayuresposne&firstname=NA&card_no=519619XXXXXX5049&furl=https://www.abc.in/payment/handlepayuresposne&productinfo=2&mode=DC&amount=800.00&field4=6807112311042810&
+field3=6807112311042810&field2=838264&field9=SUCCESS&email=NA&mihpayid=175477248&surl=https://www.ABC.in/payment/handlepayuresposne&card_hash=9e88cb0573d4a826b61d808c0a870ed4a990682459b0ec9e95ea421e8e47b e8c&field1=42812
+
+-->

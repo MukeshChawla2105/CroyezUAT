@@ -19,13 +19,13 @@ public without sharing class InvoiceTriggerHelper {
             system.debug('invoiceIds-->'+invoiceIds);
             if(!invoiceIds.isEmpty()){
                 for(Id invoiceRecId : invoiceIds){
-                    TaxInvoiceHelper.attachPdf(invoiceRecId);
+                    CroyezInvoicePDF.attachPdf(invoiceRecId);
                 }
             }
             system.debug('invoiceIdsFOrOpp-->'+invoiceIdsFOrOpp);
             if(!invoiceIdsFOrOpp.isEmpty()){
                  for(Id invoiceRecId : invoiceIdsFOrOpp){
-                    TaxInvoiceHelper.attachPdfForOpp(invoiceRecId);                        
+                    CroyezInvoicePDF.attachPdfForOpp(invoiceRecId);                        
                 }
             }
         }catch(exception ex){

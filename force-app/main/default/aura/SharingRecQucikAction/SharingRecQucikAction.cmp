@@ -1,4 +1,4 @@
-<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" 
                 access="global" controller="ShareRecordController" >
     <aura:attribute name="recId" type="String" />
     <aura:attribute name="users" type="list" />
@@ -10,56 +10,69 @@
     <aura:attribute name="userIdList" type="List"/>
     <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
     <aura:attribute name="selectedCount" type="integer" default="0"/>
-     
     
-    <lightning:card title="Lead Details">
-       
-        
-        <table class="slds-table slds-table--bordered slds-table--cell-buffer">
-            <thead class="dinesh">
-                <tr class="slds-text-title--caps">
-                    <th style="auto" class="slds-text-align--right">
-                        <div class="slds-form-element">
-                            <div class="slds-form-element__control">
-                                <label class="slds-checkbox">
-                                    <ui:inputCheckbox aura:id="box3" change="{!c.selectAll}"/>
-                                    <span class="slds-checkbox--faux"></span>
-                                    <span class="slds-form-element__label text"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </th>
-                    <th>
-                        <span class="slds-truncate" title="Name"> Name</span>      
-                    </th>
-                </tr>
-            </thead>
+    
+    
+    <lightning:card >
+        <div class="modal-header slds-modal__header slds-size_1-of-1">
+            <h4 class="title slds-text-heading--medium"><b>Share Record</b></h4>
+        </div><br/>
+        <aura:if isTrue="{!empty(v.data)}">
+            <div class="modal-header slds-modal__header slds-size_1-of-1">
+                <h6 class="title slds-text-heading--medium"> No user left for Sharing</h6>
+            </div><br/>
             
-            <tbody>
-                <aura:iteration items="{!v.data}" var="con" indexVar="i">
-                    <tr>
-                        <td scope="row" class="slds-text-align--right" style="width:3.25rem;">
-                            <div class="slds-form-element">
-                                <div class="slds-form-element__control">
-                                    <label class="slds-checkbox">
-                                        <ui:inputCheckbox text="{!con.Id}" aura:id="boxPack" value="" change="{!c.checkboxSelect}"/>
-                                        <span class="slds-checkbox--faux"></span>
-                                        <span class="slds-form-element__label text"></span>
-                                    </label>
+            <aura:set attribute="else">
+                <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                    <thead class="dinesh">
+                        <tr class="slds-text-title--caps">
+                            <th style="auto;" class="slds-text-align--right">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                        <label class="slds-checkbox">
+                                            <ui:inputCheckbox aura:id="box3" change="{!c.selectAll}"/>
+                                            <span class="slds-checkbox--faux"></span>
+                                            <span class="slds-form-element__label text"></span>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>  
-                        <td scope="row">
-                            <div class="slds-truncate"><a>{!con.Name}</a></div>
-                        </td>
-                        
-                    </tr>
-                </aura:iteration>
-            </tbody>
-        </table>
-        
-        <br/>
-        <lightning:button variant="brand" label="Share" onclick="{!c.shareAllRecord}" />
+                            </th>
+                            <th>
+                                <span class="slds-truncate" title="Name"> Name</span>      
+                            </th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <aura:iteration items="{!v.data}" var="con" indexVar="i">
+                            <tr>
+                                <td scope="row" class="slds-text-align--right" style="width:3.25rem;">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <label class="slds-checkbox">
+                                                <ui:inputCheckbox text="{!con.Id}" aura:id="boxPack" value="" change="{!c.checkboxSelect}"/>
+                                                <span class="slds-checkbox--faux"></span>
+                                                <span class="slds-form-element__label text"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </td>  
+                                <td scope="row">
+                                    <div class="slds-truncate"><a>{!con.Name}</a></div>
+                                </td>
+                                
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+                
+                <br/>
+                <div class="modal-footer slds-align_absolute-center">
+                    <lightning:button variant="brand" label="Share" title="Share" onclick="{! c.SaveRecord }" class="marginTop"/>
+                    <lightning:button variant="brand" label="Cancel" title="Cancel" onclick="{! c.handleCancel }" class="marginTop"/>
+                </div>
+            </aura:set>
+        </aura:if>
     </lightning:card>
-     
+    
 </aura:component>

@@ -1,0 +1,94 @@
+<aura:component controller= "UserApprovalAccessClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" >
+    
+    <aura:attribute name="objectName" 		type="string" default="User" required="true" />
+    <aura:attribute name="fieldName" 		type="string" default="Name" required="true" />
+    <aura:attribute name="selectedRecords" 	type="List"   default="[]" description="selected Records Id Array" />
+    <aura:attribute name="recordCount" 		type="string" default="5" description="Records visible at once"/>
+    <aura:attribute name="label" 			type="string" default="Select Users : " description="Label will be displayed above input Box" />
+    <aura:attribute name="placeholder" 		type="string" default="Search..." description="placeholder for input Box" />
+    <aura:attribute name="disabled" 		type="Boolean" default="false" description="To disable the combobox"/>
+    <aura:attribute name="iconName" 		type="string" default="standard:user"/>
+    <aura:attribute name="recordId"         type="string"/>
+    <aura:handler   name="init"             value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="message" 		    type="String" access="private" default="" />
+    <aura:attribute name="showDetail"       type="Boolean" default="false"/>
+    <aura:attribute name="runApproval"      type="Boolean" default="false"/>
+    <aura:attribute name="searchString"     type="string" access="private" default="" description="String to search"/>
+    <aura:attribute name="recordsList" 	    type="List"   access="private" description="List of Records having data" />
+    <aura:attribute name="selectedUsers"    type="List"   access="private" description="Selected Users List" />
+    
+    <aura:html tag="style">
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }   
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+    </aura:html>
+    
+    <div class="modal-header slds-modal__header slds-size_1-of-1">
+        <h4 class="title slds-text-heading--medium">Submit for Approval</h4>
+    </div>
+    <div>  
+        <p>
+            <b>{!if(!empty(v.label), v.label, '')}</b>
+        </p>
+        <div class="slds-combobox_container">
+            
+            <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aura:id="resultsDiv" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+                
+                <div class="slds-input-has-icon slds-input-has-icon_right">
+                    
+                    <lightning:icon class="slds-combobox__input-entity-icon" iconName="{!v.iconName}" size="large" alternativeText="icon"/>
+                    <lightning:input aura:id="inputLookup" class="inputBox" placeholder="{!v.placeholder}" onblur="{!c.blurEvent}" onclick="{!c.showRecords}" disabled="{!v.disabled}" 
+                                     onkeyup="{!c.searchRecords}" value="{!v.searchString}" autoComplete="off" variant="label-hidden" id="combobox-id-1" />
+                    <lightning:icon class="slds-input__icon" iconName="utility:search" size="x-small" alternativeText="search"/> 
+                    
+                </div>
+                
+                <div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" style="{! 'max-height:' + (8 + (v.recordCount * 40)) + 'px' }">
+                    <ul class="slds-listbox slds-listbox_vertical recordListBox">
+                        
+                        <aura:if isTrue="{!empty(v.message)}" >
+                            
+                            <aura:iteration items="{!v.recordsList}" var="rec" >
+                                <li id="{!rec.value}" class="slds-listbox__item eachItem" onmousedown="{!c.selectItem}">
+                                    <lightning:icon class="{!if(rec.isSelected,'','slds-hide')}" iconName="utility:check" size="x-small" alternativeText="icon" />
+                                    <span class="verticalAlign slds-truncate">{!rec.label}</span>
+                                </li>
+                            </aura:iteration>
+                            
+                            <aura:set attribute="else">
+                                <span class="slds-media slds-listbox__option_entity">{!v.message}</span>
+                            </aura:set>
+                        </aura:if>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <aura:iteration items="{!v.selectedUsers}" var="data">
+            <lightning:pill class="slds-m-around_xx-small" name="{!data.value}" label="{!data.label}" onremove="{!c.removePill}"/>
+        </aura:iteration>
+        <br/>
+        <br/>
+        
+        <aura:if isTrue="{!v.showDetail}">
+            <div class="exampleHolder">
+                <lightning:spinner alternativeText="Loading" size="large" />
+            </div>
+        </aura:if>
+        
+        <div class="modal-footer slds-modal__footer slds-size_1-of-1">  
+            <lightning:button variant="Brand" class="slds-button" label="Submit" onclick = "{!c.handleSubmit}"/>
+            <lightning:button variant="Neutral" class="slds-button" label="Cancel" onclick="{!c.handleExit}"/>   
+        </div>
+
+    </div>
+    
+</aura:component>

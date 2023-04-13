@@ -5,7 +5,7 @@ public without sharing class EvaluationScoreController {
     
     public EvaluationScoreController(){
         try{ 
-            ldDetails = [SELECT id, Name, Phone, Email, Evaluation_Score_V1__c, Title_Job_Title_Score__c,Qualification_Score__c,Experience_Score__c, Title_Job_Title__c, Experience__c, Qualification__c, Evaluation_Score__c, Ilets__c
+            ldDetails = [SELECT id, Name, Phone, Email, Evaluation_Score_V1__c, Title_Job_Title_Score__c,Qualification_Score__c,Experience_Score__c, Title_Job_Title__c, Experience__c, Evaluation_Score__c, Ilets__c
                          FROM Lead WHERE Id =: recordId];            
         }
         catch(Exception ex){

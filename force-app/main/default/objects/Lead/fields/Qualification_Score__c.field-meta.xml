@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Qualification_Score__c</fullName>
     <externalId>false</externalId>
-    <formula>If( Qualification__c == null ,0,5)</formula>
+    <formula>If( Quantity__c == null ,0,5)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <inlineHelpText>Maximum score can be 5</inlineHelpText>
     <label>Qualification Score</label>

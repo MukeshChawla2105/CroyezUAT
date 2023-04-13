@@ -3,10 +3,89 @@
     <fullName>Qualification__c</fullName>
     <externalId>false</externalId>
     <label>Qualification</label>
-    <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>BA</fullName>
+                <default>false</default>
+                <label>BA</label>
+            </value>
+            <value>
+                <fullName>Bcom</fullName>
+                <default>false</default>
+                <label>Bcom</label>
+            </value>
+            <value>
+                <fullName>Bsc</fullName>
+                <default>false</default>
+                <label>Bsc</label>
+            </value>
+            <value>
+                <fullName>Btech</fullName>
+                <default>false</default>
+                <label>Btech</label>
+            </value>
+            <value>
+                <fullName>BBA</fullName>
+                <default>false</default>
+                <label>BBA</label>
+            </value>
+            <value>
+                <fullName>BBM</fullName>
+                <default>false</default>
+                <label>BBM</label>
+            </value>
+            <value>
+                <fullName>BCA</fullName>
+                <default>false</default>
+                <label>BCA</label>
+            </value>
+            <value>
+                <fullName>MA</fullName>
+                <default>false</default>
+                <label>MA</label>
+            </value>
+            <value>
+                <fullName>MBA</fullName>
+                <default>false</default>
+                <label>MBA</label>
+            </value>
+            <value>
+                <fullName>MCA</fullName>
+                <default>false</default>
+                <label>MCA</label>
+            </value>
+            <value>
+                <fullName>MCom</fullName>
+                <default>false</default>
+                <label>MCom</label>
+            </value>
+            <value>
+                <fullName>Master in Engineering</fullName>
+                <default>false</default>
+                <label>Master in Engineering</label>
+            </value>
+            <value>
+                <fullName>Mphil</fullName>
+                <default>false</default>
+                <label>Mphil</label>
+            </value>
+            <value>
+                <fullName>MTech</fullName>
+                <default>false</default>
+                <label>MTech</label>
+            </value>
+            <value>
+                <fullName>Others</fullName>
+                <default>false</default>
+                <label>Others</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

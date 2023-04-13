@@ -30,7 +30,7 @@ public without sharing class TaskTriggerHandler {
                 }
 
                 if (!Leadids.isEmpty() && Leadids.size() >0) {
-                    LeadListQueried = [SELECT Assignment_Group__c,Budget_Score__c,City,Company,Consultation_Fees__c,Country,Designation__c,Discovery_Demo_Date__c,Email,Evaluation_Score_V1__c,Evaluation_Score__c,Experience_Score__c,Experience__c,Follow_Up_Date_Time__c,Has_Budget__c,Ilets__c,Lead_Assigned_Date__c,Lead_Assigned_Time__c,Lead_Capture_Date__c,Lead_Substatus__c,Name,Product__c,Project_Defined_Score__c,Project_Defined__c,Qualification_Score__c,Qualification__c,Quantity__c 
+                    LeadListQueried = [SELECT Assignment_Group__c,Budget_Score__c,City,Company,Consultation_Fees__c,Country,Designation__c,Discovery_Demo_Date__c,Email,Evaluation_Score_V1__c,Evaluation_Score__c,Experience_Score__c,Experience__c,Follow_Up_Date_Time__c,Has_Budget__c,Ilets__c,Lead_Assigned_Date__c,Lead_Assigned_Time__c,Lead_Capture_Date__c,Lead_Substatus__c,Name,Product__c,Project_Defined_Score__c,Project_Defined__c,Qualification_Score__c, Quantity__c 
                                         FROM Lead 
                                         where Id IN: Leadids];
                     

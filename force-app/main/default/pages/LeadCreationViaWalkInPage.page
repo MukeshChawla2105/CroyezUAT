@@ -1,0 +1,26 @@
+<apex:page standardController="Lead" extensions="LeadCreationViaWalkInHelper"  sidebar="false" showHeader="false">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <apex:form >
+        	<apex:pageBlock >
+                <apex:pageMessages id="showmsg"></apex:pageMessages>
+         		<apex:pageBlockSection title="Create a Lead" columns="2">
+                    <apex:inputField value="{!newLead.FirstName}" />
+                    <apex:inputField value="{!newLead.LastName}" required="true" />
+                    <apex:inputField value="{!newLead.Company}"  /> 
+                    <apex:inputField value="{!newLead.Email}" />
+                    <apex:inputField value="{!newLead.Phone}" />
+                    <apex:inputField value="{!newLead.Status}" />
+                    <apex:inputField value="{!newLead.Visa_Type__c}"/>
+                    <apex:inputField value="{!newLead.CustomState__c}" label="City"/>
+         		</apex:pageBlockSection>
+         		<apex:pageBlockButtons location="bottom">
+                    <div style="width:400px; text-align:center;">
+                        <apex:commandButton value="Save" style="float:centre"  action="{!saveLead}" rerender="showmsg"/>
+                        </div>
+            		
+         		</apex:pageBlockButtons>
+      </apex:pageBlock>
+    </apex:form>
+</apex:page>

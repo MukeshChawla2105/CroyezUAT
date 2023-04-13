@@ -81,7 +81,7 @@
                         <td data-label="Field Name">
                           
                             <a name="{!index}">
-                            <lightning:select aura:id="fieldVal" value="{!exc.fieldValue}" name="fieldPicklist" required="true" messageWhenValueMissing="Select cannot be empty" onchange="{!c.selectFieldName}">
+                            <lightning:select aura:id="fieldVal" value="{!exc.fieldValue}" name="{!index}" required="true" messageWhenValueMissing="Select cannot be empty" onchange="{!c.selectFieldName}">
                                 <option value="">--None--</option>
                                 <aura:iteration items="{!exc.FieldName}" var="field" indexVar="key">
                                     <option text="{!field.value}" value="{!field.key}"/>

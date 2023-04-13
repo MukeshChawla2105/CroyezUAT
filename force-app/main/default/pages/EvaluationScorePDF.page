@@ -63,12 +63,12 @@
                     </tr>
                      <tr>
                         <td>Qualification : </td>
-                        <td>{!ldDetails.Qualification__c}</td>
+                        <td> </td>
                         
                     </tr>
                     <tr>
                         <td>Qualification Score: </td>
-                        <td>{!ldDetails.Qualification_Score__c}</td>
+                        <td>{!ldDetails.Qualification_Score__c} </td>
                         
                     </tr>
                      <tr>

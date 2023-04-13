@@ -1,14 +1,17 @@
 public class ShareRecordController {
+
     @AuraEnabled 
     public static List<User> getUsers(String recordId) {
-        system.debug('recordId--->'+recordId);
         set<Id> userIds = new Set<Id>();
         set<Id> userIdsToBeReturned = new Set<Id>();
-        string keyPrefix = recordId.substring(0,3);
         string userName = 'execsponsor.d4mfunnxgo49.tomlybmt6vbv.dgfnlcg3rxro@example.com.dev';
-        Map<Id, User> existingUserMap = New Map<Id,User>([Select Name,Id  From User Where userType = 'Standard' and Username !=: userName]);
-        List<User> userlistToBeReturned = New List<User>();
         
+        //SELECT Id, UserOrGroupId, RowCause FROM LeadShare WHERE ParentId =: recordId;
+
+        Map<Id, User> existingUserMap = New Map<Id,User>([Select Name,Id  From User Where userType = 'Standard' and Username !=: userName ]);
+        system.debug('existingUserMap--->'+existingUserMap);
+        List<User> userlistToBeReturned = New List<User>();
+        string keyPrefix = recordId.substring(0,3);
         userIds.addAll(existingUserMap.keySet());
          if( keyPrefix == '00Q'){
             List<LeadShare> leadShareList = new List<LeadShare>();
@@ -18,6 +21,8 @@ public class ShareRecordController {
                     if(userIds.contains(leadShareRecord.UserOrGroupId))
                         userIds.remove(leadShareRecord.UserOrGroupId);
                 }
+                
+                system.debug('userIds -- ' + userIds);
                 userIdsToBeReturned = userIds;
                 if(!userIdsToBeReturned.isEmpty()){
                     for(Id userId : userIdsToBeReturned){
@@ -68,10 +73,13 @@ public class ShareRecordController {
             
         }
         system.debug('userlistToBeReturned===>>' +userlistToBeReturned );
+        
         return userlistToBeReturned;
     }
     @AuraEnabled
     public static String shareRecord(String recordId, List<String> userIds) {
+        system.debug('SharerecID---' +recordId);
+        system.debug('SharerecID---' +userIds);
         
         List <LeadShare> leadShareLIst = new List<LeadShare>();
         List <AccountShare> accountShareLIst = new List<AccountShare>();
