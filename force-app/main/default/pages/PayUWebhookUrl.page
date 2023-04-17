@@ -1,7 +1,7 @@
 <apex:page sidebar="false"
            showHeader="false"
            controller="PayUWebhook"
-           action="{!CCAvenueresponse}"
+           action="{!PayUresponse}"
            applyhtmltag="false"
            standardstylesheets="false" 
            cache="false">

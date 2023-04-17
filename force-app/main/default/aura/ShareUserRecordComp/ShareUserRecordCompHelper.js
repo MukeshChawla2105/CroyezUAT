@@ -1,5 +1,5 @@
 ({
-    searchuserhelper: function(component,event ,helper ) {
+    searchuserhelper: function(component,event ,helper,selectedRecords ) {
         debugger;
         $A.util.removeClass(component.find("Spinner"), "slds-hide");
        component.set('v.message', '');

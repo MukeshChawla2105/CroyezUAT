@@ -22,7 +22,7 @@ global without sharing class RazorpayWebhookHandler{
                 system.debug('objName--->'+objName);
                 system.debug('recId-->'+recId);
                 if (objName == 'Lead'){
-                    Lead ld = new Lead(Id = recId, Should_be_Converted__c = true);
+                    Lead ld = new Lead(Id = recId, Should_be_Converted__c = true, status='Consultation Fee Collected');
                     update ld;
                     Invoice__c invoiceToUpdate = [Select Id,Status__c From Invoice__c where LeadInvoice__c =:recId and Status__c = 'Initiated' order by CreatedDAte DESC limit 1];
                     invoiceToUpdate.Status__c = 'Realized';

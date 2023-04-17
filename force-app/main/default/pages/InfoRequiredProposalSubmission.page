@@ -1,13 +1,8 @@
-<apex:page id="mobileFriendlyVfUsingSlds" standardStylesheets="false" sideBar="false" showHeader="false" controller="LeadCreationViaQRCodeHelper"  >
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" controller="InfoRequiredPropSubmissClas"  >
     
     <html>
         
         <head>
-             <apex:slds />
-            
-       <meta charset="UTF-8"/>
-       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-       <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -59,7 +54,7 @@
                     var comp =  $scope.data.Company;
                     var city = $scope.data.CustomState__c;
                     var visa = $scope.data.Visa_Type__c;
-                    LeadCreationViaQRCodeHelper.insertLeadDetails(ledId,fname,lname,email,phone,comp,city,visa, function(result, event){ //$scope.leadId, $scope.data,7
+                    InfoRequiredPropSubmissClas.insertLeadDetails(ledId,fname,lname,email,phone,comp,city,visa, function(result, event){ //$scope.leadId, $scope.data,7
                         debugger;
                         if(event.status){
                             swal({
@@ -67,11 +62,6 @@
                                 text:  'Lead Details have been Saved Successfully.',
                                 icon: "success"
                             });
-                            timeout = setTimeout(alertFunc, 3000);
-                            function alertFunc() {
-                               window.location.href = 'https://croyezimmigrationservicespvtltd--dev.sandbox.my.salesforce-sites.com/LeadCreationViaQRCodeHelper/LeadCreationViaQRCodePage?id=7011e0000007NZv';
-                            }
-                            
                             
                         }else{
                             swal({
@@ -87,7 +77,7 @@
             
             
             <body ng-app="myApp" ng-controller="myCtrl">      
-                <div class="slds-scope" style="width:100%;height: 100%;">
+                <div class="card" style="width:100%;height: 100%;">
                     <div class="header">
                          <apex:image id="theImage" style="margin-left: 10rem" value="{!$Resource.CroyezHeader}" width="70%" height="80"/>
                     </div>
@@ -99,8 +89,8 @@
                                 <div style="font-size: 18px;padding: 3px;background: cornflowerblue;margin-bottom: 10px;text-align: center;margin-right: 0px;">BASIC DETAILS</div>
                                 <form >
                                     <div class="col-auto" style=" width: 100%; padding-bottom: 10px;">
-                                        <label class="form-label" for="form11Example4" style="margin-top: -4px; margin-bottom: 4px;margin-left: 6px;font-size: 11px;">FirstName</label>
-                                        <input type="text" id="form11Example4" ng-model="data.FirstName"  placeholder="Enter FirstName"  class="form-control" />
+                                        <label class="form-label" for="form11Example4" style="margin-top: -4px; margin-bottom: 4px;margin-left: 6px;font-size: 11px;">FirstName 1</label>
+                                        <input type="text" id="form11Example4" ng-model="data.FirstName" style="font-size: 14px;" placeholder="Enter FirstName"  class="form-control" />
                                     </div>
                                 </form>
                                 <form >
@@ -148,10 +138,10 @@
                                                                
                             </div>
                         </div>
-                         <div  class="text-center">
-                        <button type="submit" ng-click="saveRecord()" style="padding: 5px; margin-top: 0px ;background: royalblue;" class="btn btn-primary">Submit Details</button>
+                        
+                        <button type="submit" ng-click="saveRecord()" style="padding: 5px; margin-top: 0px ;   margin-left: 62rem;background: royalblue;" class="btn btn-primary">Submit Details</button>
                     </div>
-                      </div>
+                    
                 </div>
                 
                 

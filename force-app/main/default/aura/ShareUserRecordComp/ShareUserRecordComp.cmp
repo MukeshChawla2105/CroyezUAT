@@ -1,4 +1,4 @@
-<aura:component controller= "ShareRecordController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" >
+<aura:component controller= "ShareRecordToUserClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" >
     <aura:handler   name="init"  value="{!this}" action="{!c.doInit}"/>
     <aura:attribute name="searchString"     type="string" access="private" default="" description="String to search"/>
     <aura:attribute name="usersList" 	    type="List"   access="private" description="List of Records having data" />
@@ -10,6 +10,7 @@
     <aura:attribute name="disabled" 		type="Boolean" default="false" description="To disable the combobox"/>
     <aura:attribute name="iconName" 		type="string" default="standard:user"/>
     <aura:attribute name="recordId"         type="string"/>
+    
      <aura:attribute name="showDetail"       type="Boolean" default="false"/>
     <aura:attribute name="runApproval"      type="Boolean" default="false"/>
     
@@ -28,11 +29,12 @@
         padding: 0 0rem !important;
         }
     </aura:html>
+    <lightning:card>
     
-    <div class="modal-header slds-modal__header slds-size_1-of-1">
-        <h4 class="title slds-text-heading--medium">Submit for Approval</h4>
+    <div class="modal-header slds-modal__header slds-size_1-of-1"  >
+        <h4 class="title slds-text-heading--medium"><b>Share Record</b></h4>
     </div>
-    <div>  
+    <div style="padding-left:20px; padding-right:20px;">  
         <p>
              <b>{!if(!empty(v.label), v.label, '')}</b>  
         </p>
@@ -40,9 +42,9 @@
             
             <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aura:id="resultsDiv" aria-expanded="true" aria-haspopup="listbox" role="combobox">
                 
-                <div class="slds-input-has-icon slds-input-has-icon_right">
+                <div class="slds-input-has-icon slds-input-has-icon_right"  style=" padding-top:5px;">
                     
-                    <lightning:icon class="slds-combobox__input-entity-icon" iconName="{!v.iconName}" size="large" alternativeText="icon"/>
+                    <!-- <lightning:icon class="slds-combobox__input-entity-icon" iconName="{!v.iconName}" size="large" alternativeText="icon"/> -->
                     <lightning:input aura:id="inputLookup" class="inputBox" placeholder="{!v.placeholder}" onblur="{!c.blurEvent}" onclick="{!c.showRecords}" disabled="{!v.disabled}" 
                                      onkeyup="{!c.searchRecords}" value="{!v.searchString}" autoComplete="off" variant="label-hidden" id="combobox-id-1" />
                     <lightning:icon class="slds-input__icon" iconName="utility:search" size="x-small" alternativeText="search"/> 
@@ -81,11 +83,20 @@
             </div>
         </aura:if>
         
-        <div class="modal-footer slds-modal__footer slds-size_1-of-1">  
-            <lightning:button variant="Brand" class="slds-button" label="Submit" onclick = "{!c.handleSubmit}"/>
+        <!-- <div class="modal-footer slds-modal__footer slds-size_1-of-1">  
+            <lightning:button  variant="Brand" class="slds-button" label="Submit" onclick = "{!c.handleSubmit}"/>
             <lightning:button variant="Neutral" class="slds-button" label="Cancel" onclick="{!c.handleExit}"/>   
+        </div> -->
+
+        <div  class="slds-clearfix">
+             
+               <lightning:button class="slds-float_left"    variant="success" label="Share"   onclick="{!c.handleSubmit}" /> 
+            
+      <p style="margin-left:88%;">  <lightning:button class="slds-float_Right"     variant="destructive" label="Cancel"    onclick="{!c.handleExit}" /></p>      
+           
         </div>
 
     </div>
+</lightning:card>
 
 </aura:component>

@@ -1,26 +1,192 @@
-<apex:page standardController="Lead" extensions="LeadCreationViaWalkInHelper"  sidebar="false" showHeader="false">
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+<apex:page Controller="LeadCreationViaWalkInHelper"  sidebar="false" showHeader="false">
+    <!--
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
+    </script>
     <apex:form >
-        	<apex:pageBlock >
-                <apex:pageMessages id="showmsg"></apex:pageMessages>
-         		<apex:pageBlockSection title="Create a Lead" columns="2">
-                    <apex:inputField value="{!newLead.FirstName}" />
-                    <apex:inputField value="{!newLead.LastName}" required="true" />
-                    <apex:inputField value="{!newLead.Company}"  /> 
-                    <apex:inputField value="{!newLead.Email}" />
-                    <apex:inputField value="{!newLead.Phone}" />
-                    <apex:inputField value="{!newLead.Status}" />
-                    <apex:inputField value="{!newLead.Visa_Type__c}"/>
-                    <apex:inputField value="{!newLead.CustomState__c}" label="City"/>
-         		</apex:pageBlockSection>
-         		<apex:pageBlockButtons location="bottom">
-                    <div style="width:400px; text-align:center;">
-                        <apex:commandButton value="Save" style="float:centre"  action="{!saveLead}" rerender="showmsg"/>
-                        </div>
-            		
-         		</apex:pageBlockButtons>
-      </apex:pageBlock>
+        <apex:pageBlock >
+            <apex:pageMessages id="showmsg"></apex:pageMessages>
+            <apex:image id="theImage" value="{!$Resource.CroyezHeader}" width="100%" height="100"/>
+            
+            <apex:pageBlockSection title="Create a Lead" columns="2">
+                <apex:inputField value="{!newLead.FirstName}" />
+                <apex:inputField value="{!newLead.LastName}" required="true" />
+                <apex:inputField value="{!newLead.Company}"  /> 
+                <apex:inputField value="{!newLead.Email}" />
+                <apex:inputField value="{!newLead.Phone}" />
+                <apex:inputField value="{!newLead.Status}" />
+                <apex:inputField value="{!newLead.Visa_Type__c}"/>
+                <apex:inputField value="{!newLead.CustomState__c}" label="City"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <div style="width:400px; text-align:center;">
+                    <apex:commandButton value="Save" style="float:centre"  action="{!saveLead}" rerender="showmsg"/>
+                </div>
+                
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
     </apex:form>
+  -->
+      <html>
+        
+        <head>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js" crossorigin='anonymous'></script>
+            
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+            
+            <style>
+                html,body{
+                    background-color:#e5e7eb;
+                    font-family: 'Dosis', sans-serif;
+                    font-family: 'Varela Round', sans-serif !important;
+                }
+            
+            .col-auto{
+                width: 647px;
+                padding-bottom: 6px;
+            }
+            </style>
+            </head>
+            
+            <script>
+                debugger;
+            var cityPickList=JSON.parse('{!cityPickList}');
+            var VisaTypeList = JSON.parse('{!VisaTypeList}');
+            var statusList = JSON.parse('{!statusList}');
+                var leadObj;
+            leadObj = JSON.parse('{!leadRecordString}');
+            var app = angular.module('myApp', []);
+          
+          
+            app.controller('myCtrl', function($scope) {
+                 $scope.cityPickList= cityPickList; 
+                 $scope.VisaTypeList= VisaTypeList; 
+                 $scope.statusList= statusList;
+                $scope.data = leadObj;
+                // $scope.leadId = leadObj.Id;
+                $scope.data.CustomState__c='--None--';
+                 $scope.data.Visa_Type__c='--None--';
+                  $scope.data.Status='--None--';
+                $scope.saveRecord = function(){
+                    debugger;
+                    delete $scope.data.attributes;
+                    // var ledId = $scope.leadId;
+                    var fname =  $scope.data.FirstName;
+                    var lname = $scope.data.LastName;
+                    var email = $scope.data.Email;
+                    var phone = $scope.data.Phone;
+                    var comp =  $scope.data.Company;
+                    var city = $scope.data.CustomState__c;
+                    var visa = $scope.data.Visa_Type__c;
+                    var status =  $scope.data.Status;
+                    LeadCreationViaWalkInHelper.insertLeadDetails(fname,lname,email,phone,comp,city,visa,status, function(result, event){ //$scope.leadId, $scope.data,7
+                        debugger;
+                        if(event.status){
+                            swal({
+                                title: "SUCCESS",
+                                text:  'Lead Details have been Saved Successfully.',
+                                icon: "success"
+                            });
+                            
+                        }else{
+                            swal({
+                                title: "ERROR",
+                                text:  'Something went wrong !.',
+                                icon: "error"
+                            });
+                        }
+                    })  
+                }
+            });
+            </script>
+            
+            
+            <body ng-app="myApp" ng-controller="myCtrl">      
+                <div class="card" style="width:100%;height: 100%;">
+                    <div class="header">
+                         <apex:image id="theImage" style="margin-left: 10.5rem" value="{!$Resource.CroyezHeader}" width="70%" height="80"/>
+                    </div>
+                    
+                    
+                    <div class="container" style="width:100%;padding: 0px;">
+                        <div class="mt-3" id="basic">
+                            <div class="mb-2">
+                                <div style="font-size: 18px;padding: 3px;background: cornflowerblue;margin-bottom: 10px;text-align: center;margin-right: 0px;">CREATE LEAD</div>
+                                <form >
+                                    <div class="col-auto" style=" width: 100%; padding-bottom: 10px;">
+                                        <label class="form-label" for="form11Example4" style="margin-top: -4px; margin-bottom: 4px;margin-left: 6px;font-size: 11px;">FirstName</label>
+                                        <input type="text" id="form11Example4" ng-model="data.FirstName" style="font-size: 14px;" placeholder="Enter here"  class="form-control" />
+                                    </div>
+                                </form>
+                                <form >
+                                    <div class="col-auto" style=" width: 100%; padding-bottom: 10px;">
+                                        <label class="form-label" for="form11Example4" style="margin-top: -2px; margin-bottom: 4px;margin-left: 6px;font-size: 11px;">LastName</label>
+                                        <input type="text" id="form11Example4" ng-model="data.LastName" placeholder="Enter LastName"  class="form-control" />
+                                    </div>
+                                </form>
+                                <form >
+                                    <div class="col-auto" style=" width: 100%; padding-bottom: 10px;">
+                                        <label class="form-label" for="form11Example4" style="margin-top: -2px; margin-bottom: 4px;margin-left: 6px;font-size: 11px;">Email</label>
+                                        <input type="text" id="form11Example4" ng-model="data.Email" placeholder="Enter Email"  class="form-control" />
+                                    </div>
+                                </form>
+                                 <form >
+                                    <div class="col-auto" style=" width: 100%; padding-bottom: 10px;">
+                                        <label class="form-label" for="form11Example4" style="margin-top: -2px; margin-bottom: 4px;margin-left: 6px;font-size: 11px;">Phone</label>
+                                        <input type="text" id="form11Example4" ng-model="data.Phone" placeholder="Enter Phone"  class="form-control" />
+                                    </div>
+                                </form>
+                                 <form >
+                                    <div class="col-auto" style=" width: 100%; padding-bottom: 10px;">
+                                        <label class="form-label" for="form11Example4" style="margin-top: -2px; margin-bottom: 4px;margin-left: 6px;font-size: 11px;">Company</label>
+                                        <input type="text" id="form11Example4" ng-model="data.Company" placeholder="Enter Company"  class="form-control" />
+                                    </div>
+                                </form>
+                                
+                                <form >
+                                    <div class="col-auto" style=" width: 100%; padding-bottom: 10px;">
+                                        <label class="form-label" for="form11Example4" style="margin-top: -2px; margin-bottom: 4px;margin-left: 6px;font-size: 11px;">City</label>
+                                        <select class="form-control" aria-label="Please select" ng-model="data.CustomState__c">
+                                            <option ng-repeat="crowns in cityPickList">{{crowns}}</option>
+                                        </select>   
+                                          </div>
+                                  </form>
+                                
+                                 <form >
+                                    <div class="col-auto" style=" width: 100%; padding-bottom: 10px;">
+                                        <label class="form-label" for="form11Example4" style="margin-top: -2px; margin-bottom: 4px;margin-left: 6px;font-size: 11px;">Status</label>
+                                        <select class="form-control" aria-label="Please select" ng-model="data.Status">
+                                            <option ng-repeat="crowns in statusList">{{crowns}}</option>
+                                        </select>   
+                                          </div>
+                                  </form>
+                                
+                                 <form >
+                                    <div class="col-auto" style=" width: 100%; padding-bottom: 10px;">
+                                        <label class="form-label" for="form11Example4" style="margin-top: -2px; margin-bottom: 4px;margin-left: 6px;font-size: 11px;">Visa Type</label>
+                                        <select class="form-control" aria-label="Please select" ng-model="data.Visa_Type__c">
+                                            <option ng-repeat="crowns in VisaTypeList">{{crowns}}</option>
+                                        </select>   
+                                          </div>
+                                  </form>
+                                                               
+                            </div>
+                        </div>
+                        
+                        <button type="submit" ng-click="saveRecord()" style="padding: 5px; margin-top: 0px ;   margin-left: 62rem;background: royalblue;" class="btn btn-primary">Submit Details</button>
+                    </div>
+                    
+                </div>
+                
+                
+            </body>
+        </html>
+    
 </apex:page>

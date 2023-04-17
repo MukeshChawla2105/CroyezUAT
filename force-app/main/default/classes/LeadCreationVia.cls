@@ -1,36 +1,11 @@
-public with sharing class LeadCreationViaWalkInHelper {
-    /*
-    public Lead newLead {get;set;}
-    
-    public LeadCreationViaWalkInHelper(ApexPages.StandardController controller){
-        newLead = new Lead();
-    }
-    
-    public PageReference saveLead(){
-        try{
-            Lead leadRecordToInsert = (Lead)newLead;
-            leadRecordToInsert.CustomState__c = leadRecordToInsert.CustomState__c;
-            insert newLead;
-            System.debug('Inserted Lead City === >'+newLead.City);
-            system.debug('newLead ' + newLead);
-            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.CONFIRM,'Lead created successfully!'));
-            //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'Lead created successfully!'));
-            
-            PageReference pageRef = new PageReference('https://croyezimmigrationservicespvtltd--dev.sandbox.my.salesforce-sites.com/LeadCreationViaWalkInPage');
-            return pageRef;
-        } catch (Exception e){
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Error on Saving Lead: ' + e.getMessage()));
-        }
-        return ApexPages.currentPage();
-    }
-   */
+public class LeadCreationVia {
     
     public Campaign ledRec {get;set;}
     public String leadRecordString{get;set;}
     public string cityPickList {get;set;}
     public String VisaTypeList {get;set;}
     Public String statusList {get;set;}
-    Public LeadCreationViaWalkInHelper() { 
+    Public LeadCreationVia() { 
         ledRec = [SELECT Id,Name FROM Campaign  WHERE ID ='7011e0000007NZvAAM'];
         System.debug('ledRec ::'+ledRec);
         leadRecordString=JSON.serialize(ledRec);

@@ -26,7 +26,7 @@ global without sharing class PayUWebhook{
     }
     
     
-    public PageReference CCAvenueresponse(){
+    public PageReference PayUresponse(){
         String status=ApexPages.currentPage().getParameters().get('status');
         String curl=ApexPages.currentPage().getParameters().get('curl');
         system.debug('status =====> ' + status);

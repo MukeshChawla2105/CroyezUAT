@@ -2,11 +2,11 @@
     doInit : function(component, event, helper) {
         debugger;
         $A.util.toggleClass(component.find('resultsDiv'),'slds-is-open');
-        // if( !$A.util.isEmpty(component.get('v.selectedRecords')) ) {
-        //     helper.searchuserhelper(component, event,helper,component.get('v.selectedRecords'));
-        // }
-      //  $A.util.addClass(component.find('userDiv'),'slds-hide');
-        helper.searchuserhelper(component, event,helper );
+        if( !$A.util.isEmpty(component.get('v.selectedRecords')) ) {
+            helper.searchuserhelper(component, event,helper,component.get('v.selectedRecords'));
+        }
+       $A.util.addClass(component.find('userDiv'),'slds-hide');
+       // helper.searchuserhelper(component, event,helper );
 
          
     },
@@ -99,13 +99,17 @@ handleSubmit : function( component, event, helper ){
         var state = response.getState();
         if (state === "SUCCESS") {
             component.set("v.showDetail", false);
-            component.set("v.userIds", response.getReturnValue());
+           // component.set("v.userIds", response.getReturnValue());
             
             $A.get('e.force:refreshView').fire();
             
             var resultsToast = $A.get("e.force:showToast");
             resultsToast.setParams({
-                "message": 'Share Record to user.'
+                        "message": "Record has been Share to User.",
+                        'duration':' 5000',
+                        'key': 'info_alt',
+                        'type': 'success',
+                        'mode': 'pester'
             });
             resultsToast.fire();
             
