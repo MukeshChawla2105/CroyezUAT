@@ -1,0 +1,108 @@
+<aura:component controller="getOpportunityRecord" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+    
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }       
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+    </aura:html>
+    <aura:attribute name="options" type="List" default="[
+                                                        {'label': 'Online Pay', 'value': 'Online Pay'},
+                                                        {'label': 'Manual Pay', 'value': 'Manual Pay'}
+                                                        ]"/>
+    
+    <aura:attribute name="payOptions" type="List" default="[
+                                                           {'label': '100% Payment', 'value': '100% Payment'},
+                                                           {'label': 'Partial Payment', 'value': 'Partial Payment'}
+                                                           ]"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="recordId" type="String" default="0061e00000AgvWCAAZ"/>
+    <aura:attribute name="totalPayment" type="Integer"/>
+    <aura:attribute name="duePayment" type="Integer"/>
+    <aura:attribute name="rdvalue" type="String" />
+    <aura:attribute name="rdPayValue" type="String" />
+    <aura:attribute name="value" type="List" />
+    <aura:attribute name="upfrontPayment" type="Integer"/>
+       
+    <div>
+        
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Quick Payment Link</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    
+                    <lightning:radioGroup name="Payment Options"
+                                          label="Payment Options"
+                                          options="{!v.options }"
+                                          value="{!v.rdvalue }"
+                                          type="radio"
+                                          required="true"
+                                          onchange="{! c.handleRadio }"/>
+                    
+                    
+                    <lightning:radioGroup name="Payment Type"
+                                          label="Payment Type"
+                                          options="{! v.payOptions }"
+                                          value="{!v.rdPayValue}"
+                                          type="radio"
+                                          required="true"
+                                          onchange="{!c.handlePayRadio }"/>
+                    
+                    
+                    <aura:if isTrue="{!AND(v.rdPayValue=='100% Payment',v.rdvalue=='Online Pay')}">
+                        <lightning:input name="totalAmount" disabled="true" value="{!v.totalPayment}" label="Total Amount"/>
+                        <lightning:select name="Payment Channel" label="Payment Channel" value="New" aura:id="paymentPicklist" > 
+                            <option value="">choose one...</option>
+                            <option value="Razor Pay">Razor Pay</option>
+                            <option value="Pay U">Pay U</option>                
+                        </lightning:select>
+                    </aura:if>
+                    
+                    <aura:if isTrue="{!AND(v.rdPayValue=='Partial Payment',v.rdvalue=='Online Pay')}">
+                        <lightning:input name="totalAmount" disabled="true" value="{!v.totalPayment}" label="Total Amount"/>
+                        <lightning:input type="number" name="upForntPayment" value="{!v.upfrontPayment}" label="Upfront Payment" onchange="{!c.handleUpfront}"/>
+                        <lightning:input type="number" name="duePayment" disabled="true" value="{!v.duePayment}" label="Due Payment" />
+                        
+                    </aura:if>    
+                    <aura:if isTrue="{!AND(v.rdPayValue=='100% Payment',v.rdvalue=='Manual Pay')}">
+                        <lightning:input name="totalAmount" disabled="true" value="{!v.totalPayment}" label="Total Amount"/>
+                        <lightning:select name="Payment Channel" label="Payment Mode" value="New" aura:id="paymentTypePicklist" >
+                            <option value="">choose one...</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Cheque">Cheque</option> 
+                            <option value="POS">POS</option>
+                        </lightning:select>
+                        <lightning:input name="file2" type="file" multiple="true" label="Attachment(version required)" required="true" onchange="{! c.handleFilesChange }"/>
+                    </aura:if> 
+                    <aura:if isTrue="{!AND(v.rdPayValue=='Partial Payment',v.rdvalue=='Manual Pay')}">
+                        
+                        <lightning:input name="totalAmount" disabled="true" value="{!v.totalPayment}" label="Total Amount"/>
+                        <lightning:input type="number" name="upForntPayment" value="{!v.upfrontPayment}" label="Upfront Payment" onchange="{!c.handleUpfront}"/>
+                        <lightning:input type="number" name="duePayment" disabled="true" value="{!v.duePayment}" label="Due Payment" />
+                        
+                        <lightning:select name="Payment Medium" label="Payment Mode" value="New" aura:id="paymentMedPicklist" >
+                            <option value="">choose one...</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Cheque">Cheque</option> 
+                            <option value="POS">POS</option>
+                        </lightning:select>
+                        
+                        <lightning:input name="file2" type="file" multiple="true" label="Attachment(version required)" required="true" onchange="{! c.handleFilesChange }"/>
+                    </aura:if> 
+                </div>
+                         
+                <div class="slds-modal__footer">
+                    <lightning:button variant="Brand" class="slds-button" label="Submit" onclick="{!c.handleSubmit}"/>
+                    <lightning:button variant="destructive" class="slds-button" label="Cancel" onclick="{!c.handleClose}"/>
+                </div>
+    </div>
+</aura:component>

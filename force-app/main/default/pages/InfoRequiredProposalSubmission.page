@@ -47,7 +47,7 @@
                     debugger;
                     delete $scope.data.attributes;
                     var ledId = $scope.leadId;
-                    var fname =  $scope.data.FirstName;
+                    var fname = $scope.data.FirstName;
                     var lname = $scope.data.LastName;
                     var email = $scope.data.Email;
                     var phone = $scope.data.Phone;

@@ -27,7 +27,7 @@
                <h3 style="color:#2B65EC;font-size:90%">RETAINER AGREEMENT</h3>  <br/><br/>
                <b>Mr.{!name}</b>  <br/><br/> 
                 {!leadRec.CreatedDate} <br/><br/>
-                M/s CROYEZ IMMIGRATION SERVICE PRIVATE LIMITE 
+                M/s CROYEZ IMMIGRATION SERVICE PRIVATE LIMITED 
             </div>
             <div Style= "float: left;  width: 100%; font-size:90%; margin-top: 565px; " >
                    <apex:image url="{!$Resource.CroyezFooter}" width="700" height="100"/>

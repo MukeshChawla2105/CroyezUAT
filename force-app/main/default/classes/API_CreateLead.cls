@@ -9,7 +9,6 @@ global without sharing class API_CreateLead {
         if(!String.isEmpty(requestString)) {
             Lead newLead = (Lead)JSON.deserialize(requestString, Lead.class);
             if(newLead != null) {
-                //system.debug('insertLead :: ' + insertLead(leadWrapper));
                 String leadId = insertLead(newLead, requestString);
                 if(leadId != null)
                     RestContext.response.responseBody = Blob.valueOf(JSON.serialize(new IntegrationWrapper.APIResponseWrapper('Success', 'Lead created successfully ref Id:'+leadId)));
