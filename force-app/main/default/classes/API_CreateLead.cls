@@ -24,6 +24,13 @@ global without sharing class API_CreateLead {
     private static String insertLead(Lead leadRec, string requestString){
         try {
             system.debug('--- leadRec ' + leadRec);
+            if(leadRec.LastName != null)
+                leadRec.Company = leadRec.LastName;
+            else{
+                leadRec.Company = 'NA';
+                leadRec.LastName = 'NA';
+            }
+
             insert leadRec;
             return leadRec.Id;
         }catch(Exception e){

@@ -2,12 +2,12 @@
     <html>
         <head>
             <style>
-                 @page {
-                 background-image: url("{!URLFOR($Resource.CroyezPdfWaterMark)}")!important;
-                 background-size: 8in 8in!important !important;
-                  background-repeat : no-repeat !important;
-                  background-position : center !important;
-                 width: 100%;
+                @page {
+                background-image: url("{!URLFOR($Resource.CroyezPdfWaterMark)}")!important;
+                background-size: 8in 8in!important !important;
+                background-repeat : no-repeat !important;
+                background-position : center !important;
+                width: 100%;
                 size: 19.0cm 29.7cm !important ;
                 margin-top: 0cm !important;
                 margin-left: -2cm !important;

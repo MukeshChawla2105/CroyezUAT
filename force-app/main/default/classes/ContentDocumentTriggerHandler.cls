@@ -121,4 +121,45 @@ public with sharing class ContentDocumentTriggerHandler{
         }
     }
 
+    public void onAfterInsert(List<ContentDocumentLink> cdlList) {
+        try{
+            Set<ID> parentIds = new Set<ID>();
+            Map<Id, Approval.ProcessSubmitRequest> cdToapprovalRequestMap = new Map<Id, Approval.ProcessSubmitRequest>();
+            Utility.ApprovalWrapper approvalParentIdWrapper = Utility.getParentUserMap();
+            List<Invoice__c> invoiceList = new List<Invoice__c>();
+            
+            for ( ContentDocumentLink cdl : cdlList ) {
+                parentIds.add( cdl.LinkedEntityId );
+            }
+            if(!parentIds.isEmpty()){
+                invoiceList = [SELECT Id,Opportunity_s_Manager__c,Opportunity__r.Owner.UserRoleId,status__c,Opportunity__r.Owner.managerid,  ( SELECT Id FROM ContentDocumentLinks LIMIT 1 ) FROM Invoice__c WHERE Id IN :parentIds];
+                system.debug('invoiceList :: ' + invoiceList);
+                if(!invoiceList.isEmpty()){
+                    for (Invoice__c invoiceRec : invoiceList) {
+                        Id approverId;
+                        String userRoleId;
+                        Approval.ProcessSubmitRequest approvalRequest = new Approval.ProcessSubmitRequest();
+                        approvalRequest.setComments('Submitting for Manager Approval');
+                        approvalRequest.setObjectId(invoiceRec.Id);
+                        approvalRequest.setProcessDefinitionNameOrId('Invoice_Approval');
+                        userRoleId = invoiceRec.Opportunity__r.Owner.UserRoleId;
+                        if(invoiceRec.Opportunity_s_Manager__c != null){
+                            approverId = invoiceRec.Opportunity_s_Manager__c;
+                        }
+                        else{
+                            approverId = approvalParentIdWrapper.smToManagerMap.containsKey(userRoleId) && approvalParentIdWrapper.managerRoleToUserIdMap.containsKey(approvalParentIdWrapper.smToManagerMap.get(userRoleId)) ? approvalParentIdWrapper.managerRoleToUserIdMap.get(approvalParentIdWrapper.smToManagerMap.get(userRoleId)) : null; //userBhMap.containsKey(oppOwnersRoleId) ? userBhMap.get(oppOwnersRoleId) : null;
+                        }
+                        system.debug('approverId--->'+approverId);
+                        approvalRequest.setNextApproverIds(new List<Id> {approverId});
+                        cdToapprovalRequestMap.put(invoiceRec.Id, approvalRequest);                   
+                    } 
+                    if(!cdToapprovalRequestMap.isEmpty()){
+                        List<Approval.ProcessResult> result = Approval.process(cdToapprovalRequestMap.values());
+                    }
+                }
+            }
+        } catch (Exception e){
+            system.debug('Error :: ' + e.getMessage() + 'At Line Number :: ' + e.getLineNumber());
+        }
+    }
 }

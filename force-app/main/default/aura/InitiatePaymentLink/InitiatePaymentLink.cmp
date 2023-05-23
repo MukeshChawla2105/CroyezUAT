@@ -1,0 +1,155 @@
+<aura:component controller="OpportunityWrapper"
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader"
+    access="global">
+
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+    </aura:html>
+
+    <aura:attribute name="opportunity" type="String" default="Opportunity" access="global" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="invoiceId" type="String" />
+    <aura:attribute name="PayOption" type="list" />
+    <aura:attribute name="PayType" type="list" />
+    <aura:attribute name="PayChannel" type="list" />
+    <aura:attribute name="PayMode" type="list" />
+
+    <aura:attribute name="PaymentOptionsPickList" type="String" />
+    <aura:attribute name="PaymentTypePickList" type="String" />
+    <aura:attribute name="PaymentChannelPickList" type="String" />
+    <aura:attribute name="PaymentModePickList" type="String" />
+
+    <aura:attribute name="totalAmount" type="Integer" />
+    <aura:attribute name="duePayment" type="Integer" />
+    <aura:attribute name="upfrontPayment" type="decimal" />
+
+    <aura:attribute name="Optvalue" type="String" />
+    <aura:attribute name="Typvalue" type="String" />
+    <aura:attribute name="Chnvalue" type="String" />
+    <aura:attribute name="Modvalue" type="String" />
+
+    <aura:attribute name="accept" type="List" default="['.jpg', '.jpeg','.xls','.pdf','.png']" />
+    <aura:attribute name="multiple" type="Boolean" default="true" />
+    <aura:attribute name="disabled" type="Boolean" default="false" />
+    <aura:attribute name="fileName" type="String" default="No File Selected.." />
+
+    <div class="slds-modal__header">
+        <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Quick Payment Link</h1>
+    </div>
+    <div style="padding:2%">
+        <div class="form-group">
+            <lightning:select aura:id="payOptPicklist" value="{!v.Optvalue}" onchange="{!c.handlePayOption}"
+                label="Payment Options" required="true">
+                <option value="">--None--</option>
+                <aura:iteration items="{!v.PayOption}" var="opt" indexVar="key">
+                    <!--<option value="{!opt.key}" selected="{!opt.key==v.opportunity.Payment_Options__c}"/>-->
+                    <option value="{!opt}">{!opt}</option>
+                </aura:iteration>
+            </lightning:select>
+        </div>
+
+        <div class="form-group">
+            <lightning:select aura:id="payTypPicklist" value="{!v.Typvalue}" onchange="{!c.handlePayType}"
+                label="Payment Type" required="true">
+                <option value="">--None--</option>
+                <aura:iteration items="{!v.PayType}" var="val" indexVar="key">
+                    <option value="{!val.key}">{!val}</option>
+                </aura:iteration>
+            </lightning:select>
+        </div>
+
+        <!--condtions-->
+        <div class="form-group">
+            <aura:if isTrue="{!AND(v.Optvalue=='Online Pay', v.Typvalue=='Partial Payment')}">
+                <lightning:input type="number" name="totalAmount" value="{!v.totalAmount}" disabled="true"
+                    label="Total Amount" />
+                <lightning:input type="number" name="upfrontPayment" value="{!v.upfrontPayment}" label="Upfront Payment"
+                    onblur="{!c.handleUpfront}" />
+                <lightning:input type="number" name="duePayment" value="{!v.duePayment}" disabled="true"
+                    label="Due Amount" />
+                <lightning:select aura:id="payChannelPicklist" value="{!v.Chnvalue}" onchange="{!c.handlePayChannel}"
+                    name="paymentChannel" label="Payment Channel">
+                    <option value="">--None--</option>
+                    <aura:iteration items="{!v.PayChannel}" var="value" indexVar="key">
+                        <option value="{!value.key}">{!value}</option>
+                    </aura:iteration>
+                </lightning:select>
+            </aura:if>
+        </div>
+
+        <div class="form-group">
+            <aura:if isTrue="{!AND(v.Optvalue=='Online Pay', v.Typvalue=='100% Payment')}">
+                <lightning:input type="number" name="totalAmount" value="{!v.totalAmount}" disabled="true"
+                    label="Total Amount" />
+                <!--lightning:input type="number" name="upfrontPayment" value="{!v.upfrontPayment}" label="Upfront Payment"
+                    onchange="{!c.handleUpfront}" /-->
+                <!--lightning:input type="number" name="duePayment" value="{!v.duePayment}" disabled="true"
+                    label="Due Amount" /-->
+                <lightning:select aura:id="payChannelPicklist" value="{!v.Chnvalue}" onchange="{!c.handlePayChannel}"
+                    name="paymentChannel" label="Payment Channel">
+                    <option value="">--None--</option>
+                    <aura:iteration items="{!v.PayChannel}" var="value" indexVar="key">
+                        <option value="{!value.key}">{!value}</option>
+                    </aura:iteration>
+                </lightning:select>
+            </aura:if>
+        </div>
+
+        <div class="form-group">
+            <aura:if isTrue="{!AND(v.Optvalue=='Manual Pay', v.Typvalue=='100% Payment')}">
+                <lightning:input type="number" name="totalAmount" value="{!v.totalAmount}" disabled="true"
+                    label="Total Amount" />
+                <lightning:select aura:id="payModePicklist" value="{!v.Modvalue}" onchange="{!c.handlePayMode}"
+                    name="paymentMode" label="Payment Mode">
+                    <option value="">--None--</option>
+                    <aura:iteration items="{!v.PayMode}" var="val" indexVar="key">
+                        <option value="{!val.key}">{!val}</option>
+                    </aura:iteration>
+                </lightning:select>
+                <lightning:input aura:id="fuploader" onchange="{!c.handleFilesChange}" type="file" name="file"
+                    label="Upload File" multiple="false" />
+                <div class="slds-text-body_small slds-text-color_error">{!v.fileName} </div>
+                <!--<lightning:fileUpload label="Add attachment" multiple="{!v.multiple}" accept="{!v.accept}" recordId="{!v.recordId}" onuploadfinished="{!c.handleUploadFinished}" />
+            <h4 style="color:green;">{!v.noFileSelected} </h4>-->
+            </aura:if>
+        </div>
+
+        <div class="form-group">
+            <aura:if isTrue="{!AND(v.Optvalue=='Manual Pay', v.Typvalue=='Partial Payment')}">
+                <lightning:input type="number" name="totalAmount" value="{!v.totalAmount}" disabled="true"
+                    label="Total Amount" />
+                <lightning:input type="number" name="upfrontPayment" value="{!v.upfrontPayment}" label="Upfront Payment"
+                    onblur="{!c.handleUpfront}" />
+                <lightning:input type="number" name="duePayment" value="{!v.duePayment}" disabled="true"
+                    label="Due Amount" />
+                <lightning:select aura:id="payModePicklist" value="{!v.Modvalue}" onchange="{!c.handlePayMode}"
+                    name="paymentMode" label="Payment Mode">
+                    <option value="">--None--</option>
+                    <aura:iteration items="{!v.PayMode}" var="val" indexVar="key">
+                        <option value="{!val.key}">{!val}</option>
+                    </aura:iteration>
+                </lightning:select>
+                <lightning:input aura:id="fuploader" onchange="{!c.handleFilesChange}" type="file" name="file"
+                    label="Upload File" multiple="false" />
+                <div class="slds-text-body_small slds-text-color_error">{!v.fileName} </div>
+            </aura:if>
+        </div>
+    </div>
+    <br />
+    <div class="slds-modal__footer">
+        <lightning:button variant="brand" class="slds-button" label="Submit" onclick="{!c.handleSave}" />
+        <lightning:button variant="destructive" class="slds-button" label="Cancel" onclick="{!c.Cancel}" />
+    </div>
+</aura:component>

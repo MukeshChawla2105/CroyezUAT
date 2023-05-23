@@ -5,7 +5,7 @@
     <deprecated>false</deprecated>
     <externalId>true</externalId>
     <label>External Lead ID</label>
-    <length>128</length>
+    <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
