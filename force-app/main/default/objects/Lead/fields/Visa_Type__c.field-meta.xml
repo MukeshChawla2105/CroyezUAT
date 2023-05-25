@@ -21,9 +21,9 @@
                 <label>TRV</label>
             </value>
             <value>
-                <fullName>PR</fullName>
+                <fullName>PRV</fullName>
                 <default>false</default>
-                <label>PR</label>
+                <label>PRV</label>
             </value>
         </valueSetDefinition>
     </valueSet>

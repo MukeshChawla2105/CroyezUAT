@@ -25,7 +25,7 @@ public class EmailIUtility{
             // }
             
             //if (objName == 'Opportunity'){
-            invoiceDetails = [Select id,Amount__c,LeadInvoice__r.Name,LeadInvoice__r.Owner.name,opportunity__r.Account.Email__c, opportunity__r.owner.Name, opportunity__r.Account.Name, opportunity__r.AccountId
+            invoiceDetails = [Select id,Amount__c,LeadInvoice__r.Name,LeadInvoice__r.LastName,LeadInvoice__r.Owner.name,opportunity__r.Account.Email__c, opportunity__r.owner.Name, opportunity__r.Account.Name, opportunity__r.AccountId
                               From Invoice__c
                               WHERE Id = :invoiceId];
             //}
@@ -48,7 +48,7 @@ public class EmailIUtility{
                 // if (objName == 'Opportunity') {
                 if (htmlBody.contains('{!Lead.Name}')){
                     system.debug('{!Lead.Name}' + invoiceDetails[0].LeadInvoice__r.Name);
-                    htmlBody = htmlBody.replace('{!Lead.Name}', invoiceDetails[0].LeadInvoice__r.Name);
+                    htmlBody = htmlBody.replace('{!Lead.Name}', invoiceDetails[0].LeadInvoice__r.LastName);
                 }
                 if (htmlBody.contains('{!User.Name}')){
                     htmlBody = htmlBody.replace('{!User.Name}', invoiceDetails[0].LeadInvoice__r.Owner.name);
@@ -134,7 +134,7 @@ public class EmailIUtility{
                 
                 String htmlBody = WelcomeEmailtemplate.HtmlValue;
                 if (htmlBody.contains('{!Lead.Name}') || htmlBody.contains('{!Lead.Name},')){
-                    htmlBody = htmlBody.replace('{!Lead.Name}', LeadRec.FirstName + ' ' + LeadRec.LastName);
+                    htmlBody = htmlBody.replace('{!Lead.Name}', LeadRec.LastName);
                 }
                 
                 mail.setHtmlBody(htmlBody);
@@ -169,7 +169,7 @@ public class EmailIUtility{
                 
                 String htmlBody = WelcomeEmailtemplate.HtmlValue;
                 if (htmlBody.contains('{!Lead.Name}') || htmlBody.contains('{!Lead.Name},')){
-                    htmlBody = htmlBody.replace('{!Lead.Name}', LeadRec.FirstName + ' ' + LeadRec.LastName);
+                    htmlBody = htmlBody.replace('{!Lead.Name}', LeadRec.LastName);
                 }
                 
                 mail.setHtmlBody(htmlBody);
@@ -214,7 +214,7 @@ public class EmailIUtility{
                     
                     String htmlBody = WelcomeEmailtemplate.HtmlValue;
                     if (htmlBody.contains('{!Lead.Name}') || htmlBody.contains('{!Lead.Name},')){
-                        htmlBody = htmlBody.replace('{!Lead.Name}', Leadlist[0].FirstName + ' ' + Leadlist[0].LastName);
+                        htmlBody = htmlBody.replace('{!Lead.Name}', Leadlist[0].LastName);
                     }
                     if (htmlBody.contains('?id=') ){
                         htmlBody = htmlBody.replace('?id=', '?id=' +Leadlist[0].Id );

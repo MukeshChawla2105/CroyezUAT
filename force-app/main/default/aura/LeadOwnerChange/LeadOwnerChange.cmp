@@ -1,0 +1,10 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="LeadOwnerChange">
+    <aura:attribute name="selectedOwnerId" type="String" />
+    
+      <c:DynamicParentCustomLookup aura:id="ownerField" objectAPIName="User" IconName="Standard:User" selectedRecord="{!v.selectedOwnerId}" label="User Name"  />
+
+   <!-- <lightning:input aura:id="ownerField" type="text" label="New Owner" value="{!v.selectedOwnerId}" />-->
+    <lightning:button label="Change Owner" onclick="{!c.changeOwner}" />
+	
+</aura:component>
