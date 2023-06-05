@@ -7,7 +7,8 @@ public class ProspectTriggerHandler {
         }        
     } 
     public static void afterUpdate(map<Id,Prospect__c> newmapProspect , map<Id,Prospect__c> oldmapProspect){
-        
+        Database.DMLOptions dmo = new Database.DMLOptions();
+		dmo.assignmentRuleHeader.useDefaultRule = true;
         List<Lead> leadlist = new List<Lead>();
         for(Prospect__c prospectRec : newmapProspect.values())
         {
@@ -22,7 +23,10 @@ public class ProspectTriggerHandler {
                 leadRec.Visa_Type__c = prospectRec.Visa_Type__c;
                 leadRec.Email = prospectRec.Email__c;
                 leadRec.Phone = prospectRec.Phone__c;
+                leadRec.setOptions(dmo);
                 leadlist.add(leadRec);  
+                
+        
                 
             }
         }

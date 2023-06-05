@@ -1,6 +1,9 @@
 public with sharing class LeadFormFileUploader {
     @AuraEnabled
     public static Lead CreateLead(string firstName,string lastName,string email,string phone ,string company,string status) {
+        Database.DMLOptions dmo = new Database.DMLOptions();
+		dmo.assignmentRuleHeader.useDefaultRule = true;
+        
         list<Lead> leadlist = new list<Lead>();
         Lead leadRec = new Lead();
         leadRec.FirstName = firstName;
@@ -9,6 +12,7 @@ public with sharing class LeadFormFileUploader {
         leadRec.Phone = phone;
         leadRec.Company = company;
         leadRec.Status = status;
+        leadRec.setOptions(dmo);
         leadlist.add(leadRec);
         insert leadlist;
         system.debug('leadlist' +leadlist);

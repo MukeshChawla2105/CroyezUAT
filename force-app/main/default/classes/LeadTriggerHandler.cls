@@ -1,12 +1,12 @@
 public class LeadTriggerHandler{
     static LeadTriggerHandler handlerInstance;
-
+    
     public static LeadTriggerHandler getInstance(){
         if (handlerInstance == null)
             handlerInstance = new LeadTriggerHandler();
         return handlerInstance;
     }
-
+    
     public void assignInboundLeadToDefaultQueue(list<lead> newLeadList){
         try{
             User userRec = [Select Id, Alias, ProfileId, Profile.Name
@@ -17,7 +17,7 @@ public class LeadTriggerHandler{
                               FROM Group
                               WHERE Type = 'Queue' AND Name = :Constants.PRIVATE_LEAD_QUEUE
                               limit 1].Id;
-
+            
             for (Lead ld : newLeadList){
                 If (queueId != null){
                     ld.ownerId = queueId;
@@ -28,18 +28,18 @@ public class LeadTriggerHandler{
             system.debug('Error==>@@' + ex.getLineNumber());
         }
     }
-
+    
     public void Createtask(List<Lead> leadList){
-
+        
         List<Task> TasklistToBEInserted = new List<Task>();
         List<String> EmailList = new List<String>();
         Set<String> LeadId = new Set<String>();
         List<Lead> newLeadList = new List<Lead>();
-
+        
         try{
             if (!leadlist.isEmpty() && leadList.size() > 0){
                 for (lead ld : leadlist){
-
+                    
                     if (ld.Status == Constants.LEAD_STATUS_NEW){
                         newLeadList.add(ld);
                         task tsk = new Task();
@@ -52,31 +52,31 @@ public class LeadTriggerHandler{
                         TasklistToBEInserted.add(tsk);
                     }
                 }
-
+                
                 if (!TasklistToBEInserted.isEmpty()){
                     insert TasklistToBEInserted;
                 }
-
+                
                 if (!newLeadList.isEmpty()){
                     EmailIUtility.SendWelcomeEmail(newLeadList);
                 }
             }
-
+            
         } catch (Exception e){
-
+            
             System.debug('the error has occured due to ====> ' + e.getMessage());
             System.debug('The error has occured at line number ======> ' + e.getLineNumber());
             HandleBusinessException.captureError('LeadTriggerHandler', 'Createtask', e, null);
-
+            
         }
     }
-
+    
     public void CreateFollowuptask(map<Id, Lead> LeadOldmap, map<Id, Lead> LeadNewMap){
-
+        
         List<Task> FollowUpTasklistToBEInserted = new List<Task>();
         try{
             if (!LeadNewMap.isEmpty()){
-
+                
                 for (Lead LeadRec : LeadNewMap.values()){
                     if (LeadRec.Follow_Up_Date_Time__c != null && LeadRec.Follow_Up_Date_Time__c != LeadOldmap.get(LeadRec.id).Follow_Up_Date_Time__c && LeadRec.Lead_Substatus__c == Constants.LEAD_SUBSTATUS_FOLLOWUP){
                         task tsk = new Task();
@@ -89,29 +89,29 @@ public class LeadTriggerHandler{
                         tsk.ReminderDateTime = (LeadRec.Follow_Up_Date_Time__c).addminutes(-30);
                         FollowUpTasklistToBEInserted.add(tsk);
                     }
-
+                    
                 }
                 if (!FollowUpTasklistToBEInserted.isEmpty()){
                     insert FollowUpTasklistToBEInserted;
                 }
-
+                
             }
-
+            
         } catch (Exception e){
             System.debug('the error has occured due to ====> ' + e.getMessage());
             System.debug('The error has occured at line number ======> ' + e.getLineNumber());
             HandleBusinessException.captureError('LeadTriggerHandler', 'CreateFollowuptask', e, null);
-
+            
         }
     }
-
+    
     public void SendProcessEmailFromLead(Map<Id,Lead> LeadoldMap, Map<Id,Lead> LeadNewMap ){
         List<Task> FollowUpTasksToBEInserted = new List<Task>();
         List<Lead> LeadListtosendEmail = new List<Lead>();
         try {
-
+            
             if (!LeadNewMap.isEmpty()) {
-
+                
                 for (Lead Ld : LeadNewMap.values()) {
                     if (Ld.Status != null && ld.Lead_Substatus__c != null && (ld.Lead_Substatus__c == Constants.LEAD_SUBSTATUS_CONNECTED ||  ld.Lead_Substatus__c == Constants.LEAD_SUBSTATUS_PRICE_TOO_HIGH) && ld.Lead_Substatus__c != LeadoldMap.get(ld.id).Lead_Substatus__c) {
                         LeadListtosendEmail.add(Ld);
@@ -126,12 +126,12 @@ public class LeadTriggerHandler{
                             FollowUpTasksToBEInserted.add(tsk);
                             
                         }
-
+                        
                         
                     }
                     
                 }
-
+                
                 if (!LeadListtosendEmail.isEmpty()) {
                     EmailIUtility.SendProcessEmail(LeadListtosendEmail);
                 }
@@ -147,15 +147,15 @@ public class LeadTriggerHandler{
             System.debug('The error has occured at line number ======> ' + e.getLineNumber());
             HandleBusinessException.captureError('LeadTriggerHandler', 'CreateFollowuptask', e, null);
         }
-
+        
     }
-
+    
     Public void MoveLeadTojunk(Map<Id,Lead> LeadoldMap, Map<Id,Lead> LeadNewMap){
-
+        
         try {
-
+            
             if (!LeadNewMap.isEmpty()) {
-
+                
                 for (Lead Ld : LeadNewMap.values()) {
                     if (Ld.Status != null && ld.Lead_Substatus__c != null && (ld.Lead_Substatus__c == Constants.LEAD_SUBSTATUS_NOT_INTERESTED) && ld.Lead_Substatus__c != LeadoldMap.get(ld.id).Lead_Substatus__c) {
                         ld.Status = constants.LEAD_STATUS_UNDER_JUNK;
@@ -173,6 +173,7 @@ public class LeadTriggerHandler{
         }
         
     }
+    
     Public void onCallDispositionChanges(Map<Id,Lead> LeadoldMap, Map<Id,Lead> LeadNewMap){
         try {
             if (!LeadNewMap.isEmpty()) {
@@ -189,13 +190,53 @@ public class LeadTriggerHandler{
             HandleBusinessException.captureError('LeadTriggerHandler', 'CreateFollowuptask', e, null);
         }
     }
-
+    
     public void tagSalesMemberToOpportunity(List<Lead> leadList){
-        for(Lead ld : leadList){
-            ld.Sales_Team_Member__c = '0052w00000AfrmPAAR';
+        
+        try{
+            
+            AssignmentRule AR = new AssignmentRule();
+            AR = [select id from AssignmentRule where SobjectType = 'Lead' and Active = true limit 1];
+            
+            //Creating the DMLOptions for "Assign using active assignment rules" checkbox
+            Database.DMLOptions dmlOpts = new Database.DMLOptions();
+            dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
+            
+            Database.DMLOptions dmo = new Database.DMLOptions();
+			dmo.assignmentRuleHeader.useDefaultRule = true;
+            
+            List<Lead_Assign_Custom_Setting__c> LACustomSet = LAgetCustomSetting();
+            decimal LastCoimb_RRId = LACustomSet[0].Coimbatore_Last_RRId__c;
+            decimal LastChen_RRId = LACustomSet[0].Chennai_PR_Last_RRId__c;
+            for(Lead ld : leadList){
+                ld.Sales_Team_Member__c = '0052w00000AfrmPAAR';
+                If(ld.Nearest_Branch__c == 'Coimbatore'){
+                    ld.Coimbatore_Lead_Number__c = LastCoimb_RRId;
+                    ld.setOptions(dmo);
+                    LastCoimb_RRId++;
+                    system.debug('LastCoimb_RRId ====> ' + LastCoimb_RRId);
+                    
+                }
+                If(ld.Nearest_Branch__c == 'chennai'){
+                    ld.Chennai_PR_Lead_Number__c = LastChen_RRId;
+                    ld.setOptions(dmo);
+                    LastChen_RRId++;
+                    system.debug('LastCoimb_RRId ====> ' + LastCoimb_RRId);
+                }
+                
+            }
+            Lead_Assign_Custom_Setting__c updatedLACS = new Lead_Assign_Custom_Setting__c();
+            updatedLACS.Coimbatore_Last_RRId__c  = LastCoimb_RRId;
+            updatedLACS.Chennai_PR_Last_RRId__c  = LastChen_RRId;
+            updatedLACS.Id = LACustomSet[0].Id;
+            system.debug('updatedLACS =====> ' + updatedLACS);
+            update updatedLACS;
+            
+        }Catch(Exception e){
+            
         }
     }
-
+    
     public void createVisaInquiryRecord(List<Lead> newLeadList){
         List<Visa_Inquiry__c> visaInqListTobeInsert = new List<Visa_Inquiry__c>();
         for(Lead ld : newLeadList){
@@ -213,7 +254,7 @@ public class LeadTriggerHandler{
             insert visaInqListTobeInsert;
         }
     }
-
+    
     public void afterInsert(Map<Id,Lead> leadMap){
         System.debug('RUN--'+leadMap);
         Explorer_Configuration__c  leDocConfig = Explorer_Configuration__c.getValues('Lead');
@@ -232,31 +273,31 @@ public class LeadTriggerHandler{
         }
         
         if(!folders.isEmpty()){
-         	insert folders;   
+            insert folders;   
         }
     }
-
+    
     public void convertDuplicateLeadsToConvertedOpp(Map<Id,Lead> oldleadMap, Map<Id,Lead> NewleadMap){
-
+        
         System.debug('oldleadMap ===> '+ oldleadMap);
         System.debug('NewleadMap ===> '+ NewleadMap);
         List<Lead> ConvertingDuplicateLeadList = new List<Lead>();
-
+        
         List<String> EmailListString = new List<String>();
         Map<String, Lead> MapOfLeadWithEmail = new Map<String, Lead>();
         
         List<String> PhoneListString = new List<String>();
         Map<String, Lead> MapOfLeadWithPhone = new Map<String, Lead>();
-
+        
         Map<string, List<Lead>> existingLeadsByEmail = new Map<string, List<Lead>>();
         Map<string, List<Lead>> existingLeadsByPhone = new Map<string, List<Lead>>();
-
+        
         // ================================= After converison ===============================
-
+        
         Map<String, String> MapofLeadIdWithConvertedAccountId = new Map<String, String>();
         Map<String, String> MapofLeadIdWithConvertedOppId = new Map<String, String>();
         Map<String, String> MapofAccountIDWithConvertedOpporuntyId = new Map<String, String>();
-
+        
         String LeadQueryString = 'select Id, Email, status, course__c, CID__c,Customers__c,OwnerId,Alternate_Phone__c,Phone,Alternate_Email__c From Lead';
         String whereClauses = '( ';
         try {
@@ -307,8 +348,8 @@ public class LeadTriggerHandler{
                                 opp.name = DuplicateLead.name;
                                 opp.AccountId = MapOfLeadWithEmail.get(DuplicateLead.Email).ConvertedAccountId;
                                 //opp.StageName = Cons
-
-
+                                
+                                
                                 // if (existingLeadsByEmail.containsKey(DuplicateLead.Email)) {
                                 //     List<Lead> ExistinLeadWithEmail = existingLeadsByEmail.get(DuplicateLead.Email);
                                 //     ExistinLeadWithEmail.add(DuplicateLead);
@@ -321,7 +362,7 @@ public class LeadTriggerHandler{
                                 // }
                             }
                         }
-
+                        
                         else if (!PhoneListString.isEmpty()) {
                             if (!PhoneListString.contains(DuplicateLead.Phone)) {
                                 // if (existingLeadsByPhone.containsKey(DuplicateLead.Phone)) {
@@ -339,10 +380,20 @@ public class LeadTriggerHandler{
                     }
                 }
             }
-           
+            
         } catch (Exception e) {
             
         }
-
+        
     }
+    
+    Public List<Lead_Assign_Custom_Setting__c> LAgetCustomSetting(){
+        List<Lead_Assign_Custom_Setting__c> LACustomSet = [SELECT Chennai_PR_Last_RRId__c,Coimbatore_Last_RRId__c,Id,Name 
+                                                           FROM Lead_Assign_Custom_Setting__c
+                                                           Where Name = 'Lead Assignment RRIds' LIMIT 1];
+        system.debug('LACustomSet ====> ' + LACustomSet);
+        return LACustomSet;
+    }
+    
+    
 }

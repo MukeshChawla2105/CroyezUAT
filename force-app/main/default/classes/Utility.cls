@@ -13,12 +13,7 @@ public without sharing class Utility{
         return lstPickvals;
     }
 
-    public static List<String> getPicklistValuesWithNone1(String ObjectApi_name,String Field_name) {
-        List<String> pickList = new List<String>{'--None--'};
-        pickList.addAll(getPicklistValues(objectApi_name, field_name));
-        return pickList;
-    }
-    
+ 
     
     public static List<String> getPicklistValues(String ObjectApi_name, String Field_name){
         

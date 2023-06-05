@@ -6,6 +6,7 @@ global without sharing class API_CreateLead {
         Blob body = req.requestBody;
         String requestString = body.toString();
         System.debug('--- rquestString'+ requestString);
+        
         if(!String.isEmpty(requestString)) {
             Map<String, Object> leadMap = (Map<String, Object>) JSON.deserializeUntyped(requestString);
             if(!leadMap.isEmpty()){
@@ -51,7 +52,10 @@ global without sharing class API_CreateLead {
     
     private static String insertLead(Lead leadRec, string requestString){
         try {
-            system.debug('--- leadRec ' + leadRec);            
+            system.debug('--- leadRec ' + leadRec);      
+            Database.DMLOptions dmo = new Database.DMLOptions();
+			dmo.assignmentRuleHeader.useDefaultRule = true;
+            leadRec.setOptions(dmo);
             insert leadRec;
             return leadRec.Id;
         }catch(Exception e){

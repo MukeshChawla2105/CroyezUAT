@@ -29,20 +29,20 @@
             
             <script>
                 debugger;
-             var cityPickList=JSON.parse('{!cityPickList}');
+            var cityPickList=JSON.parse('{!cityPickList}');
             var VisaTypeList = JSON.parse('{!VisaTypeList}');
-                var leadObj;
+            var leadObj;
             leadObj = JSON.parse('{!leadRecordString}');
             var app = angular.module('myApp', []);
-          
-          
+            
+            
             app.controller('myCtrl', function($scope) {
-                 $scope.cityPickList= cityPickList; 
-                 $scope.VisaTypeList= VisaTypeList; 
+                $scope.cityPickList= cityPickList; 
+                $scope.VisaTypeList= VisaTypeList; 
                 $scope.data = leadObj;
                 $scope.leadId = leadObj.Id;
                 $scope.data.CustomState__c='--None--';
-                 $scope.data.Visa_Type__c='--None--';
+                $scope.data.Visa_Type__c='--None--';
                 $scope.saveRecord = function(){
                     debugger;
                     delete $scope.data.attributes;
@@ -79,7 +79,7 @@
             <body ng-app="myApp" ng-controller="myCtrl">      
                 <div class="card" style="width:100%;height: 100%;">
                     <div class="header">
-                         <apex:image id="theImage" style="margin-left: 10rem" value="{!$Resource.CroyezHeader}" width="70%" height="80"/>
+                        <apex:image id="theImage" style="margin-left: 10rem" value="{!$Resource.CroyezHeader}" width="70%" height="80"/>
                     </div>
                     
                     
@@ -105,13 +105,13 @@
                                         <input type="text" id="form11Example4" ng-model="data.Email" placeholder="Enter Email"  class="form-control" />
                                     </div>
                                 </form>
-                                 <form >
+                                <form >
                                     <div class="col-auto" style=" width: 100%; padding-bottom: 10px;">
                                         <label class="form-label" for="form11Example4" style="margin-top: -2px; margin-bottom: 4px;margin-left: 6px;font-size: 11px;">Phone</label>
                                         <input type="text" id="form11Example4" ng-model="data.Phone" placeholder="Enter Phone"  class="form-control" />
                                     </div>
                                 </form>
-                                 <form >
+                                <form >
                                     <div class="col-auto" style=" width: 100%; padding-bottom: 10px;">
                                         <label class="form-label" for="form11Example4" style="margin-top: -2px; margin-bottom: 4px;margin-left: 6px;font-size: 11px;">Company</label>
                                         <input type="text" id="form11Example4" ng-model="data.Company" placeholder="Enter Company"  class="form-control" />
@@ -124,18 +124,18 @@
                                         <select class="form-control" aria-label="Please select" ng-model="data.CustomState__c">
                                             <option ng-repeat="crowns in cityPickList">{{crowns}}</option>
                                         </select>   
-                                          </div>
-                                  </form>
+                                    </div>
+                                </form>
                                 
-                                 <form >
+                                <form >
                                     <div class="col-auto" style=" width: 100%; padding-bottom: 10px;">
                                         <label class="form-label" for="form11Example4" style="margin-top: -2px; margin-bottom: 4px;margin-left: 6px;font-size: 11px;">Visa Type</label>
                                         <select class="form-control" aria-label="Please select" ng-model="data.Visa_Type__c">
                                             <option ng-repeat="crowns in VisaTypeList">{{crowns}}</option>
                                         </select>   
-                                          </div>
-                                  </form>
-                                                               
+                                    </div>
+                                </form>
+                                
                             </div>
                         </div>
                         

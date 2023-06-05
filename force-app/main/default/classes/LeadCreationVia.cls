@@ -30,6 +30,9 @@ public class LeadCreationVia {
         }if(lname !=null){
             led.LastName = lname;
         }
+        Database.DMLOptions dmo = new Database.DMLOptions();
+		dmo.assignmentRuleHeader.useDefaultRule = true;
+        led.setOptions(dmo);
         Insert led;
         System.debug('Lead Record ==>'+led);
         
