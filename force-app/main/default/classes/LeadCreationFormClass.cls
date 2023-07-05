@@ -136,7 +136,7 @@ public without sharing class LeadCreationFormClass{
             LeadDetailWrap.MarriedOrNot = null;
         }
 
-        List<Education_Detail__c> EduDetail = [SELECT Ending_year__c,Id,Institution__c,Lead__c,Marks_Obtained__c, Starting_year__c,Type__c FROM Education_Detail__c Where Lead__c =:LeadrecId AND Type__c = 'Self'];
+        List<Education_Detail__c> EduDetail = [SELECT Ending_year__c,Id,Institution__c,Lead__c,Marks_Obtained__c,Qualification__c, Starting_year__c,Type__c FROM Education_Detail__c Where Lead__c =:LeadrecId AND Type__c = 'Self'];
         LeadDetailWrap.LeadSelfEducationDetails = EduDetail;
         List<Work_Experience__c> WorkExpDetail = [SELECT Company__c,Designation__c,Ended_at__c,Id,Lead__c,Name,Started_at__c,Type__c FROM Work_Experience__c Where Lead__c =: LeadrecId AND Type__c = 'Self'];
         LeadDetailWrap.LeadSelfWorkExperienceDetails = WorkExpDetail;

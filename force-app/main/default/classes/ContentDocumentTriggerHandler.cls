@@ -16,6 +16,7 @@ public with sharing class ContentDocumentTriggerHandler{
         map<String, Integer> LeadIdWithCDLsizeunderFolder = new Map<string,Integer>();
         List<Lead> UpdatedLeadList = new List<Lead>();
 		List<Upload_Doc__e> uploadDocEventList = new List<Upload_Doc__e>();
+        List<Folder__c> updatedfolderList = new List<Folder__c>();
         
         system.debug('ContentDocumentLinkList ====> ' + ContentDocumentLinkList);
         try{
@@ -36,6 +37,8 @@ public with sharing class ContentDocumentTriggerHandler{
                     for (Folder__c flder : FolderList){
                         if (flder.Lead__c != null){
                             FolderLeadIds.add(flder.Lead__c);
+                            flder.Status__c = 'Uploaded';
+                            updatedfolderList.add(flder);
                         }
                     }
 					 system.debug('FolderLeadIds ====> ' + FolderLeadIds);
@@ -106,6 +109,10 @@ public with sharing class ContentDocumentTriggerHandler{
                                 update UpdatedLeadList;
                             }*/
                             
+                        }
+                        
+                        if(!updatedfolderList.isempty()){
+                            update updatedfolderList;
                         }
                     }
                 }

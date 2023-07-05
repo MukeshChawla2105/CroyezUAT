@@ -11,6 +11,10 @@
         <default>false</default>
     </values>
     <values>
+        <fullName>Converted</fullName>
+        <default>false</default>
+    </values>
+    <values>
         <fullName>Junk</fullName>
         <default>false</default>
     </values>
@@ -20,10 +24,6 @@
     </values>
     <values>
         <fullName>Profile Details</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>Qualified</fullName>
         <default>false</default>
     </values>
     <values>

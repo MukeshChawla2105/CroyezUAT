@@ -208,8 +208,13 @@ public class LeadTriggerHandler{
             List<Lead_Assign_Custom_Setting__c> LACustomSet = LAgetCustomSetting();
             decimal LastCoimb_RRId = LACustomSet[0].Coimbatore_Last_RRId__c;
             decimal LastChen_RRId = LACustomSet[0].Chennai_PR_Last_RRId__c;
+            decimal LastBang_RRId = LACustomSet[0].Banglore_Last_RRId__c;
+            decimal LastChenTRV_RRId = LACustomSet[0].Chennai_TRV_Last_RRId__c;
+            decimal LastHyder_RRId = LACustomSet[0].Hyderabad_Last_RRId__c;
+            decimal LastKoch_RRId = LACustomSet[0].Kochi_Last_RRId__c; //	Tirunelveli
+            decimal LastTirun_RRId = LACustomSet[0].Tirunelveli_Last_RRId__c;
             for(Lead ld : leadList){
-                ld.Sales_Team_Member__c = '0052w00000AfrmPAAR';
+                //ld.Sales_Team_Member__c = '0052w00000AfrmPAAR';
                 If(ld.Nearest_Branch__c == 'Coimbatore'){
                     ld.Coimbatore_Lead_Number__c = LastCoimb_RRId;
                     ld.setOptions(dmo);
@@ -217,17 +222,56 @@ public class LeadTriggerHandler{
                     system.debug('LastCoimb_RRId ====> ' + LastCoimb_RRId);
                     
                 }
-                If(ld.Nearest_Branch__c == 'chennai'){
+                If(ld.Nearest_Branch__c == 'chennai' && ld.Visa_Type__c == 'PRV'){
                     ld.Chennai_PR_Lead_Number__c = LastChen_RRId;
                     ld.setOptions(dmo);
                     LastChen_RRId++;
-                    system.debug('LastCoimb_RRId ====> ' + LastCoimb_RRId);
+                    system.debug('LastChen_RRId ====> ' + LastChen_RRId);
+                }
+                If(ld.Nearest_Branch__c == 'chennai' && ld.Visa_Type__c == 'TRV'){
+                    ld.Chennai_TRV_Lead_Number__c = LastChenTRV_RRId;
+                    ld.setOptions(dmo);
+                    LastChenTRV_RRId++;
+                    system.debug('LastChenTRV_RRId ====> ' + LastChenTRV_RRId);
+                }
+                If(ld.Nearest_Branch__c == 'Bangalore'){
+                    ld.Banglore_Lead_Number__c = LastBang_RRId;
+                    ld.setOptions(dmo);
+                    LastBang_RRId++;
+                    system.debug('LastBang_RRId ====> ' + LastBang_RRId);
+                }
+                If(ld.Nearest_Branch__c == 'Hyderabad'){
+                    ld.Hyderabad_Lead_Number__c = LastHyder_RRId;
+                    ld.setOptions(dmo);
+                    LastHyder_RRId++;
+                    system.debug('LastHyder_RRId ====> ' + LastHyder_RRId);
+                }
+                If(ld.Nearest_Branch__c == 'Kochi'){
+                    ld.Kochi_Lead_Number__c = LastKoch_RRId;
+                    ld.setOptions(dmo);
+                    LastKoch_RRId++;
+                    system.debug('LastKoch_RRId ====> ' + LastKoch_RRId);
+                }
+                If(ld.Nearest_Branch__c == 'Tirunelveli'){
+                    ld.Tirunelveli_Lead_Number__c = LastTirun_RRId;
+                    ld.setOptions(dmo);
+                    LastTirun_RRId++;
+                    system.debug('LastTirun_RRId ====> ' + LastTirun_RRId);
                 }
                 
+                
             }
+            
             Lead_Assign_Custom_Setting__c updatedLACS = new Lead_Assign_Custom_Setting__c();
             updatedLACS.Coimbatore_Last_RRId__c  = LastCoimb_RRId;
             updatedLACS.Chennai_PR_Last_RRId__c  = LastChen_RRId;
+            updatedLACS.Chennai_TRV_Last_RRId__c  = LastChenTRV_RRId;
+            updatedLACS.Banglore_Last_RRId__c  = LastBang_RRId;
+            
+            updatedLACS.Hyderabad_Last_RRId__c  = LastHyder_RRId;
+            updatedLACS.Kochi_Last_RRId__c  = LastKoch_RRId;
+             updatedLACS.Tirunelveli_Last_RRId__c  = LastTirun_RRId;
+            
             updatedLACS.Id = LACustomSet[0].Id;
             system.debug('updatedLACS =====> ' + updatedLACS);
             update updatedLACS;
@@ -388,7 +432,7 @@ public class LeadTriggerHandler{
     }
     
     Public List<Lead_Assign_Custom_Setting__c> LAgetCustomSetting(){
-        List<Lead_Assign_Custom_Setting__c> LACustomSet = [SELECT Chennai_PR_Last_RRId__c,Coimbatore_Last_RRId__c,Id,Name 
+        List<Lead_Assign_Custom_Setting__c> LACustomSet = [SELECT Chennai_PR_Last_RRId__c,Coimbatore_Last_RRId__c,Id,Name, Banglore_Last_RRId__c
                                                            FROM Lead_Assign_Custom_Setting__c
                                                            Where Name = 'Lead Assignment RRIds' LIMIT 1];
         system.debug('LACustomSet ====> ' + LACustomSet);

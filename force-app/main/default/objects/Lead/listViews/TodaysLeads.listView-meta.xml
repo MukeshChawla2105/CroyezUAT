@@ -3,11 +3,11 @@
     <fullName>TodaysLeads</fullName>
     <columns>FULL_NAME</columns>
     <columns>Visa_Type__c</columns>
+    <columns>Nearest_Branch__c</columns>
     <columns>LEAD.EMAIL</columns>
     <columns>LEAD.STATUS</columns>
     <columns>LEAD.CREATED_DATE</columns>
-    <columns>CORE.USERS.ALIAS</columns>
-    <columns>LEAD.UNREAD</columns>
+    <columns>CORE.USERS.FIRST_NAME</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>LEAD.CREATED_DATE</field>

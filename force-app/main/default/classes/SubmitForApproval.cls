@@ -1,4 +1,4 @@
-public class SubmitForApproval {
+public without sharing class SubmitForApproval {
     @AuraEnabled
     public static void submitForSalesApproval(string leadId){
         system.debug('Inside Sales approval');

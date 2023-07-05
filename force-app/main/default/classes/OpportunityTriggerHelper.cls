@@ -37,4 +37,10 @@ public class OpportunityTriggerHelper {
             }
         }
     }
+    
+    public static void SendPaymentlink(Map<Id, Opportunity> newMap, Map<Id, Opportunity> OldMap){
+        if(!newMap.isempty()){
+            
+        }
+    }
 }

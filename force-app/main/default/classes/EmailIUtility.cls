@@ -156,6 +156,7 @@ public class EmailIUtility{
         List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
         
         for (lead LeadRec : LeadList){
+            system.debug('LeadRec =====> ' + LeadRec);
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             List<String> recipients = new List<String>();
             if (LeadRec.Email != null){

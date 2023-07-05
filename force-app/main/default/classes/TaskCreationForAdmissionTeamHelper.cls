@@ -1,9 +1,9 @@
-public class TaskCreationForAdmissionTeamHelper {
+public without sharing class TaskCreationForAdmissionTeamHelper {
     @AuraEnabled
     public static void createTask(String LeadId){
         system.debug('LeadId--->'+LeadId);
         Task taskRec = new Task();
-        taskRec.Subject = 'Send Email to Candidate';
+        taskRec.Subject = 'Admission Team to process Further';
         taskRec.whoId = LeadId;
         taskRec.ownerId = '0051e000003kJpp';
         taskRec.ActivityDate = system.today();

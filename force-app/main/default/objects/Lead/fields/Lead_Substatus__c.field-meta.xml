@@ -71,60 +71,31 @@
         <valueSettings>
             <controllingFieldValue>Contacted</controllingFieldValue>
             <controllingFieldValue>Profile Details</controllingFieldValue>
-            <controllingFieldValue>Under Registration</controllingFieldValue>
-            <controllingFieldValue>Junk</controllingFieldValue>
             <valueName>Follow up</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Contacted</controllingFieldValue>
-            <controllingFieldValue>Junk</controllingFieldValue>
             <valueName>Called</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Contacted</controllingFieldValue>
-            <controllingFieldValue>Junk</controllingFieldValue>
             <valueName>Connected</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Profile Details</controllingFieldValue>
-            <controllingFieldValue>Under Registration</controllingFieldValue>
-            <controllingFieldValue>Junk</controllingFieldValue>
             <valueName>Price To High</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Profile Details</controllingFieldValue>
-            <controllingFieldValue>Under Registration</controllingFieldValue>
-            <controllingFieldValue>Junk</controllingFieldValue>
             <valueName>Not Interested</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Profile Details</controllingFieldValue>
-            <controllingFieldValue>Under Registration</controllingFieldValue>
-            <controllingFieldValue>Junk</controllingFieldValue>
             <valueName>Eligible</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Profile Details</controllingFieldValue>
-            <controllingFieldValue>Under Registration</controllingFieldValue>
-            <controllingFieldValue>Junk</controllingFieldValue>
             <valueName>Not Eligible</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Under Registration</controllingFieldValue>
-            <controllingFieldValue>Junk</controllingFieldValue>
-            <valueName>Partial Eligible</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Junk</controllingFieldValue>
-            <valueName>Request sent</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Junk</controllingFieldValue>
-            <valueName>Details Received</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Junk</controllingFieldValue>
-            <valueName>Requested Modification</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
