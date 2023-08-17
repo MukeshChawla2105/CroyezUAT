@@ -30,6 +30,13 @@ global without sharing class RazorpayWebhookHandler{
                     
                     system.debug('Lead After Updation :: ' + ld);
                 } 
+                if (objName == 'Opportunity'){
+                    Opportunity Opp = new Opportunity(Id = recId,Stagename='Consultation Fee Collected');
+                    update Opp;
+                    Invoice__c invoiceToUpdate = [Select Id,Status__c From Invoice__c where Opportunity__c =:recId and Status__c = 'Initiated' order by CreatedDAte DESC limit 1];
+                    invoiceToUpdate.Status__c = 'Realized';
+                    update invoiceToUpdate;
+                } 
             }
 
 

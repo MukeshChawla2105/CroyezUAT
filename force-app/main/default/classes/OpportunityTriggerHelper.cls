@@ -39,7 +39,32 @@ public class OpportunityTriggerHelper {
     }
     
     public static void SendPaymentlink(Map<Id, Opportunity> newMap, Map<Id, Opportunity> OldMap){
+        set<String> OppIds = new Set<String>();
+        Map<string, String> OppIdwithInvoiceId = new Map<string, String>();
         if(!newMap.isempty()){
+            for (Opportunity Opp : newMap.values()) {
+                if (Opp.Approval_Status__c != OldMap.get(opp.Id).Approval_Status__c && Opp.Approval_Status__c == 'Accepted' && OldMap.get(opp.Id).Approval_Status__c == 'Under Approval') {
+                    //RazorpayPaymentHandler.sendPaymentLink(recId);
+                    OppIds.add(Opp.Id);
+                }
+            }
+            if (!OppIds.isEmpty()) {
+                List<Invoice__c> ivlist = [Select Id, Name, Amount__c, Opportunity__c, Opportunity__r.Account.Name, Opportunity__r.Account.Email__c, Opportunity__r.Account.Phone, LeadInvoice__c, LeadInvoice__r.Name, LeadInvoice__r.Phone, LeadInvoice__r.Email
+                         From Invoice__c
+                         Where Opportunity__c IN :OppIds order By CreatedDate DESC];
+                if(!ivlist.isEmpty() ){
+                    for (Invoice__c iv : ivlist) {
+                        if (!OppIdwithInvoiceId.containsKey(iv.Opportunity__c)) {
+                            OppIdwithInvoiceId.put(iv.Opportunity__c, iv.Id);
+                        }
+                    }
+                }
+                if (!OppIdwithInvoiceId.isEmpty()) {
+                    for (String InvoiceId : OppIdwithInvoiceId.values()) {
+                        RazorpayPaymentHandler.initateRazorpayPament(InvoiceId);
+                    }
+                }
+            }
             
         }
     }
